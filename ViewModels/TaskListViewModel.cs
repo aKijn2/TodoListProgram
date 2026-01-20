@@ -29,16 +29,32 @@ namespace Todo_asa.ViewModels
         }
 
         /// <summary>
-        /// Load tasks from database
+        /// Load tasks from database, optionally with a filter index from tab tap
         /// </summary>
         [RelayCommand]
-        private async Task LoadTasksAsync()
+        private async Task LoadTasksAsync(object? filterParam = null)
         {
             if (IsBusy) return;
 
             try
             {
                 IsBusy = true;
+                
+                // Handle filter parameter from tab taps
+                if (filterParam != null)
+                {
+                    if (int.TryParse(filterParam.ToString(), out int filterIndex))
+                    {
+                        SelectedFilterIndex = filterIndex;
+                        SelectedFilter = filterIndex switch
+                        {
+                            1 => Models.TaskStatus.ToDo,
+                            2 => Models.TaskStatus.InProgress,
+                            3 => Models.TaskStatus.Completed,
+                            _ => null // 0 = All
+                        };
+                    }
+                }
                 
                 List<TaskItem> tasks;
                 
