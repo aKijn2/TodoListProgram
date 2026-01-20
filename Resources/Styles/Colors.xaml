@@ -5,142 +5,126 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <!-- ═══════════════════════════════════════════════════════ -->
-    <!-- PREMIUM DARK THEME WITH GRADIENTS & GLASSMORPHISM       -->
+    <!-- MINIMALIST BLACK & WHITE THEME                           -->
     <!-- ═══════════════════════════════════════════════════════ -->
     
-    <!-- Primary Brand Colors - Vibrant Purple/Blue Gradient -->
-    <Color x:Key="Primary">#7C3AED</Color>
-    <Color x:Key="PrimaryDark">#5B21B6</Color>
-    <Color x:Key="PrimaryLight">#A78BFA</Color>
-    <Color x:Key="AccentColor">#EC4899</Color>
-    <Color x:Key="AccentLight">#F472B6</Color>
+    <!-- Primary Colors - Pure Black & White -->
+    <Color x:Key="Primary">#FFFFFF</Color>
+    <Color x:Key="PrimaryDark">#E0E0E0</Color>
+    <Color x:Key="PrimaryLight">#FFFFFF</Color>
+    <Color x:Key="AccentColor">#FFFFFF</Color>
+    <Color x:Key="AccentLight">#F5F5F5</Color>
     
-    <!-- Gradient Colors -->
-    <Color x:Key="GradientStart">#7C3AED</Color>
-    <Color x:Key="GradientMid">#8B5CF6</Color>
-    <Color x:Key="GradientEnd">#EC4899</Color>
-    
-    <!-- Background Colors - Deep Space Theme -->
-    <Color x:Key="PageBackgroundColor">#0A0A1A</Color>
-    <Color x:Key="CardBackgroundColor">#1E1E3F</Color>
-    <Color x:Key="CardBackgroundColorTranslucent">#CC1E1E3F</Color>
-    <Color x:Key="SurfaceColor">#151530</Color>
-    <Color x:Key="GlassColor">#401E1E3F</Color>
+    <!-- Background Colors - Dark Mode -->
+    <Color x:Key="PageBackgroundColor">#000000</Color>
+    <Color x:Key="CardBackgroundColor">#111111</Color>
+    <Color x:Key="CardBackgroundColorTranslucent">#DD111111</Color>
+    <Color x:Key="SurfaceColor">#0A0A0A</Color>
+    <Color x:Key="GlassColor">#20FFFFFF</Color>
     
     <!-- Text Colors -->
     <Color x:Key="PrimaryTextColor">#FFFFFF</Color>
-    <Color x:Key="SecondaryTextColor">#A1A1C7</Color>
-    <Color x:Key="PlaceholderColor">#6B6B8D</Color>
+    <Color x:Key="SecondaryTextColor">#888888</Color>
+    <Color x:Key="PlaceholderColor">#666666</Color>
     
-    <!-- Status Colors - More Vibrant -->
-    <Color x:Key="ToDoColor">#6366F1</Color>
-    <Color x:Key="InProgressColor">#FBBF24</Color>
-    <Color x:Key="CompletedColor">#34D399</Color>
-    <Color x:Key="OverdueColor">#F87171</Color>
+    <!-- Status Colors - Grayscale -->
+    <Color x:Key="ToDoColor">#444444</Color>
+    <Color x:Key="InProgressColor">#888888</Color>
+    <Color x:Key="CompletedColor">#CCCCCC</Color>
+    <Color x:Key="OverdueColor">#FF6666</Color>
     
     <!-- UI Element Colors -->
-    <Color x:Key="BorderColor">#3D3D6B</Color>
-    <Color x:Key="BorderGlowColor">#607C3AED</Color>
-    <Color x:Key="SecondaryButtonColor">#2D2D5A</Color>
-    <Color x:Key="DangerColor">#EF4444</Color>
-    
-    <!-- Highlight/Glow Colors for Interactive Elements -->
-    <Color x:Key="GlowPurple">#807C3AED</Color>
-    <Color x:Key="GlowPink">#80EC4899</Color>
-    <Color x:Key="GlowBlue">#806366F1</Color>
+    <Color x:Key="BorderColor">#333333</Color>
+    <Color x:Key="BorderGlowColor">#444444</Color>
+    <Color x:Key="SecondaryButtonColor">#222222</Color>
+    <Color x:Key="DangerColor">#666666</Color>
     
     <!-- Legacy Colors (for compatibility with Styles.xaml) -->
-    <Color x:Key="White">White</Color>
-    <Color x:Key="Black">Black</Color>
-    <Color x:Key="Secondary">#DFD8F7</Color>
-    <Color x:Key="SecondaryDarkText">#9880e5</Color>
-    <Color x:Key="Tertiary">#2B0B98</Color>
-    <Color x:Key="PrimaryDarkText">#242424</Color>
-    <Color x:Key="Magenta">#D600AA</Color>
-    <Color x:Key="MidnightBlue">#190649</Color>
-    <Color x:Key="OffBlack">#0A0A1A</Color>
-    <Color x:Key="Gray100">#E1E1E1</Color>
-    <Color x:Key="Gray200">#C8C8C8</Color>
-    <Color x:Key="Gray300">#ACACAC</Color>
-    <Color x:Key="Gray400">#919191</Color>
-    <Color x:Key="Gray500">#6E6E6E</Color>
-    <Color x:Key="Gray600">#404040</Color>
-    <Color x:Key="Gray900">#212121</Color>
-    <Color x:Key="Gray950">#141414</Color>
+    <Color x:Key="White">#FFFFFF</Color>
+    <Color x:Key="Black">#000000</Color>
+    <Color x:Key="Secondary">#DDDDDD</Color>
+    <Color x:Key="SecondaryDarkText">#AAAAAA</Color>
+    <Color x:Key="Tertiary">#333333</Color>
+    <Color x:Key="PrimaryDarkText">#111111</Color>
+    <Color x:Key="Magenta">#FFFFFF</Color>
+    <Color x:Key="MidnightBlue">#000000</Color>
+    <Color x:Key="OffBlack">#000000</Color>
+    <Color x:Key="Gray100">#F0F0F0</Color>
+    <Color x:Key="Gray200">#E0E0E0</Color>
+    <Color x:Key="Gray300">#C0C0C0</Color>
+    <Color x:Key="Gray400">#A0A0A0</Color>
+    <Color x:Key="Gray500">#808080</Color>
+    <Color x:Key="Gray600">#606060</Color>
+    <Color x:Key="Gray900">#202020</Color>
+    <Color x:Key="Gray950">#101010</Color>
 
     <!-- ═══════════════════════════════════════════════════════ -->
-    <!-- GRADIENT BRUSHES                                         -->
+    <!-- MONOCHROME GRADIENTS (subtle)                            -->
     <!-- ═══════════════════════════════════════════════════════ -->
     
-    <!-- Main Accent Gradient (Purple to Pink) -->
     <LinearGradientBrush x:Key="AccentGradient" StartPoint="0,0" EndPoint="1,1">
-        <GradientStop Color="#7C3AED" Offset="0.0"/>
-        <GradientStop Color="#EC4899" Offset="1.0"/>
+        <GradientStop Color="#FFFFFF" Offset="0.0"/>
+        <GradientStop Color="#E0E0E0" Offset="1.0"/>
     </LinearGradientBrush>
     
-    <!-- Header Gradient -->
     <LinearGradientBrush x:Key="HeaderGradient" StartPoint="0,0" EndPoint="1,0">
-        <GradientStop Color="#7C3AED" Offset="0.0"/>
-        <GradientStop Color="#8B5CF6" Offset="0.5"/>
-        <GradientStop Color="#EC4899" Offset="1.0"/>
+        <GradientStop Color="#FFFFFF" Offset="0.0"/>
+        <GradientStop Color="#CCCCCC" Offset="1.0"/>
     </LinearGradientBrush>
     
-    <!-- Card Gradient (Subtle) -->
     <LinearGradientBrush x:Key="CardGradient" StartPoint="0,0" EndPoint="1,1">
-        <GradientStop Color="#1E1E3F" Offset="0.0"/>
-        <GradientStop Color="#252550" Offset="1.0"/>
+        <GradientStop Color="#111111" Offset="0.0"/>
+        <GradientStop Color="#1A1A1A" Offset="1.0"/>
     </LinearGradientBrush>
     
-    <!-- Button Gradient -->
     <LinearGradientBrush x:Key="ButtonGradient" StartPoint="0,0" EndPoint="1,0">
-        <GradientStop Color="#7C3AED" Offset="0.0"/>
-        <GradientStop Color="#9333EA" Offset="0.5"/>
-        <GradientStop Color="#C026D3" Offset="1.0"/>
+        <GradientStop Color="#FFFFFF" Offset="0.0"/>
+        <GradientStop Color="#E0E0E0" Offset="1.0"/>
     </LinearGradientBrush>
     
-    <!-- Status Gradients -->
+    <!-- Status Gradients - Grayscale -->
     <LinearGradientBrush x:Key="ToDoGradient" StartPoint="0,0" EndPoint="1,1">
-        <GradientStop Color="#4F46E5" Offset="0.0"/>
-        <GradientStop Color="#6366F1" Offset="1.0"/>
+        <GradientStop Color="#333333" Offset="0.0"/>
+        <GradientStop Color="#444444" Offset="1.0"/>
     </LinearGradientBrush>
     
     <LinearGradientBrush x:Key="InProgressGradient" StartPoint="0,0" EndPoint="1,1">
-        <GradientStop Color="#F59E0B" Offset="0.0"/>
-        <GradientStop Color="#FBBF24" Offset="1.0"/>
+        <GradientStop Color="#666666" Offset="0.0"/>
+        <GradientStop Color="#888888" Offset="1.0"/>
     </LinearGradientBrush>
     
     <LinearGradientBrush x:Key="CompletedGradient" StartPoint="0,0" EndPoint="1,1">
-        <GradientStop Color="#059669" Offset="0.0"/>
-        <GradientStop Color="#34D399" Offset="1.0"/>
+        <GradientStop Color="#AAAAAA" Offset="0.0"/>
+        <GradientStop Color="#CCCCCC" Offset="1.0"/>
     </LinearGradientBrush>
 
     <!-- ═══════════════════════════════════════════════════════ -->
-    <!-- SHADOWS WITH GLOW EFFECTS                                -->
+    <!-- SHADOWS                                                  -->
     <!-- ═══════════════════════════════════════════════════════ -->
     
     <Shadow x:Key="CardShadow"
             Brush="#40000000"
-            Offset="0,8"
-            Radius="16"
-            Opacity="0.5"/>
+            Offset="0,4"
+            Radius="8"
+            Opacity="0.3"/>
     
     <Shadow x:Key="CardGlowShadow"
-            Brush="#407C3AED"
-            Offset="0,4"
-            Radius="20"
-            Opacity="0.4"/>
+            Brush="#20FFFFFF"
+            Offset="0,2"
+            Radius="12"
+            Opacity="0.2"/>
     
     <Shadow x:Key="ButtonShadow"
-            Brush="#807C3AED"
-            Offset="0,6"
-            Radius="16"
-            Opacity="0.6"/>
+            Brush="#40FFFFFF"
+            Offset="0,4"
+            Radius="12"
+            Opacity="0.3"/>
     
     <Shadow x:Key="AccentGlow"
-            Brush="#60EC4899"
+            Brush="#30FFFFFF"
             Offset="0,0"
-            Radius="24"
-            Opacity="0.5"/>
+            Radius="16"
+            Opacity="0.4"/>
 
     <!-- Solid Brushes -->
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>
