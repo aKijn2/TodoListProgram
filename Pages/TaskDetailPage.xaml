@@ -11,38 +11,43 @@
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="20">
             
-            <!-- Task Title -->
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <!-- TASK TITLE INPUT                                         -->
+            <!-- ═══════════════════════════════════════════════════════ -->
             <VerticalStackLayout Spacing="8">
                 <Label Text="Title" 
-                       FontSize="14" 
+                       FontSize="13" 
                        FontAttributes="Bold"
-                       TextColor="{StaticResource SecondaryTextColor}"/>
-                <Border BackgroundColor="{StaticResource CardBackgroundColor}"
-                        StrokeShape="RoundRectangle 12"
+                       TextColor="{StaticResource PrimaryLight}"/>
+                <Border BackgroundColor="{StaticResource GlassColor}"
+                        StrokeShape="RoundRectangle 14"
                         Stroke="{StaticResource BorderColor}"
                         StrokeThickness="1"
-                        Padding="12">
+                        Padding="16,12">
                     <Entry Text="{Binding TaskTitle}"
                            Placeholder="Enter task title..."
                            PlaceholderColor="{StaticResource PlaceholderColor}"
                            TextColor="{StaticResource PrimaryTextColor}"
-                           FontSize="16"
+                           FontSize="17"
+                           FontAttributes="Bold"
                            BackgroundColor="Transparent"/>
                 </Border>
             </VerticalStackLayout>
             
-            <!-- Description -->
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <!-- DESCRIPTION INPUT                                        -->
+            <!-- ═══════════════════════════════════════════════════════ -->
             <VerticalStackLayout Spacing="8">
                 <Label Text="Description" 
-                       FontSize="14" 
+                       FontSize="13" 
                        FontAttributes="Bold"
-                       TextColor="{StaticResource SecondaryTextColor}"/>
-                <Border BackgroundColor="{StaticResource CardBackgroundColor}"
-                        StrokeShape="RoundRectangle 12"
+                       TextColor="{StaticResource PrimaryLight}"/>
+                <Border BackgroundColor="{StaticResource GlassColor}"
+                        StrokeShape="RoundRectangle 14"
                         Stroke="{StaticResource BorderColor}"
                         StrokeThickness="1"
-                        Padding="12"
-                        MinimumHeightRequest="120">
+                        Padding="16,12"
+                        MinimumHeightRequest="100">
                     <Editor Text="{Binding Description}"
                             Placeholder="Enter description..."
                             PlaceholderColor="{StaticResource PlaceholderColor}"
@@ -53,76 +58,111 @@
                 </Border>
             </VerticalStackLayout>
             
-            <!-- Status Picker -->
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <!-- STATUS PICKER WITH GRADIENT INDICATOR                    -->
+            <!-- ═══════════════════════════════════════════════════════ -->
             <VerticalStackLayout Spacing="8">
                 <Label Text="Status" 
-                       FontSize="14" 
+                       FontSize="13" 
                        FontAttributes="Bold"
-                       TextColor="{StaticResource SecondaryTextColor}"/>
-                <Border BackgroundColor="{StaticResource CardBackgroundColor}"
-                        StrokeShape="RoundRectangle 12"
+                       TextColor="{StaticResource PrimaryLight}"/>
+                <Border BackgroundColor="{StaticResource GlassColor}"
+                        StrokeShape="RoundRectangle 14"
                         Stroke="{StaticResource BorderColor}"
                         StrokeThickness="1"
-                        Padding="12">
-                    <Picker SelectedIndex="{Binding SelectedStatusIndex}"
-                            TextColor="{StaticResource PrimaryTextColor}"
-                            BackgroundColor="Transparent">
-                        <Picker.ItemsSource>
-                            <x:Array Type="{x:Type x:String}">
-                                <x:String>📝 To Do</x:String>
-                                <x:String>🔄 In Progress</x:String>
-                                <x:String>✅ Completed</x:String>
-                            </x:Array>
-                        </Picker.ItemsSource>
-                    </Picker>
+                        Padding="16,8">
+                    <Grid ColumnDefinitions="Auto,*">
+                        <!-- Status Indicator Dot -->
+                        <Border Grid.Column="0" 
+                                WidthRequest="12" HeightRequest="12"
+                                StrokeShape="RoundRectangle 6"
+                                Margin="0,0,12,0"
+                                VerticalOptions="Center">
+                            <Border.Triggers>
+                                <DataTrigger TargetType="Border" Binding="{Binding SelectedStatusIndex}" Value="0">
+                                    <Setter Property="Background" Value="{StaticResource ToDoGradient}"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Border" Binding="{Binding SelectedStatusIndex}" Value="1">
+                                    <Setter Property="Background" Value="{StaticResource InProgressGradient}"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Border" Binding="{Binding SelectedStatusIndex}" Value="2">
+                                    <Setter Property="Background" Value="{StaticResource CompletedGradient}"/>
+                                </DataTrigger>
+                            </Border.Triggers>
+                        </Border>
+                        <Picker Grid.Column="1"
+                                SelectedIndex="{Binding SelectedStatusIndex}"
+                                TextColor="{StaticResource PrimaryTextColor}"
+                                BackgroundColor="Transparent">
+                            <Picker.ItemsSource>
+                                <x:Array Type="{x:Type x:String}">
+                                    <x:String>📝 To Do</x:String>
+                                    <x:String>⚡ In Progress</x:String>
+                                    <x:String>✓ Completed</x:String>
+                                </x:Array>
+                            </Picker.ItemsSource>
+                        </Picker>
+                    </Grid>
                 </Border>
             </VerticalStackLayout>
             
-            <!-- Due Date -->
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <!-- DUE DATE SECTION                                         -->
+            <!-- ═══════════════════════════════════════════════════════ -->
             <VerticalStackLayout Spacing="8">
                 <Label Text="Due Date" 
-                       FontSize="14" 
+                       FontSize="13" 
                        FontAttributes="Bold"
-                       TextColor="{StaticResource SecondaryTextColor}"/>
+                       TextColor="{StaticResource PrimaryLight}"/>
                 
                 <!-- Toggle Due Date -->
-                <HorizontalStackLayout Spacing="12">
-                    <CheckBox IsChecked="{Binding HasDueDate}"
-                              Color="{StaticResource AccentColor}"/>
-                    <Label Text="Set a due date"
-                           FontSize="15"
-                           TextColor="{StaticResource PrimaryTextColor}"
-                           VerticalOptions="Center"/>
-                </HorizontalStackLayout>
+                <Border BackgroundColor="{StaticResource GlassColor}"
+                        StrokeShape="RoundRectangle 14"
+                        Stroke="Transparent"
+                        Padding="12,8">
+                    <HorizontalStackLayout Spacing="12">
+                        <CheckBox IsChecked="{Binding HasDueDate}"
+                                  Color="{StaticResource AccentColor}"/>
+                        <Label Text="Set a due date"
+                               FontSize="15"
+                               TextColor="{StaticResource PrimaryTextColor}"
+                               VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
                 
                 <!-- Date Picker (visible when HasDueDate is true) -->
-                <Border BackgroundColor="{StaticResource CardBackgroundColor}"
-                        StrokeShape="RoundRectangle 12"
-                        Stroke="{StaticResource BorderColor}"
+                <Border BackgroundColor="{StaticResource GlassColor}"
+                        StrokeShape="RoundRectangle 14"
+                        Stroke="{StaticResource BorderGlowColor}"
                         StrokeThickness="1"
-                        Padding="12"
+                        Padding="16,12"
                         IsVisible="{Binding HasDueDate}">
-                    <DatePicker Date="{Binding SelectedDueDate}"
-                                MinimumDate="{Binding MinimumDate}"
-                                TextColor="{StaticResource PrimaryTextColor}"
-                                BackgroundColor="Transparent"/>
+                    <HorizontalStackLayout Spacing="12">
+                        <Label Text="📅" FontSize="20" VerticalOptions="Center"/>
+                        <DatePicker Date="{Binding SelectedDueDate}"
+                                    MinimumDate="{Binding MinimumDate}"
+                                    TextColor="{StaticResource PrimaryTextColor}"
+                                    BackgroundColor="Transparent"/>
+                    </HorizontalStackLayout>
                 </Border>
             </VerticalStackLayout>
             
-            <!-- Subtasks Section -->
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <!-- SUBTASKS SECTION                                         -->
+            <!-- ═══════════════════════════════════════════════════════ -->
             <VerticalStackLayout Spacing="12">
                 <Label Text="Subtasks" 
-                       FontSize="14" 
+                       FontSize="13" 
                        FontAttributes="Bold"
-                       TextColor="{StaticResource SecondaryTextColor}"/>
+                       TextColor="{StaticResource PrimaryLight}"/>
                 
                 <!-- Add Subtask -->
-                <Border BackgroundColor="{StaticResource CardBackgroundColor}"
-                        StrokeShape="RoundRectangle 12"
+                <Border BackgroundColor="{StaticResource GlassColor}"
+                        StrokeShape="RoundRectangle 14"
                         Stroke="{StaticResource BorderColor}"
                         StrokeThickness="1"
                         Padding="12">
-                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
                         <Entry Grid.Column="0"
                                Text="{Binding NewSubTaskTitle}"
                                Placeholder="Add a subtask..."
@@ -130,13 +170,22 @@
                                TextColor="{StaticResource PrimaryTextColor}"
                                BackgroundColor="Transparent"
                                ReturnCommand="{Binding AddSubTaskCommand}"/>
-                        <Button Grid.Column="1"
-                                Text="Add"
-                                BackgroundColor="{StaticResource AccentColor}"
-                                TextColor="White"
-                                CornerRadius="8"
+                        <!-- Gradient Add Button -->
+                        <Border Grid.Column="1"
+                                StrokeShape="RoundRectangle 10"
+                                Stroke="Transparent"
+                                Background="{StaticResource AccentGradient}"
                                 Padding="16,8"
-                                Command="{Binding AddSubTaskCommand}"/>
+                                Shadow="{StaticResource ButtonShadow}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding AddSubTaskCommand}"/>
+                            </Border.GestureRecognizers>
+                            <Label Text="Add" 
+                                   TextColor="White" 
+                                   FontAttributes="Bold"
+                                   FontSize="13"
+                                   VerticalOptions="Center"/>
+                        </Border>
                     </Grid>
                 </Border>
                 
@@ -144,8 +193,8 @@
                 <VerticalStackLayout BindableLayout.ItemsSource="{Binding SubTasks}" Spacing="8">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="models:SubTaskItem">
-                            <Border BackgroundColor="{StaticResource CardBackgroundColor}"
-                                    StrokeShape="RoundRectangle 10"
+                            <Border BackgroundColor="{StaticResource GlassColor}"
+                                    StrokeShape="RoundRectangle 12"
                                     Stroke="Transparent"
                                     Padding="12">
                                 <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
@@ -175,15 +224,20 @@
                                     </Label>
                                     
                                     <!-- Delete Button -->
-                                    <Button Grid.Column="2"
-                                            Text="✕"
-                                            FontSize="14"
-                                            BackgroundColor="Transparent"
-                                            TextColor="{StaticResource SecondaryTextColor}"
-                                            WidthRequest="32"
-                                            HeightRequest="32"
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:TaskDetailViewModel}}, Path=DeleteSubTaskCommand}"
-                                            CommandParameter="{Binding .}"/>
+                                    <Border Grid.Column="2"
+                                            WidthRequest="28" HeightRequest="28"
+                                            StrokeShape="RoundRectangle 8"
+                                            BackgroundColor="{StaticResource GlassColor}">
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:TaskDetailViewModel}}, Path=DeleteSubTaskCommand}"
+                                                                  CommandParameter="{Binding .}"/>
+                                        </Border.GestureRecognizers>
+                                        <Label Text="✕" 
+                                               FontSize="12"
+                                               TextColor="{StaticResource SecondaryTextColor}"
+                                               VerticalOptions="Center"
+                                               HorizontalOptions="Center"/>
+                                    </Border>
                                 </Grid>
                             </Border>
                         </DataTemplate>
@@ -191,32 +245,63 @@
                 </VerticalStackLayout>
             </VerticalStackLayout>
             
-            <!-- Action Buttons -->
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <!-- ACTION BUTTONS                                           -->
+            <!-- ═══════════════════════════════════════════════════════ -->
             <Grid ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,20,0,0">
-                <Button Grid.Column="0"
-                        Text="Cancel"
-                        BackgroundColor="{StaticResource SecondaryButtonColor}"
-                        TextColor="{StaticResource PrimaryTextColor}"
-                        CornerRadius="12"
+                <!-- Cancel Button -->
+                <Border Grid.Column="0"
+                        StrokeShape="RoundRectangle 14"
+                        BackgroundColor="{StaticResource GlassColor}"
+                        Stroke="{StaticResource BorderColor}"
+                        StrokeThickness="1"
+                        HeightRequest="50">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding CancelCommand}"/>
+                    </Border.GestureRecognizers>
+                    <Label Text="Cancel"
+                           TextColor="{StaticResource PrimaryTextColor}"
+                           FontAttributes="Bold"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"/>
+                </Border>
+                
+                <!-- Save Button with Gradient -->
+                <Border Grid.Column="1"
+                        StrokeShape="RoundRectangle 14"
+                        Background="{StaticResource AccentGradient}"
+                        Stroke="Transparent"
                         HeightRequest="50"
-                        Command="{Binding CancelCommand}"/>
-                <Button Grid.Column="1"
-                        Text="Save"
-                        BackgroundColor="{StaticResource AccentColor}"
-                        TextColor="White"
-                        CornerRadius="12"
-                        HeightRequest="50"
-                        Command="{Binding SaveCommand}"/>
+                        Shadow="{StaticResource ButtonShadow}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SaveCommand}"/>
+                    </Border.GestureRecognizers>
+                    <Label Text="Save"
+                           TextColor="White"
+                           FontAttributes="Bold"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"/>
+                </Border>
             </Grid>
             
             <!-- Delete Button (only for existing tasks) -->
-            <Button Text="🗑️ Delete Task"
-                    BackgroundColor="{StaticResource DangerColor}"
-                    TextColor="White"
-                    CornerRadius="12"
+            <Border StrokeShape="RoundRectangle 14"
+                    BackgroundColor="#40EF4444"
+                    Stroke="{StaticResource DangerColor}"
+                    StrokeThickness="1"
                     HeightRequest="50"
-                    Command="{Binding DeleteCommand}"
-                    IsVisible="{Binding IsNewTask, Converter={StaticResource InverseBoolConverter}}"/>
+                    IsVisible="{Binding IsNewTask, Converter={StaticResource InverseBoolConverter}}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding DeleteCommand}"/>
+                </Border.GestureRecognizers>
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="8">
+                    <Label Text="🗑️" FontSize="16" VerticalOptions="Center"/>
+                    <Label Text="Delete Task"
+                           TextColor="{StaticResource OverdueColor}"
+                           FontAttributes="Bold"
+                           VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+            </Border>
             
         </VerticalStackLayout>
     </ScrollView>
