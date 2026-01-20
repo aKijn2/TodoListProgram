@@ -107,40 +107,45 @@
 
                 <!--  Empty State - Monochrome  -->
                 <CollectionView.EmptyView>
-                    <VerticalStackLayout
-                        Padding="40"
-                        HorizontalOptions="Center"
-                        Spacing="16"
-                        VerticalOptions="Center">
-                        <Border
-                            BackgroundColor="{StaticResource GlassColor}"
-                            HeightRequest="80"
-                            HorizontalOptions="Center"
-                            Stroke="{StaticResource BorderColor}"
-                            StrokeShape="RoundRectangle 40"
-                            StrokeThickness="1"
-                            WidthRequest="80">
-                            <Label
-                                FontSize="40"
+                    <!--  WRAPPER: Add this Grid to take up the full space  -->
+                    <Grid>
+                        <VerticalStackLayout
+                            Margin="15"
+                            Padding="15"
+                            HorizontalOptions="Fill"
+                            Spacing="20"
+                            VerticalOptions="CenterAndExpand">
+
+                            <Border
+                                BackgroundColor="{StaticResource GlassColor}"
+                                HeightRequest="80"
                                 HorizontalOptions="Center"
-                                Text="○"
-                                TextColor="{StaticResource SecondaryTextColor}"
-                                VerticalOptions="Center" />
-                        </Border>
-                        <Label
-                            FontAttributes="Bold"
-                            FontFamily="Inter"
-                            FontSize="18"
-                            HorizontalOptions="Center"
-                            Text="No tasks yet"
-                            TextColor="{StaticResource PrimaryTextColor}" />
-                        <Label
-                            FontFamily="Inter"
-                            FontSize="13"
-                            HorizontalOptions="Center"
-                            Text="Tap + to create your first task"
-                            TextColor="{StaticResource SecondaryTextColor}" />
-                    </VerticalStackLayout>
+                                Stroke="{StaticResource BorderColor}"
+                                StrokeShape="RoundRectangle 40"
+                                StrokeThickness="1"
+                                WidthRequest="80">
+                                <Label
+                                    FontSize="40"
+                                    HorizontalOptions="Center"
+                                    Text="○"
+                                    TextColor="{StaticResource SecondaryTextColor}"
+                                    VerticalOptions="Center" />
+                            </Border>
+                            <Label
+                                FontAttributes="Bold"
+                                FontFamily="Inter"
+                                FontSize="18"
+                                HorizontalOptions="Center"
+                                Text="No tasks yet"
+                                TextColor="{StaticResource PrimaryTextColor}" />
+                            <Label
+                                FontFamily="Inter"
+                                FontSize="13"
+                                HorizontalOptions="Center"
+                                Text="Tap + to create your first task"
+                                TextColor="{StaticResource SecondaryTextColor}" />
+                        </VerticalStackLayout>
+                    </Grid>
                 </CollectionView.EmptyView>
 
                 <CollectionView.ItemsLayout>
@@ -311,7 +316,11 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
                 <CollectionView.Footer>
-                     <BoxView HeightRequest="80" Color="Transparent"/>
+                    <!--  Only show this spacer when there are actually tasks in the list  -->
+                    <BoxView
+                        HeightRequest="80"
+                        IsVisible="{Binding Tasks.Count, Converter={StaticResource IntToBoolConverter}}"
+                        Color="Transparent" />
                 </CollectionView.Footer>
             </CollectionView>
         </RefreshView>
@@ -362,10 +371,10 @@
                     Grid.Column="0"
                     Padding="8,10"
                     HorizontalOptions="Center"
-                    WidthRequest="80"
                     Stroke="Transparent"
                     StrokeShape="RoundRectangle 12"
-                    VerticalOptions="Center">
+                    VerticalOptions="Center"
+                    WidthRequest="80">
                     <Border.Triggers>
                         <DataTrigger
                             Binding="{Binding SelectedFilterIndex}"
@@ -417,10 +426,10 @@
                     Grid.Column="1"
                     Padding="8,10"
                     HorizontalOptions="Center"
-                    WidthRequest="80"
                     Stroke="Transparent"
                     StrokeShape="RoundRectangle 12"
-                    VerticalOptions="Center">
+                    VerticalOptions="Center"
+                    WidthRequest="80">
                     <Border.Triggers>
                         <DataTrigger
                             Binding="{Binding SelectedFilterIndex}"
@@ -473,10 +482,10 @@
                     Grid.Column="2"
                     Padding="8,10"
                     HorizontalOptions="Center"
-                    WidthRequest="80"
                     Stroke="Transparent"
                     StrokeShape="RoundRectangle 12"
-                    VerticalOptions="Center">
+                    VerticalOptions="Center"
+                    WidthRequest="80">
                     <Border.Triggers>
                         <DataTrigger
                             Binding="{Binding SelectedFilterIndex}"
@@ -529,10 +538,10 @@
                     Grid.Column="3"
                     Padding="8,10"
                     HorizontalOptions="Center"
-                    WidthRequest="80"
                     Stroke="Transparent"
                     StrokeShape="RoundRectangle 12"
-                    VerticalOptions="Center">
+                    VerticalOptions="Center"
+                    WidthRequest="80">
                     <Border.Triggers>
                         <DataTrigger
                             Binding="{Binding SelectedFilterIndex}"
