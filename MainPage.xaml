@@ -1,227 +1,308 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:viewmodels="clr-namespace:Todo_asa.ViewModels"
-             xmlns:models="clr-namespace:Todo_asa.Models"
-             x:Class="Todo_asa.MainPage"
-             x:DataType="viewmodels:TaskListViewModel"
-             Title="{Binding Title}"
-             BackgroundColor="{StaticResource PageBackgroundColor}"
-             Shell.NavBarIsVisible="False">
+<ContentPage
+    x:Class="Todo_asa.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:Todo_asa.Models"
+    xmlns:viewmodels="clr-namespace:Todo_asa.ViewModels"
+    Title="{Binding Title}"
+    x:DataType="viewmodels:TaskListViewModel"
+    BackgroundColor="{StaticResource PageBackgroundColor}"
+    Shell.NavBarIsVisible="False">
 
     <Grid RowDefinitions="Auto,*,Auto">
-        
-        <!-- ═══════════════════════════════════════════════════════ -->
-        <!-- TOP HEADER - MINIMALIST BLACK & WHITE                    -->
-        <!-- ═══════════════════════════════════════════════════════ -->
-        <Border Grid.Row="0"
-                BackgroundColor="{StaticResource CardBackgroundColor}"
-                StrokeShape="RoundRectangle 0,0,20,20"
-                Stroke="Transparent"
-                Padding="20,16">
+
+        <!--  ═══════════════════════════════════════════════════════  -->
+        <!--  TOP HEADER - MINIMALIST BLACK & WHITE  -->
+        <!--  ═══════════════════════════════════════════════════════  -->
+        <Border
+            Grid.Row="0"
+            Padding="20,16"
+            BackgroundColor="{StaticResource CardBackgroundColor}"
+            Stroke="Transparent"
+            StrokeShape="RoundRectangle 0,0,20,20">
             <Grid ColumnDefinitions="Auto,*,Auto,Auto">
-                
-                <!-- Profile Avatar - Monochrome -->
-                <Border Grid.Column="0"
-                        WidthRequest="44" HeightRequest="44"
-                        StrokeShape="RoundRectangle 22"
-                        BackgroundColor="{StaticResource GlassColor}"
-                        Stroke="{StaticResource BorderColor}"
-                        StrokeThickness="1">
-                    <Label Text="●" 
-                           FontSize="24"
-                           TextColor="{StaticResource PrimaryTextColor}"
-                           VerticalOptions="Center"
-                           HorizontalOptions="Center"/>
+
+                <!--  Profile Avatar - Monochrome  -->
+                <Border
+                    Grid.Column="0"
+                    BackgroundColor="{StaticResource GlassColor}"
+                    HeightRequest="44"
+                    Stroke="{StaticResource BorderColor}"
+                    StrokeShape="RoundRectangle 22"
+                    StrokeThickness="1"
+                    WidthRequest="44">
+                    <Label
+                        FontSize="24"
+                        HorizontalOptions="Center"
+                        Text="●"
+                        TextColor="{StaticResource PrimaryTextColor}"
+                        VerticalOptions="Center" />
                 </Border>
-                
-                <!-- Title & Greeting -->
-                <VerticalStackLayout Grid.Column="1" Spacing="2" Margin="14,0,0,0" VerticalOptions="Center">
-                    <Label Text="TaskFlow" 
-                           FontSize="20" 
-                           FontAttributes="Bold"
-                           FontFamily="Inter"
-                           TextColor="{StaticResource PrimaryTextColor}"/>
-                    <Label Text="Let's be productive today" 
-                           FontSize="12"
-                           FontFamily="Inter"
-                           TextColor="{StaticResource SecondaryTextColor}"/>
+
+                <!--  Title & Greeting  -->
+                <VerticalStackLayout
+                    Grid.Column="1"
+                    Margin="14,0,0,0"
+                    Spacing="2"
+                    VerticalOptions="Center">
+                    <Label
+                        FontAttributes="Bold"
+                        FontFamily="Inter"
+                        FontSize="20"
+                        Text="TaskFlow"
+                        TextColor="{StaticResource PrimaryTextColor}" />
+                    <Label
+                        FontFamily="Inter"
+                        FontSize="12"
+                        Text="Let's be productive today"
+                        TextColor="{StaticResource SecondaryTextColor}" />
                 </VerticalStackLayout>
-                
-                <!-- Notification - Monochrome -->
-                <Border Grid.Column="2"
-                        WidthRequest="40" HeightRequest="40"
-                        StrokeShape="RoundRectangle 12"
-                        BackgroundColor="{StaticResource GlassColor}"
-                        Stroke="Transparent"
-                        Margin="0,0,8,0">
-                    <Label Text="◉" 
-                           FontSize="16"
-                           TextColor="{StaticResource SecondaryTextColor}"
-                           VerticalOptions="Center"
-                           HorizontalOptions="Center"/>
+
+                <!--  Notification - Monochrome  -->
+                <Border
+                    Grid.Column="2"
+                    Margin="0,0,8,0"
+                    BackgroundColor="{StaticResource GlassColor}"
+                    HeightRequest="40"
+                    Stroke="Transparent"
+                    StrokeShape="RoundRectangle 12"
+                    WidthRequest="40">
+                    <Label
+                        FontSize="16"
+                        HorizontalOptions="Center"
+                        Text="◉"
+                        TextColor="{StaticResource SecondaryTextColor}"
+                        VerticalOptions="Center" />
                 </Border>
-                
-                <!-- Settings - Monochrome -->
-                <Border Grid.Column="3"
-                        WidthRequest="40" HeightRequest="40"
-                        StrokeShape="RoundRectangle 12"
-                        BackgroundColor="{StaticResource GlassColor}"
-                        Stroke="Transparent">
-                    <Label Text="≡" 
-                           FontSize="20"
-                           TextColor="{StaticResource SecondaryTextColor}"
-                           VerticalOptions="Center"
-                           HorizontalOptions="Center"/>
+
+                <!--  Settings - Monochrome  -->
+                <Border
+                    Grid.Column="3"
+                    BackgroundColor="{StaticResource GlassColor}"
+                    HeightRequest="40"
+                    Stroke="Transparent"
+                    StrokeShape="RoundRectangle 12"
+                    WidthRequest="40">
+                    <Label
+                        FontSize="20"
+                        HorizontalOptions="Center"
+                        Text="≡"
+                        TextColor="{StaticResource SecondaryTextColor}"
+                        VerticalOptions="Center" />
                 </Border>
             </Grid>
         </Border>
 
-        <!-- ═══════════════════════════════════════════════════════ -->
-        <!-- TASK LIST                                                -->
-        <!-- ═══════════════════════════════════════════════════════ -->
-        <RefreshView Grid.Row="1"
-                     Command="{Binding RefreshCommand}"
-                     IsRefreshing="{Binding IsBusy}"
-                     RefreshColor="{StaticResource PrimaryTextColor}"
-                     Margin="16,12,16,0">
-            <CollectionView ItemsSource="{Binding Tasks}"
-                            SelectionMode="None">
-                
-                <!-- Empty State - Monochrome -->
+        <!--  ═══════════════════════════════════════════════════════  -->
+        <!--  TASK LIST  -->
+        <!--  ═══════════════════════════════════════════════════════  -->
+        <RefreshView
+            Grid.Row="1"
+            Margin="16,12,16,0"
+            Command="{Binding RefreshCommand}"
+            IsRefreshing="{Binding IsBusy}"
+            RefreshColor="{StaticResource PrimaryTextColor}">
+            <CollectionView ItemsSource="{Binding Tasks}" SelectionMode="None">
+
+                <!--  Empty State - Monochrome  -->
                 <CollectionView.EmptyView>
-                    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="16" Padding="40">
-                        <Border WidthRequest="80" HeightRequest="80"
-                                StrokeShape="RoundRectangle 40"
-                                BackgroundColor="{StaticResource GlassColor}"
-                                Stroke="{StaticResource BorderColor}"
-                                StrokeThickness="1"
-                                HorizontalOptions="Center">
-                            <Label Text="○" FontSize="40" TextColor="{StaticResource SecondaryTextColor}"
-                                   VerticalOptions="Center" HorizontalOptions="Center"/>
+                    <VerticalStackLayout
+                        Padding="40"
+                        HorizontalOptions="Center"
+                        Spacing="16"
+                        VerticalOptions="Center">
+                        <Border
+                            BackgroundColor="{StaticResource GlassColor}"
+                            HeightRequest="80"
+                            HorizontalOptions="Center"
+                            Stroke="{StaticResource BorderColor}"
+                            StrokeShape="RoundRectangle 40"
+                            StrokeThickness="1"
+                            WidthRequest="80">
+                            <Label
+                                FontSize="40"
+                                HorizontalOptions="Center"
+                                Text="○"
+                                TextColor="{StaticResource SecondaryTextColor}"
+                                VerticalOptions="Center" />
                         </Border>
-                        <Label Text="No tasks yet" 
-                               FontSize="18" 
-                               FontAttributes="Bold"
-                               FontFamily="Inter"
-                               TextColor="{StaticResource PrimaryTextColor}"
-                               HorizontalOptions="Center"/>
-                        <Label Text="Tap + to create your first task" 
-                               FontSize="13"
-                               FontFamily="Inter"
-                               TextColor="{StaticResource SecondaryTextColor}"
-                               HorizontalOptions="Center"/>
+                        <Label
+                            FontAttributes="Bold"
+                            FontFamily="Inter"
+                            FontSize="18"
+                            HorizontalOptions="Center"
+                            Text="No tasks yet"
+                            TextColor="{StaticResource PrimaryTextColor}" />
+                        <Label
+                            FontFamily="Inter"
+                            FontSize="13"
+                            HorizontalOptions="Center"
+                            Text="Tap + to create your first task"
+                            TextColor="{StaticResource SecondaryTextColor}" />
                     </VerticalStackLayout>
                 </CollectionView.EmptyView>
-                
+
                 <CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="10"/>
+                    <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
                 </CollectionView.ItemsLayout>
-                
+
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:TaskItem">
-                        <!-- Task Card - Monochrome -->
-                        <Border BackgroundColor="{StaticResource CardBackgroundColor}"
-                                StrokeShape="RoundRectangle 16"
-                                Stroke="{StaticResource BorderColor}"
-                                StrokeThickness="1"
-                                Padding="14">
+                        <!--  Task Card - Monochrome  -->
+                        <Border
+                            Padding="14"
+                            BackgroundColor="{StaticResource CardBackgroundColor}"
+                            Stroke="{StaticResource BorderColor}"
+                            StrokeShape="RoundRectangle 16"
+                            StrokeThickness="1">
                             <Border.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:TaskListViewModel}}, Path=ViewTaskCommand}"
-                                                      CommandParameter="{Binding .}"/>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:TaskListViewModel}}, Path=ViewTaskCommand}" CommandParameter="{Binding .}" />
                             </Border.GestureRecognizers>
-                            
-                            <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="12" RowSpacing="6">
-                                
-                                <!-- Status Icon - Monochrome Circles -->
-                                <Border Grid.Column="0" Grid.RowSpan="2"
-                                        WidthRequest="44" HeightRequest="44"
-                                        StrokeShape="RoundRectangle 22"
-                                        Stroke="{StaticResource BorderColor}"
-                                        StrokeThickness="1"
-                                        VerticalOptions="Start">
+
+                            <Grid
+                                ColumnDefinitions="Auto,*,Auto"
+                                ColumnSpacing="12"
+                                RowDefinitions="Auto,Auto,Auto"
+                                RowSpacing="6">
+
+                                <!--  Status Icon - Monochrome Circles  -->
+                                <Border
+                                    Grid.RowSpan="2"
+                                    Grid.Column="0"
+                                    HeightRequest="44"
+                                    Stroke="{StaticResource BorderColor}"
+                                    StrokeShape="RoundRectangle 22"
+                                    StrokeThickness="1"
+                                    VerticalOptions="Start"
+                                    WidthRequest="44">
                                     <Border.Triggers>
-                                        <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="ToDo">
-                                            <Setter Property="BackgroundColor" Value="Transparent"/>
+                                        <DataTrigger
+                                            Binding="{Binding Status}"
+                                            TargetType="Border"
+                                            Value="ToDo">
+                                            <Setter Property="BackgroundColor" Value="Transparent" />
                                         </DataTrigger>
-                                        <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="InProgress">
-                                            <Setter Property="BackgroundColor" Value="{StaticResource GlassColor}"/>
+                                        <DataTrigger
+                                            Binding="{Binding Status}"
+                                            TargetType="Border"
+                                            Value="InProgress">
+                                            <Setter Property="BackgroundColor" Value="{StaticResource GlassColor}" />
                                         </DataTrigger>
-                                        <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="Completed">
-                                            <Setter Property="BackgroundColor" Value="{StaticResource PrimaryTextColor}"/>
+                                        <DataTrigger
+                                            Binding="{Binding Status}"
+                                            TargetType="Border"
+                                            Value="Completed">
+                                            <Setter Property="BackgroundColor" Value="{StaticResource PrimaryTextColor}" />
                                         </DataTrigger>
                                     </Border.Triggers>
-                                    <Label VerticalOptions="Center" HorizontalOptions="Center" FontSize="18" FontAttributes="Bold">
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontSize="18"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center">
                                         <Label.Triggers>
-                                            <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="ToDo">
-                                                <Setter Property="Text" Value="○"/>
-                                                <Setter Property="TextColor" Value="{StaticResource SecondaryTextColor}"/>
+                                            <DataTrigger
+                                                Binding="{Binding Status}"
+                                                TargetType="Label"
+                                                Value="ToDo">
+                                                <Setter Property="Text" Value="○" />
+                                                <Setter Property="TextColor" Value="{StaticResource SecondaryTextColor}" />
                                             </DataTrigger>
-                                            <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="InProgress">
-                                                <Setter Property="Text" Value="◐"/>
-                                                <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}"/>
+                                            <DataTrigger
+                                                Binding="{Binding Status}"
+                                                TargetType="Label"
+                                                Value="InProgress">
+                                                <Setter Property="Text" Value="◐" />
+                                                <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}" />
                                             </DataTrigger>
-                                            <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="Completed">
-                                                <Setter Property="Text" Value="✓"/>
-                                                <Setter Property="TextColor" Value="{StaticResource PageBackgroundColor}"/>
+                                            <DataTrigger
+                                                Binding="{Binding Status}"
+                                                TargetType="Label"
+                                                Value="Completed">
+                                                <Setter Property="Text" Value="✓" />
+                                                <Setter Property="TextColor" Value="{StaticResource PageBackgroundColor}" />
                                             </DataTrigger>
                                         </Label.Triggers>
                                     </Label>
                                 </Border>
-                                
-                                <!-- Title -->
-                                <Label Grid.Column="1" Grid.Row="0"
-                                       Text="{Binding Title}"
-                                       FontSize="15"
-                                       FontAttributes="Bold"
-                                       FontFamily="Inter"
-                                       TextColor="{StaticResource PrimaryTextColor}"
-                                       LineBreakMode="TailTruncation"
-                                       MaxLines="1"/>
-                                
-                                <!-- Delete Button -->
-                                <Border Grid.Column="2" Grid.Row="0"
-                                        WidthRequest="28" HeightRequest="28"
-                                        StrokeShape="RoundRectangle 8"
-                                        BackgroundColor="Transparent"
-                                        Stroke="Transparent">
+
+                                <!--  Title  -->
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    FontAttributes="Bold"
+                                    FontFamily="Inter"
+                                    FontSize="15"
+                                    LineBreakMode="TailTruncation"
+                                    MaxLines="1"
+                                    Text="{Binding Title}"
+                                    TextColor="{StaticResource PrimaryTextColor}" />
+
+                                <!--  Delete Button  -->
+                                <Border
+                                    Grid.Row="0"
+                                    Grid.Column="2"
+                                    BackgroundColor="Transparent"
+                                    HeightRequest="28"
+                                    Stroke="Transparent"
+                                    StrokeShape="RoundRectangle 8"
+                                    WidthRequest="28">
                                     <Border.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:TaskListViewModel}}, Path=DeleteTaskCommand}"
-                                                              CommandParameter="{Binding .}"/>
+                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:TaskListViewModel}}, Path=DeleteTaskCommand}" CommandParameter="{Binding .}" />
                                     </Border.GestureRecognizers>
-                                    <Label Text="×" FontSize="18" TextColor="{StaticResource SecondaryTextColor}"
-                                           VerticalOptions="Center" HorizontalOptions="Center"/>
+                                    <Label
+                                        FontSize="18"
+                                        HorizontalOptions="Center"
+                                        Text="×"
+                                        TextColor="{StaticResource SecondaryTextColor}"
+                                        VerticalOptions="Center" />
                                 </Border>
-                                
-                                <!-- Status Text -->
-                                <HorizontalStackLayout Grid.Column="1" Grid.Row="1" Spacing="8">
-                                    <Label Text="{Binding StatusDisplay}"
-                                           FontSize="11"
-                                           FontFamily="Inter"
-                                           TextColor="{StaticResource SecondaryTextColor}"/>
-                                    <Label Text="·" 
-                                           FontSize="11"
-                                           TextColor="{StaticResource SecondaryTextColor}"
-                                           IsVisible="{Binding SubTasks.Count, Converter={StaticResource IntToBoolConverter}}"/>
-                                    <Label Text="{Binding SubTaskProgress}"
-                                           FontSize="11"
-                                           FontFamily="Inter"
-                                           TextColor="{StaticResource SecondaryTextColor}"
-                                           IsVisible="{Binding SubTasks.Count, Converter={StaticResource IntToBoolConverter}}"/>
+
+                                <!--  Status Text  -->
+                                <HorizontalStackLayout
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Spacing="8">
+                                    <Label
+                                        FontFamily="Inter"
+                                        FontSize="11"
+                                        Text="{Binding StatusDisplay}"
+                                        TextColor="{StaticResource SecondaryTextColor}" />
+                                    <Label
+                                        FontSize="11"
+                                        IsVisible="{Binding SubTasks.Count, Converter={StaticResource IntToBoolConverter}}"
+                                        Text="·"
+                                        TextColor="{StaticResource SecondaryTextColor}" />
+                                    <Label
+                                        FontFamily="Inter"
+                                        FontSize="11"
+                                        IsVisible="{Binding SubTasks.Count, Converter={StaticResource IntToBoolConverter}}"
+                                        Text="{Binding SubTaskProgress}"
+                                        TextColor="{StaticResource SecondaryTextColor}" />
                                 </HorizontalStackLayout>
-                                
-                                <!-- Due Date -->
-                                <Label Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2"
-                                       Text="{Binding DueDateDisplay}"
-                                       FontSize="11"
-                                       FontFamily="Inter"
-                                       IsVisible="{Binding DueDate, Converter={StaticResource NullableToBoolConverter}}">
+
+                                <!--  Due Date  -->
+                                <Label
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    Grid.ColumnSpan="2"
+                                    FontFamily="Inter"
+                                    FontSize="11"
+                                    IsVisible="{Binding DueDate, Converter={StaticResource NullableToBoolConverter}}"
+                                    Text="{Binding DueDateDisplay}">
                                     <Label.Triggers>
-                                        <DataTrigger TargetType="Label" Binding="{Binding IsOverdue}" Value="True">
-                                            <Setter Property="TextColor" Value="{StaticResource OverdueColor}"/>
+                                        <DataTrigger
+                                            Binding="{Binding IsOverdue}"
+                                            TargetType="Label"
+                                            Value="True">
+                                            <Setter Property="TextColor" Value="{StaticResource OverdueColor}" />
                                         </DataTrigger>
-                                        <DataTrigger TargetType="Label" Binding="{Binding IsOverdue}" Value="False">
-                                            <Setter Property="TextColor" Value="{StaticResource SecondaryTextColor}"/>
+                                        <DataTrigger
+                                            Binding="{Binding IsOverdue}"
+                                            TargetType="Label"
+                                            Value="False">
+                                            <Setter Property="TextColor" Value="{StaticResource SecondaryTextColor}" />
                                         </DataTrigger>
                                     </Label.Triggers>
                                 </Label>
@@ -229,173 +310,270 @@
                         </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
+                <CollectionView.Footer>
+                     <BoxView HeightRequest="80" Color="Transparent"/>
+                </CollectionView.Footer>
             </CollectionView>
         </RefreshView>
-        
-        <!-- ═══════════════════════════════════════════════════════ -->
-        <!-- FLOATING ACTION BUTTON - MINIMALIST WHITE                -->
-        <!-- ═══════════════════════════════════════════════════════ -->
-        <Border Grid.Row="1"
-                WidthRequest="56"
-                HeightRequest="56"
-                StrokeShape="RoundRectangle 28"
-                Stroke="Transparent"
-                BackgroundColor="{StaticResource PrimaryTextColor}"
-                HorizontalOptions="End"
-                VerticalOptions="End"
-                Margin="0,0,20,20"
-                Shadow="{StaticResource AccentGlow}">
+
+        <!--  ═══════════════════════════════════════════════════════  -->
+        <!--  FLOATING ACTION BUTTON - MINIMALIST WHITE  -->
+        <!--  ═══════════════════════════════════════════════════════  -->
+        <Border
+            Grid.Row="1"
+            Margin="0,0,20,20"
+            BackgroundColor="{StaticResource PrimaryTextColor}"
+            HeightRequest="56"
+            HorizontalOptions="End"
+            Shadow="{StaticResource AccentGlow}"
+            Stroke="Transparent"
+            StrokeShape="RoundRectangle 28"
+            VerticalOptions="End"
+            WidthRequest="56">
             <Border.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding AddTaskCommand}"/>
+                <TapGestureRecognizer Command="{Binding AddTaskCommand}" />
             </Border.GestureRecognizers>
-            <Label Text="+"
-                   FontSize="28"
-                   FontAttributes="Bold"
-                   TextColor="{StaticResource PageBackgroundColor}"
-                   VerticalOptions="Center"
-                   HorizontalOptions="Center"/>
+            <Label
+                FontAttributes="Bold"
+                FontSize="28"
+                HorizontalOptions="Center"
+                Text="+"
+                TextColor="{StaticResource PageBackgroundColor}"
+                VerticalOptions="Center" />
         </Border>
 
-        <!-- ═══════════════════════════════════════════════════════ -->
-        <!-- BOTTOM TAB BAR - MONOCHROME                              -->
-        <!-- ═══════════════════════════════════════════════════════ -->
-        <Border Grid.Row="2"
-                BackgroundColor="{StaticResource CardBackgroundColor}"
-                StrokeShape="RoundRectangle 20,20,0,0"
-                Stroke="{StaticResource BorderColor}"
-                StrokeThickness="1"
-                Padding="8,12,8,16">
-            <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="4">
-                
-                <!-- All Tab -->
-                <Border Grid.Column="0"
-                        StrokeShape="RoundRectangle 12"
-                        Stroke="Transparent"
-                        Padding="8,10">
+        <!--  ═══════════════════════════════════════════════════════  -->
+        <!--  BOTTOM TAB BAR - MONOCHROME  -->
+        <!--  ═══════════════════════════════════════════════════════  -->
+        <Border
+            Grid.Row="2"
+            Padding="0,12,0,16"
+            BackgroundColor="{StaticResource CardBackgroundColor}"
+            Stroke="{StaticResource BorderColor}"
+            StrokeShape="RoundRectangle 20,20,0,0"
+            StrokeThickness="1">
+            <Grid
+                ColumnDefinitions="*,*,*,*"
+                ColumnSpacing="0"
+                HorizontalOptions="Fill">
+
+                <!--  All Tab  -->
+                <Border
+                    Grid.Column="0"
+                    Padding="8,10"
+                    HorizontalOptions="Center"
+                    WidthRequest="80"
+                    Stroke="Transparent"
+                    StrokeShape="RoundRectangle 12"
+                    VerticalOptions="Center">
                     <Border.Triggers>
-                        <DataTrigger TargetType="Border" Binding="{Binding SelectedFilterIndex}" Value="0">
-                            <Setter Property="BackgroundColor" Value="{StaticResource GlassColor}"/>
+                        <DataTrigger
+                            Binding="{Binding SelectedFilterIndex}"
+                            TargetType="Border"
+                            Value="0">
+                            <Setter Property="BackgroundColor" Value="{StaticResource GlassColor}" />
                         </DataTrigger>
                     </Border.Triggers>
                     <Border.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding LoadTasksCommand}" CommandParameter="0"/>
+                        <TapGestureRecognizer Command="{Binding LoadTasksCommand}" CommandParameter="0" />
                     </Border.GestureRecognizers>
-                    <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
-                        <Label Text="◆" FontSize="16" HorizontalOptions="Center">
+                    <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                        <Label
+                            FontSize="16"
+                            HorizontalOptions="Center"
+                            HorizontalTextAlignment="Center"
+                            Text="◆">
                             <Label.Triggers>
-                                <DataTrigger TargetType="Label" Binding="{Binding SelectedFilterIndex}" Value="0">
-                                    <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}"/>
+                                <DataTrigger
+                                    Binding="{Binding SelectedFilterIndex}"
+                                    TargetType="Label"
+                                    Value="0">
+                                    <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}" />
                                 </DataTrigger>
                             </Label.Triggers>
                         </Label>
-                        <Label Text="All" FontSize="10" FontFamily="Inter" HorizontalOptions="Center"
-                               TextColor="{StaticResource SecondaryTextColor}">
+                        <Label
+                            FontFamily="Inter"
+                            FontSize="10"
+                            HorizontalOptions="Center"
+                            HorizontalTextAlignment="Center"
+                            Text="All"
+                            TextColor="{StaticResource SecondaryTextColor}">
                             <Label.Triggers>
-                                <DataTrigger TargetType="Label" Binding="{Binding SelectedFilterIndex}" Value="0">
-                                    <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}"/>
-                                    <Setter Property="FontAttributes" Value="Bold"/>
+                                <DataTrigger
+                                    Binding="{Binding SelectedFilterIndex}"
+                                    TargetType="Label"
+                                    Value="0">
+                                    <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}" />
+                                    <Setter Property="FontAttributes" Value="Bold" />
                                 </DataTrigger>
                             </Label.Triggers>
                         </Label>
                     </VerticalStackLayout>
                 </Border>
-                
-                <!-- To Do Tab -->
-                <Border Grid.Column="1"
-                        StrokeShape="RoundRectangle 12"
-                        Stroke="Transparent"
-                        Padding="8,10">
+
+                <!--  To Do Tab  -->
+                <Border
+                    Grid.Column="1"
+                    Padding="8,10"
+                    HorizontalOptions="Center"
+                    WidthRequest="80"
+                    Stroke="Transparent"
+                    StrokeShape="RoundRectangle 12"
+                    VerticalOptions="Center">
                     <Border.Triggers>
-                        <DataTrigger TargetType="Border" Binding="{Binding SelectedFilterIndex}" Value="1">
-                            <Setter Property="BackgroundColor" Value="{StaticResource GlassColor}"/>
+                        <DataTrigger
+                            Binding="{Binding SelectedFilterIndex}"
+                            TargetType="Border"
+                            Value="1">
+                            <Setter Property="BackgroundColor" Value="{StaticResource GlassColor}" />
                         </DataTrigger>
                     </Border.Triggers>
                     <Border.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding LoadTasksCommand}" CommandParameter="1"/>
+                        <TapGestureRecognizer Command="{Binding LoadTasksCommand}" CommandParameter="1" />
                     </Border.GestureRecognizers>
-                    <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
-                        <Label Text="○" FontSize="16" HorizontalOptions="Center"
-                               TextColor="{StaticResource SecondaryTextColor}">
+                    <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                        <Label
+                            FontSize="16"
+                            HorizontalOptions="Center"
+                            HorizontalTextAlignment="Center"
+                            Text="○"
+                            TextColor="{StaticResource SecondaryTextColor}">
                             <Label.Triggers>
-                                <DataTrigger TargetType="Label" Binding="{Binding SelectedFilterIndex}" Value="1">
-                                    <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}"/>
+                                <DataTrigger
+                                    Binding="{Binding SelectedFilterIndex}"
+                                    TargetType="Label"
+                                    Value="1">
+                                    <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}" />
                                 </DataTrigger>
                             </Label.Triggers>
                         </Label>
-                        <Label Text="To Do" FontSize="10" FontFamily="Inter" HorizontalOptions="Center"
-                               TextColor="{StaticResource SecondaryTextColor}">
+                        <Label
+                            FontFamily="Inter"
+                            FontSize="10"
+                            HorizontalOptions="Center"
+                            HorizontalTextAlignment="Center"
+                            Text="To Do"
+                            TextColor="{StaticResource SecondaryTextColor}">
                             <Label.Triggers>
-                                <DataTrigger TargetType="Label" Binding="{Binding SelectedFilterIndex}" Value="1">
-                                    <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}"/>
-                                    <Setter Property="FontAttributes" Value="Bold"/>
+                                <DataTrigger
+                                    Binding="{Binding SelectedFilterIndex}"
+                                    TargetType="Label"
+                                    Value="1">
+                                    <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}" />
+                                    <Setter Property="FontAttributes" Value="Bold" />
                                 </DataTrigger>
                             </Label.Triggers>
                         </Label>
                     </VerticalStackLayout>
                 </Border>
-                
-                <!-- Active Tab -->
-                <Border Grid.Column="2"
-                        StrokeShape="RoundRectangle 12"
-                        Stroke="Transparent"
-                        Padding="8,10">
+
+                <!--  Active Tab  -->
+                <Border
+                    Grid.Column="2"
+                    Padding="8,10"
+                    HorizontalOptions="Center"
+                    WidthRequest="80"
+                    Stroke="Transparent"
+                    StrokeShape="RoundRectangle 12"
+                    VerticalOptions="Center">
                     <Border.Triggers>
-                        <DataTrigger TargetType="Border" Binding="{Binding SelectedFilterIndex}" Value="2">
-                            <Setter Property="BackgroundColor" Value="{StaticResource GlassColor}"/>
+                        <DataTrigger
+                            Binding="{Binding SelectedFilterIndex}"
+                            TargetType="Border"
+                            Value="2">
+                            <Setter Property="BackgroundColor" Value="{StaticResource GlassColor}" />
                         </DataTrigger>
                     </Border.Triggers>
                     <Border.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding LoadTasksCommand}" CommandParameter="2"/>
+                        <TapGestureRecognizer Command="{Binding LoadTasksCommand}" CommandParameter="2" />
                     </Border.GestureRecognizers>
-                    <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
-                        <Label Text="◐" FontSize="16" HorizontalOptions="Center"
-                               TextColor="{StaticResource SecondaryTextColor}">
+                    <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                        <Label
+                            FontSize="16"
+                            HorizontalOptions="Center"
+                            HorizontalTextAlignment="Center"
+                            Text="◐"
+                            TextColor="{StaticResource SecondaryTextColor}">
                             <Label.Triggers>
-                                <DataTrigger TargetType="Label" Binding="{Binding SelectedFilterIndex}" Value="2">
-                                    <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}"/>
+                                <DataTrigger
+                                    Binding="{Binding SelectedFilterIndex}"
+                                    TargetType="Label"
+                                    Value="2">
+                                    <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}" />
                                 </DataTrigger>
                             </Label.Triggers>
                         </Label>
-                        <Label Text="Active" FontSize="10" FontFamily="Inter" HorizontalOptions="Center"
-                               TextColor="{StaticResource SecondaryTextColor}">
+                        <Label
+                            FontFamily="Inter"
+                            FontSize="10"
+                            HorizontalOptions="Center"
+                            HorizontalTextAlignment="Center"
+                            Text="Active"
+                            TextColor="{StaticResource SecondaryTextColor}">
                             <Label.Triggers>
-                                <DataTrigger TargetType="Label" Binding="{Binding SelectedFilterIndex}" Value="2">
-                                    <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}"/>
-                                    <Setter Property="FontAttributes" Value="Bold"/>
+                                <DataTrigger
+                                    Binding="{Binding SelectedFilterIndex}"
+                                    TargetType="Label"
+                                    Value="2">
+                                    <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}" />
+                                    <Setter Property="FontAttributes" Value="Bold" />
                                 </DataTrigger>
                             </Label.Triggers>
                         </Label>
                     </VerticalStackLayout>
                 </Border>
-                
-                <!-- Done Tab -->
-                <Border Grid.Column="3"
-                        StrokeShape="RoundRectangle 12"
-                        Stroke="Transparent"
-                        Padding="8,10">
+
+                <!--  Done Tab  -->
+                <Border
+                    Grid.Column="3"
+                    Padding="8,10"
+                    HorizontalOptions="Center"
+                    WidthRequest="80"
+                    Stroke="Transparent"
+                    StrokeShape="RoundRectangle 12"
+                    VerticalOptions="Center">
                     <Border.Triggers>
-                        <DataTrigger TargetType="Border" Binding="{Binding SelectedFilterIndex}" Value="3">
-                            <Setter Property="BackgroundColor" Value="{StaticResource GlassColor}"/>
+                        <DataTrigger
+                            Binding="{Binding SelectedFilterIndex}"
+                            TargetType="Border"
+                            Value="3">
+                            <Setter Property="BackgroundColor" Value="{StaticResource GlassColor}" />
                         </DataTrigger>
                     </Border.Triggers>
                     <Border.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding LoadTasksCommand}" CommandParameter="3"/>
+                        <TapGestureRecognizer Command="{Binding LoadTasksCommand}" CommandParameter="3" />
                     </Border.GestureRecognizers>
-                    <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
-                        <Label Text="●" FontSize="16" HorizontalOptions="Center"
-                               TextColor="{StaticResource SecondaryTextColor}">
+                    <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                        <Label
+                            FontSize="16"
+                            HorizontalOptions="Center"
+                            HorizontalTextAlignment="Center"
+                            Text="●"
+                            TextColor="{StaticResource SecondaryTextColor}">
                             <Label.Triggers>
-                                <DataTrigger TargetType="Label" Binding="{Binding SelectedFilterIndex}" Value="3">
-                                    <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}"/>
+                                <DataTrigger
+                                    Binding="{Binding SelectedFilterIndex}"
+                                    TargetType="Label"
+                                    Value="3">
+                                    <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}" />
                                 </DataTrigger>
                             </Label.Triggers>
                         </Label>
-                        <Label Text="Done" FontSize="10" FontFamily="Inter" HorizontalOptions="Center"
-                               TextColor="{StaticResource SecondaryTextColor}">
+                        <Label
+                            FontFamily="Inter"
+                            FontSize="10"
+                            HorizontalOptions="Center"
+                            HorizontalTextAlignment="Center"
+                            Text="Done"
+                            TextColor="{StaticResource SecondaryTextColor}">
                             <Label.Triggers>
-                                <DataTrigger TargetType="Label" Binding="{Binding SelectedFilterIndex}" Value="3">
-                                    <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}"/>
-                                    <Setter Property="FontAttributes" Value="Bold"/>
+                                <DataTrigger
+                                    Binding="{Binding SelectedFilterIndex}"
+                                    TargetType="Label"
+                                    Value="3">
+                                    <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}" />
+                                    <Setter Property="FontAttributes" Value="Bold" />
                                 </DataTrigger>
                             </Label.Triggers>
                         </Label>
@@ -403,6 +581,6 @@
                 </Border>
             </Grid>
         </Border>
-        
+
     </Grid>
 </ContentPage>
