@@ -16,6 +16,7 @@ namespace Todo_asa
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    fonts.AddFont("Inter-Variable.ttf", "Inter");
                 });
 
             // Register Services
