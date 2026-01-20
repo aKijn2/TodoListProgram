@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:Todo_asa.ViewModels"
+             xmlns:models="clr-namespace:Todo_asa.Models"
+             x:Class="Todo_asa.MainPage"
+             x:DataType="viewmodels:TaskListViewModel"
+             Title="{Binding Title}"
+             BackgroundColor="{StaticResource PageBackgroundColor}">
+
+    <Grid RowDefinitions="Auto,*" Padding="16">
+        
+        <!-- Header with Filter Tabs -->
+        <VerticalStackLayout Grid.Row="0" Spacing="16" Margin="0,8,0,16">
+            <Label Text="📋 My Tasks" 
+                   FontSize="28" 
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource PrimaryTextColor}"/>
+            
+            <!-- Filter Picker -->
+            <Border BackgroundColor="{StaticResource CardBackgroundColor}"
+                    StrokeShape="RoundRectangle 12"
+                    Stroke="Transparent"
+                    Padding="4">
+                <Picker x:Name="FilterPicker"
+                        Title="Filter by Status"
+                        SelectedIndex="{Binding SelectedFilterIndex}"
+                        TextColor="{StaticResource PrimaryTextColor}"
+                        TitleColor="{StaticResource SecondaryTextColor}">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>📊 All Tasks</x:String>
+                            <x:String>📝 To Do</x:String>
+                            <x:String>🔄 In Progress</x:String>
+                            <x:String>✅ Completed</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+            </Border>
+        </VerticalStackLayout>
+
+        <!-- Task List -->
+        <RefreshView Grid.Row="1"
+                     Command="{Binding LoadTasksCommand}"
+                     IsRefreshing="{Binding IsBusy}"
+                     RefreshColor="{StaticResource AccentColor}">
+            <CollectionView ItemsSource="{Binding Tasks}"
+                            SelectionMode="None"
+                            EmptyView="No tasks yet. Tap + to add one!">
+                
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="12"/>
+                </CollectionView.ItemsLayout>
+                
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:TaskItem">
+                        <Border BackgroundColor="{StaticResource CardBackgroundColor}"
+                                StrokeShape="RoundRectangle 16"
+                                Stroke="Transparent"
+                                Padding="16"
+                                Shadow="{StaticResource CardShadow}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:TaskListViewModel}}, Path=ViewTaskCommand}"
+                                                      CommandParameter="{Binding .}"/>
+                            </Border.GestureRecognizers>
+                            
+                            <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="12" RowSpacing="6">
+                                
+                                <!-- Status Indicator -->
+                                <Border Grid.Column="0" Grid.RowSpan="2"
+                                        WidthRequest="44" HeightRequest="44"
+                                        StrokeShape="RoundRectangle 22"
+                                        Stroke="Transparent"
+                                        VerticalOptions="Start">
+                                    <Border.Triggers>
+                                        <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="ToDo">
+                                            <Setter Property="BackgroundColor" Value="{StaticResource ToDoColor}"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="InProgress">
+                                            <Setter Property="BackgroundColor" Value="{StaticResource InProgressColor}"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="Completed">
+                                            <Setter Property="BackgroundColor" Value="{StaticResource CompletedColor}"/>
+                                        </DataTrigger>
+                                    </Border.Triggers>
+                                    <Label VerticalOptions="Center" HorizontalOptions="Center" FontSize="20">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="ToDo">
+                                                <Setter Property="Text" Value="📝"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="InProgress">
+                                                <Setter Property="Text" Value="🔄"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="Completed">
+                                                <Setter Property="Text" Value="✅"/>
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                </Border>
+                                
+                                <!-- Title -->
+                                <Label Grid.Column="1" Grid.Row="0"
+                                       Text="{Binding Title}"
+                                       FontSize="17"
+                                       FontAttributes="Bold"
+                                       TextColor="{StaticResource PrimaryTextColor}"
+                                       LineBreakMode="TailTruncation"
+                                       MaxLines="1"/>
+                                
+                                <!-- Delete Button -->
+                                <Button Grid.Column="2" Grid.Row="0"
+                                        Text="🗑️"
+                                        BackgroundColor="Transparent"
+                                        WidthRequest="40" HeightRequest="40"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:TaskListViewModel}}, Path=DeleteTaskCommand}"
+                                        CommandParameter="{Binding .}"/>
+                                
+                                <!-- Description / Status -->
+                                <HorizontalStackLayout Grid.Column="1" Grid.Row="1" Spacing="8">
+                                    <Label Text="{Binding StatusDisplay}"
+                                           FontSize="13"
+                                           TextColor="{StaticResource SecondaryTextColor}"/>
+                                    <Label Text="•" 
+                                           FontSize="13"
+                                           TextColor="{StaticResource SecondaryTextColor}"
+                                           IsVisible="{Binding SubTasks.Count, Converter={StaticResource IntToBoolConverter}}"/>
+                                    <Label Text="{Binding SubTaskProgress, StringFormat='Subtasks: {0}'}"
+                                           FontSize="13"
+                                           TextColor="{StaticResource SecondaryTextColor}"
+                                           IsVisible="{Binding SubTasks.Count, Converter={StaticResource IntToBoolConverter}}"/>
+                                </HorizontalStackLayout>
+                                
+                                <!-- Due Date -->
+                                <HorizontalStackLayout Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Spacing="4">
+                                    <Label Text="📅"
+                                           FontSize="12"
+                                           IsVisible="{Binding DueDate, Converter={StaticResource NullableToBoolConverter}}"/>
+                                    <Label Text="{Binding DueDateDisplay}"
+                                           FontSize="12"
+                                           IsVisible="{Binding DueDate, Converter={StaticResource NullableToBoolConverter}}">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding IsOverdue}" Value="True">
+                                                <Setter Property="TextColor" Value="{StaticResource OverdueColor}"/>
+                                                <Setter Property="FontAttributes" Value="Bold"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" Binding="{Binding IsOverdue}" Value="False">
+                                                <Setter Property="TextColor" Value="{StaticResource SecondaryTextColor}"/>
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                </HorizontalStackLayout>
+                                
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+        
+        <!-- Floating Add Button -->
+        <Button Grid.Row="1"
+                Text="+"
+                FontSize="28"
+                FontAttributes="Bold"
+                BackgroundColor="{StaticResource AccentColor}"
+                TextColor="White"
+                WidthRequest="60"
+                HeightRequest="60"
+                CornerRadius="30"
+                HorizontalOptions="End"
+                VerticalOptions="End"
+                Margin="0,0,16,16"
+                Command="{Binding AddTaskCommand}"
+                Shadow="{StaticResource ButtonShadow}"/>
+        
+    </Grid>
+</ContentPage>
