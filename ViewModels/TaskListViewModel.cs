@@ -7,11 +7,15 @@ using Todo_asa.Services;
 namespace Todo_asa.ViewModels
 {
     /// <summary>
-    /// ViewModel for the main task list page
+    /// ViewModel for the main task list page - optimized for fast tab switching
     /// </summary>
     public partial class TaskListViewModel : BaseViewModel
     {
         private readonly DatabaseService _databaseService;
+        
+        // Cache all tasks in memory for instant filtering
+        private List<TaskItem> _cachedTasks = new();
+        private bool _isInitialized = false;
 
         [ObservableProperty]
         private ObservableCollection<TaskItem> _tasks = new();
@@ -29,58 +33,86 @@ namespace Todo_asa.ViewModels
         }
 
         /// <summary>
-        /// Load tasks from database, optionally with a filter index from tab tap
+        /// Initial load from database - called once on startup
         /// </summary>
-        [RelayCommand]
-        private async Task LoadTasksAsync(object? filterParam = null)
+        public async Task InitializeAsync()
         {
-            if (IsBusy) return;
-
+            if (_isInitialized) return;
+            
             try
             {
-                IsBusy = true;
-                
-                // Handle filter parameter from tab taps
-                if (filterParam != null)
-                {
-                    if (int.TryParse(filterParam.ToString(), out int filterIndex))
-                    {
-                        SelectedFilterIndex = filterIndex;
-                        SelectedFilter = filterIndex switch
-                        {
-                            1 => Models.TaskStatus.ToDo,
-                            2 => Models.TaskStatus.InProgress,
-                            3 => Models.TaskStatus.Completed,
-                            _ => null // 0 = All
-                        };
-                    }
-                }
-                
-                List<TaskItem> tasks;
-                
-                if (SelectedFilter.HasValue)
-                {
-                    tasks = await _databaseService.GetTasksByStatusAsync(SelectedFilter.Value);
-                }
-                else
-                {
-                    tasks = await _databaseService.GetTasksAsync();
-                }
-
-                Tasks.Clear();
-                foreach (var task in tasks)
-                {
-                    Tasks.Add(task);
-                }
+                _cachedTasks = await _databaseService.GetTasksAsync();
+                _isInitialized = true;
+                ApplyFilter();
             }
             catch (Exception ex)
             {
                 await Shell.Current.DisplayAlert("Error", $"Failed to load tasks: {ex.Message}", "OK");
             }
+        }
+
+        /// <summary>
+        /// Refresh cache from database
+        /// </summary>
+        [RelayCommand]
+        private async Task RefreshAsync()
+        {
+            if (IsBusy) return;
+            
+            try
+            {
+                IsBusy = true;
+                _cachedTasks = await _databaseService.GetTasksAsync();
+                ApplyFilter();
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Error", $"Failed to refresh tasks: {ex.Message}", "OK");
+            }
             finally
             {
                 IsBusy = false;
             }
+        }
+
+        /// <summary>
+        /// Apply filter instantly from cached data - no database hit
+        /// </summary>
+        private void ApplyFilter()
+        {
+            IEnumerable<TaskItem> filtered = SelectedFilter.HasValue
+                ? _cachedTasks.Where(t => t.Status == SelectedFilter.Value)
+                : _cachedTasks;
+
+            Tasks.Clear();
+            foreach (var task in filtered.OrderByDescending(t => t.CreatedAt))
+            {
+                Tasks.Add(task);
+            }
+        }
+
+        /// <summary>
+        /// Handle tab tap - instant filtering from cache
+        /// </summary>
+        [RelayCommand]
+        private Task LoadTasksAsync(object? filterParam = null)
+        {
+            // Handle filter parameter from tab taps
+            if (filterParam != null && int.TryParse(filterParam.ToString(), out int filterIndex))
+            {
+                SelectedFilterIndex = filterIndex;
+                SelectedFilter = filterIndex switch
+                {
+                    1 => Models.TaskStatus.ToDo,
+                    2 => Models.TaskStatus.InProgress,
+                    3 => Models.TaskStatus.Completed,
+                    _ => null // 0 = All
+                };
+            }
+            
+            // Instant filter from cache - no await needed
+            ApplyFilter();
+            return Task.CompletedTask;
         }
 
         /// <summary>
@@ -103,7 +135,7 @@ namespace Todo_asa.ViewModels
         }
 
         /// <summary>
-        /// Delete a task
+        /// Delete a task - update cache immediately
         /// </summary>
         [RelayCommand]
         private async Task DeleteTaskAsync(TaskItem task)
@@ -118,20 +150,24 @@ namespace Todo_asa.ViewModels
 
             if (confirm)
             {
-                await _databaseService.DeleteTaskAsync(task);
+                // Update cache immediately
+                _cachedTasks.Remove(task);
                 Tasks.Remove(task);
+                
+                // Delete from database in background
+                await _databaseService.DeleteTaskAsync(task);
             }
         }
 
         /// <summary>
-        /// Quick toggle task status
+        /// Quick toggle task status - update cache immediately
         /// </summary>
         [RelayCommand]
         private async Task ToggleTaskStatusAsync(TaskItem task)
         {
             if (task == null) return;
 
-            // Cycle through statuses: ToDo -> InProgress -> Completed -> ToDo
+            // Cycle through statuses
             task.Status = task.Status switch
             {
                 Models.TaskStatus.ToDo => Models.TaskStatus.InProgress,
@@ -140,14 +176,15 @@ namespace Todo_asa.ViewModels
                 _ => Models.TaskStatus.ToDo
             };
 
-            await _databaseService.SaveTaskAsync(task);
+            // Re-apply filter immediately (task may move to different tab)
+            ApplyFilter();
             
-            // Reload to refresh the list
-            await LoadTasksAsync();
+            // Save to database in background
+            await _databaseService.SaveTaskAsync(task);
         }
 
         /// <summary>
-        /// Filter tasks by status
+        /// Filter change handler - instant from cache
         /// </summary>
         partial void OnSelectedFilterIndexChanged(int value)
         {
@@ -156,10 +193,19 @@ namespace Todo_asa.ViewModels
                 1 => Models.TaskStatus.ToDo,
                 2 => Models.TaskStatus.InProgress,
                 3 => Models.TaskStatus.Completed,
-                _ => null // 0 = All
+                _ => null
             };
             
-            _ = LoadTasksAsync();
+            ApplyFilter();
+        }
+
+        /// <summary>
+        /// Invalidate cache - called when returning from detail page
+        /// </summary>
+        public async Task InvalidateCacheAsync()
+        {
+            _cachedTasks = await _databaseService.GetTasksAsync();
+            ApplyFilter();
         }
     }
 }
