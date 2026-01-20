@@ -5,6 +5,7 @@ namespace Todo_asa
     public partial class MainPage : ContentPage
     {
         private readonly TaskListViewModel _viewModel;
+        private bool _isFirstLoad = true;
 
         public MainPage(TaskListViewModel viewModel)
         {
@@ -15,7 +16,18 @@ namespace Todo_asa
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            await _viewModel.LoadTasksCommand.ExecuteAsync(null);
+            
+            if (_isFirstLoad)
+            {
+                // First load - initialize from database
+                await _viewModel.InitializeAsync();
+                _isFirstLoad = false;
+            }
+            else
+            {
+                // Returning from detail page - refresh cache
+                await _viewModel.InvalidateCacheAsync();
+            }
         }
     }
 }
