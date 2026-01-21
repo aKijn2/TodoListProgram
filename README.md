@@ -17,7 +17,7 @@ A minimalist, high-performance task management application built with **.NET MAU
 - **Due Dates**: Set deadlines and track overdue items.
 
 ### Technical Highlights
-- **Local Storage**: Secure, offline-first SQLite database (`Documents/Todo_asa` storage).
+- **Local Storage**: Secure, offline-first SQLite database (`Documents/Todo_asa` storage), feel free to change the path and name in the `DatabaseService.cs` file.
 - **AOT Compatible**: Fully optimized ViewModels avoiding reflection-heavy MVVM features.
 - **Performance**: Instant load times and smooth transitions.
 
