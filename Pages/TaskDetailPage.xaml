@@ -197,13 +197,15 @@
                                     Stroke="Transparent"
                                     Padding="12">
                                 <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:TaskDetailViewModel}}, Path=ToggleSubTaskCommand}"
+                                                              CommandParameter="{Binding .}"/>
+                                    </Grid.GestureRecognizers>
+
                                     <CheckBox Grid.Column="0"
                                               IsChecked="{Binding IsCompleted}"
-                                              Color="{StaticResource PrimaryTextColor}">
-                                        <CheckBox.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:TaskDetailViewModel}}, Path=ToggleSubTaskCommand}"
-                                                                  CommandParameter="{Binding .}"/>
-                                        </CheckBox.GestureRecognizers>
+                                              Color="{StaticResource PrimaryTextColor}"
+                                              InputTransparent="True">
                                     </CheckBox>
                                     
                                     <Label Grid.Column="1"

@@ -229,14 +229,28 @@ namespace Todo_asa.ViewModels
         {
             if (subTask == null) return;
 
-            await _databaseService.ToggleSubTaskAsync(subTask);
-            
-            // Update the local collection
+            // Find index first
             var index = SubTasks.IndexOf(subTask);
-            if (index >= 0)
+            if (index < 0) return;
+
+            // Toggle state
+            subTask.IsCompleted = !subTask.IsCompleted;
+            
+            // Save to database
+            await _databaseService.SaveSubTaskAsync(subTask);
+            
+            // Create a new instance to force UI update (since model doesn't implement INotifyPropertyChanged)
+            var updatedSubTask = new SubTaskItem
             {
-                SubTasks[index] = subTask;
-            }
+                Id = subTask.Id,
+                ParentTaskId = subTask.ParentTaskId,
+                Title = subTask.Title,
+                IsCompleted = subTask.IsCompleted,
+                CreatedAt = subTask.CreatedAt
+            };
+
+            // Replace the item in the collection
+            SubTasks[index] = updatedSubTask;
         }
 
         /// <summary>
