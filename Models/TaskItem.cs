@@ -47,7 +47,41 @@ namespace Todo_asa.Models
         /// Calculated property for due date display
         /// </summary>
         [Ignore]
-        public string DueDateDisplay => DueDate?.ToString("MMM dd, yyyy") ?? "No due date";
+        public string DueDateDisplay 
+        {
+            get
+            {
+                if (!DueDate.HasValue) return "No due date";
+                var dateStr = DueDate.Value.ToString("MMM dd, yyyy");
+                
+                if (Status == Models.TaskStatus.Completed || IsOverdue)
+                    return dateStr;
+
+                // Calculate time until end of due date (23:59:59)
+                var deadline = DueDate.Value.Date.AddDays(1).AddTicks(-1);
+                var diff = deadline - DateTime.Now;
+
+                if (diff.TotalSeconds <= 0) return dateStr;
+
+                string remaining;
+                if (diff.TotalDays >= 1)
+                {
+                    // For > 24h, show days (rounding up to ensure "1.5 days" is treated safe, or just casting)
+                    // Let's use simple casting to match "1d 10h" conceptually
+                    remaining = $"{(int)diff.TotalDays}d";
+                }
+                else if (diff.TotalHours >= 1)
+                {
+                    remaining = $"{(int)diff.TotalHours}h";
+                }
+                else
+                {
+                    remaining = $"{(int)diff.TotalMinutes}m";
+                }
+
+                return $"{dateStr} - {remaining}";
+            }
+        }
 
         /// <summary>
         /// Check if task is overdue
