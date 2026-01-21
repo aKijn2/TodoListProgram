@@ -54,6 +54,13 @@ TodoListProgram/
 └── Resources/       # Styles, colors, fonts
 ```
 
+## Future Plans 
+
+I am working on adapting this app for **Android**!
+- **Coming Soon to Play Store**: The full mobile experience.
+- **Always Free**: The Android version also will be completely free.
+- **No Ads**: A clean, distraction-free experience with absolutely zero ads.
+
 ## 📄 License
 
 MIT License - Feel free to use and modify!
