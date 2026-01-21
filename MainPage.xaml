@@ -345,10 +345,10 @@
                 ColumnSpacing="0"
                 HorizontalOptions="Fill">
 
-                <!--  All Tab (Col 0)  -->
                 <Border
                     Grid.Column="0"
                     Padding="8,10"
+                    BackgroundColor="Transparent"
                     HorizontalOptions="Fill"
                     Stroke="Transparent"
                     StrokeShape="RoundRectangle 12"
@@ -399,10 +399,10 @@
                     </VerticalStackLayout>
                 </Border>
 
-                <!--  To Do Tab (Col 1)  -->
                 <Border
                     Grid.Column="1"
                     Padding="8,10"
+                    BackgroundColor="Transparent"
                     HorizontalOptions="Fill"
                     Stroke="Transparent"
                     StrokeShape="RoundRectangle 12"
@@ -476,10 +476,10 @@
                         VerticalOptions="Center" />
                 </Border>
 
-                <!--  Active Tab (Col 3)  -->
                 <Border
                     Grid.Column="3"
                     Padding="8,10"
+                    BackgroundColor="Transparent"
                     HorizontalOptions="Fill"
                     Stroke="Transparent"
                     StrokeShape="RoundRectangle 12"
@@ -531,10 +531,10 @@
                     </VerticalStackLayout>
                 </Border>
 
-                <!--  Done Tab (Col 4)  -->
                 <Border
                     Grid.Column="4"
                     Padding="8,10"
+                    BackgroundColor="Transparent"
                     HorizontalOptions="Fill"
                     Stroke="Transparent"
                     StrokeShape="RoundRectangle 12"
