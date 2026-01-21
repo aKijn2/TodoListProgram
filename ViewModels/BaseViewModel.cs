@@ -7,11 +7,25 @@ namespace Todo_asa.ViewModels
     /// </summary>
     public partial class BaseViewModel : ObservableObject
     {
-        [ObservableProperty]
         private bool _isBusy;
+        public bool IsBusy
+        {
+            get => _isBusy;
+            set
+            {
+                if (SetProperty(ref _isBusy, value))
+                {
+                    OnPropertyChanged(nameof(IsNotBusy));
+                }
+            }
+        }
 
-        [ObservableProperty]
         private string _title = string.Empty;
+        public string Title
+        {
+            get => _title;
+            set => SetProperty(ref _title, value);
+        }
 
         public bool IsNotBusy => !IsBusy;
     }

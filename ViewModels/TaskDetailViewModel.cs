@@ -14,57 +14,125 @@ namespace Todo_asa.ViewModels
     {
         private readonly DatabaseService _databaseService;
 
-        [ObservableProperty]
         private int _taskId;
+        public int TaskId
+        {
+            get => _taskId;
+            set
+            {
+                if (SetProperty(ref _taskId, value))
+                {
+                     if (value > 0)
+                     {
+                         _ = LoadTaskAsync(value);
+                     }
+                }
+            }
+        }
 
-        [ObservableProperty]
         private string _taskTitle = string.Empty;
+        public string TaskTitle
+        {
+            get => _taskTitle;
+            set => SetProperty(ref _taskTitle, value);
+        }
 
-        [ObservableProperty]
         private string _description = string.Empty;
+        public string Description
+        {
+            get => _description;
+            set => SetProperty(ref _description, value);
+        }
 
-        [ObservableProperty]
         private Models.TaskStatus _status = Models.TaskStatus.ToDo;
+        public Models.TaskStatus Status
+        {
+            get => _status;
+            set => SetProperty(ref _status, value);
+        }
 
-        [ObservableProperty]
         private DateTime? _dueDate;
+        public DateTime? DueDate
+        {
+            get => _dueDate;
+            set => SetProperty(ref _dueDate, value);
+        }
 
-        [ObservableProperty]
         private DateTime _selectedDueDate = DateTime.Today;
+        public DateTime SelectedDueDate
+        {
+            get => _selectedDueDate;
+            set
+            {
+                if (SetProperty(ref _selectedDueDate, value))
+                {
+                    if (HasDueDate)
+                    {
+                        DueDate = value;
+                    }
+                }
+            }
+        }
 
-        [ObservableProperty]
         private bool _hasDueDate = false;
+        public bool HasDueDate
+        {
+            get => _hasDueDate;
+            set
+            {
+                if (SetProperty(ref _hasDueDate, value))
+                {
+                    if (value)
+                    {
+                        DueDate = SelectedDueDate;
+                    }
+                    else
+                    {
+                        DueDate = null;
+                    }
+                }
+            }
+        }
 
-        [ObservableProperty]
         private DateTime _minimumDate = DateTime.Today;
+        public DateTime MinimumDate
+        {
+            get => _minimumDate;
+            set => SetProperty(ref _minimumDate, value);
+        }
 
-        [ObservableProperty]
         private ObservableCollection<SubTaskItem> _subTasks = new();
+        public ObservableCollection<SubTaskItem> SubTasks
+        {
+            get => _subTasks;
+            set => SetProperty(ref _subTasks, value);
+        }
 
-        [ObservableProperty]
         private string _newSubTaskTitle = string.Empty;
+        public string NewSubTaskTitle
+        {
+            get => _newSubTaskTitle;
+            set => SetProperty(ref _newSubTaskTitle, value);
+        }
 
-        [ObservableProperty]
         private bool _isNewTask = true;
+        public bool IsNewTask
+        {
+            get => _isNewTask;
+            set => SetProperty(ref _isNewTask, value);
+        }
 
-        [ObservableProperty]
         private int _selectedStatusIndex = 0;
+        public int SelectedStatusIndex
+        {
+            get => _selectedStatusIndex;
+            set => SetProperty(ref _selectedStatusIndex, value);
+        }
 
         public TaskDetailViewModel(DatabaseService databaseService)
         {
             _databaseService = databaseService;
             Title = "New Task";
-        }
-
-        /// <summary>
-        /// Load task when ID changes
-        /// </summary>
-        partial void OnTaskIdChanged(int value)
-        {
-            if (value > 0)
-            {
-                _ = LoadTaskAsync(value);
-            }
         }
 
         /// <summary>
@@ -265,31 +333,7 @@ namespace Todo_asa.ViewModels
             SubTasks.Remove(subTask);
         }
 
-        /// <summary>
-        /// Called when HasDueDate changes
-        /// </summary>
-        partial void OnHasDueDateChanged(bool value)
-        {
-            if (value)
-            {
-                DueDate = SelectedDueDate;
-            }
-            else
-            {
-                DueDate = null;
-            }
-        }
 
-        /// <summary>
-        /// Called when SelectedDueDate changes
-        /// </summary>
-        partial void OnSelectedDueDateChanged(DateTime value)
-        {
-            if (HasDueDate)
-            {
-                DueDate = value;
-            }
-        }
 
         /// <summary>
         /// Toggle due date on/off

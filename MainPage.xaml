@@ -10,7 +10,7 @@
     BackgroundColor="{StaticResource PageBackgroundColor}"
     Shell.NavBarIsVisible="False">
 
-    <Grid RowDefinitions="Auto,*,Auto">
+    <Grid RowDefinitions="Auto,Auto,*,Auto">
 
         <!--  ═══════════════════════════════════════════════════════  -->
         <!--  TOP HEADER - MINIMALIST BLACK & WHITE  -->
@@ -97,8 +97,43 @@
         <!--  ═══════════════════════════════════════════════════════  -->
         <!--  TASK LIST  -->
         <!--  ═══════════════════════════════════════════════════════  -->
-        <RefreshView
+        <!--  SEARCH BAR  -->
+        <Grid
             Grid.Row="1"
+            Margin="20,0,20,10">
+
+            <!-- Search Bar - Minimalist Text Only -->
+            <Border
+                BackgroundColor="{StaticResource GlassColor}"
+                Stroke="Transparent"
+                StrokeShape="RoundRectangle 12"
+                HeightRequest="44">
+                <Grid ColumnDefinitions="Auto,*" Padding="15,0">
+                    <!-- "Something white" on the left: A minimalist dot -->
+                    <BoxView
+                        Grid.Column="0"
+                        Color="{StaticResource PrimaryTextColor}"
+                        CornerRadius="4"
+                        HeightRequest="8"
+                        VerticalOptions="Center"
+                        WidthRequest="8" />
+                    
+                    <Entry
+                        Grid.Column="1"
+                        Margin="10,0,0,0"
+                        BackgroundColor="Transparent"
+                        ClearButtonVisibility="WhileEditing"
+                        Placeholder="Search tasks..."
+                        PlaceholderColor="{StaticResource SecondaryTextColor}"
+                        Text="{Binding SearchText}"
+                        TextColor="{StaticResource PrimaryTextColor}"
+                        VerticalOptions="Center" />
+                </Grid>
+            </Border>
+        </Grid>
+        
+        <RefreshView
+            Grid.Row="2"
             Margin="16,12,16,0"
             Command="{Binding RefreshCommand}"
             IsRefreshing="{Binding IsBusy}"
@@ -334,7 +369,7 @@
         <!--  BOTTOM TAB BAR - MONOCHROME  -->
         <!--  ═══════════════════════════════════════════════════════  -->
         <Border
-            Grid.Row="2"
+            Grid.Row="3"
             Padding="0,12,0,16"
             BackgroundColor="{StaticResource CardBackgroundColor}"
             Stroke="{StaticResource BorderColor}"

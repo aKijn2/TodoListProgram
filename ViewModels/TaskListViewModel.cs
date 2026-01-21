@@ -17,14 +17,53 @@ namespace Todo_asa.ViewModels
         private List<TaskItem> _cachedTasks = new();
         private bool _isInitialized = false;
 
-        [ObservableProperty]
         private ObservableCollection<TaskItem> _tasks = new();
+        public ObservableCollection<TaskItem> Tasks
+        {
+            get => _tasks;
+            set => SetProperty(ref _tasks, value);
+        }
 
-        [ObservableProperty]
         private Models.TaskStatus? _selectedFilter;
+        public Models.TaskStatus? SelectedFilter
+        {
+            get => _selectedFilter;
+            set => SetProperty(ref _selectedFilter, value);
+        }
 
-        [ObservableProperty]
         private int _selectedFilterIndex = 0;
+        public int SelectedFilterIndex
+        {
+            get => _selectedFilterIndex;
+            set
+            {
+                if (SetProperty(ref _selectedFilterIndex, value))
+                {
+                    SelectedFilter = value switch
+                    {
+                        1 => Models.TaskStatus.ToDo,
+                        2 => Models.TaskStatus.InProgress,
+                        3 => Models.TaskStatus.Completed,
+                        _ => null
+                    };
+
+                    ApplyFilter();
+                }
+            }
+        }
+
+        private string _searchText = string.Empty;
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                if (SetProperty(ref _searchText, value))
+                {
+                    ApplyFilter();
+                }
+            }
+        }
 
         public TaskListViewModel(DatabaseService databaseService)
         {
@@ -80,12 +119,28 @@ namespace Todo_asa.ViewModels
         /// </summary>
         private void ApplyFilter()
         {
-            IEnumerable<TaskItem> filtered = SelectedFilter.HasValue
-                ? _cachedTasks.Where(t => t.Status == SelectedFilter.Value)
-                : _cachedTasks;
+            var filtered = _cachedTasks.AsEnumerable();
+
+            // 1. Filter by Status (Tabs)
+            if (SelectedFilter.HasValue)
+            {
+                filtered = filtered.Where(t => t.Status == SelectedFilter.Value);
+            }
+
+            // 2. Filter by Search Text
+            if (!string.IsNullOrWhiteSpace(SearchText))
+            {
+                var search = SearchText.Trim().ToLowerInvariant();
+                filtered = filtered.Where(t => 
+                    (t.Title?.ToLowerInvariant().Contains(search) ?? false) || 
+                    (t.Description?.ToLowerInvariant().Contains(search) ?? false));
+            }
+
+            // 3. Sort - Always newest first (default)
+            filtered = filtered.OrderByDescending(t => t.CreatedAt);
 
             Tasks.Clear();
-            foreach (var task in filtered.OrderByDescending(t => t.CreatedAt))
+            foreach (var task in filtered)
             {
                 Tasks.Add(task);
             }
@@ -183,21 +238,7 @@ namespace Todo_asa.ViewModels
             await _databaseService.SaveTaskAsync(task);
         }
 
-        /// <summary>
-        /// Filter change handler - instant from cache
-        /// </summary>
-        partial void OnSelectedFilterIndexChanged(int value)
-        {
-            SelectedFilter = value switch
-            {
-                1 => Models.TaskStatus.ToDo,
-                2 => Models.TaskStatus.InProgress,
-                3 => Models.TaskStatus.Completed,
-                _ => null
-            };
-            
-            ApplyFilter();
-        }
+
 
         /// <summary>
         /// Invalidate cache - called when returning from detail page
