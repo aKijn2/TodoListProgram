@@ -328,28 +328,7 @@
         <!--  ═══════════════════════════════════════════════════════  -->
         <!--  FLOATING ACTION BUTTON - MINIMALIST WHITE  -->
         <!--  ═══════════════════════════════════════════════════════  -->
-        <Border
-            Grid.Row="1"
-            Margin="0,0,20,20"
-            BackgroundColor="{StaticResource PrimaryTextColor}"
-            HeightRequest="56"
-            HorizontalOptions="End"
-            Shadow="{StaticResource AccentGlow}"
-            Stroke="Transparent"
-            StrokeShape="RoundRectangle 28"
-            VerticalOptions="End"
-            WidthRequest="56">
-            <Border.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding AddTaskCommand}" />
-            </Border.GestureRecognizers>
-            <Label
-                FontAttributes="Bold"
-                FontSize="28"
-                HorizontalOptions="Center"
-                Text="+"
-                TextColor="{StaticResource PageBackgroundColor}"
-                VerticalOptions="Center" />
-        </Border>
+
 
         <!--  ═══════════════════════════════════════════════════════  -->
         <!--  BOTTOM TAB BAR - MONOCHROME  -->
@@ -362,19 +341,18 @@
             StrokeShape="RoundRectangle 20,20,0,0"
             StrokeThickness="1">
             <Grid
-                ColumnDefinitions="*,*,*,*"
+                ColumnDefinitions="*,*,*,*,*"
                 ColumnSpacing="0"
                 HorizontalOptions="Fill">
 
-                <!--  All Tab  -->
+                <!--  All Tab (Col 0)  -->
                 <Border
                     Grid.Column="0"
                     Padding="8,10"
-                    HorizontalOptions="Center"
+                    HorizontalOptions="Fill"
                     Stroke="Transparent"
                     StrokeShape="RoundRectangle 12"
-                    VerticalOptions="Center"
-                    WidthRequest="80">
+                    VerticalOptions="Center">
                     <Border.Triggers>
                         <DataTrigger
                             Binding="{Binding SelectedFilterIndex}"
@@ -421,15 +399,14 @@
                     </VerticalStackLayout>
                 </Border>
 
-                <!--  To Do Tab  -->
+                <!--  To Do Tab (Col 1)  -->
                 <Border
                     Grid.Column="1"
                     Padding="8,10"
-                    HorizontalOptions="Center"
+                    HorizontalOptions="Fill"
                     Stroke="Transparent"
                     StrokeShape="RoundRectangle 12"
-                    VerticalOptions="Center"
-                    WidthRequest="80">
+                    VerticalOptions="Center">
                     <Border.Triggers>
                         <DataTrigger
                             Binding="{Binding SelectedFilterIndex}"
@@ -477,15 +454,36 @@
                     </VerticalStackLayout>
                 </Border>
 
-                <!--  Active Tab  -->
+                <!--  ADD TASK BUTTON (Col 2)  -->
                 <Border
                     Grid.Column="2"
-                    Padding="8,10"
+                    BackgroundColor="{StaticResource PrimaryTextColor}"
+                    HeightRequest="48"
                     HorizontalOptions="Center"
                     Stroke="Transparent"
-                    StrokeShape="RoundRectangle 12"
+                    StrokeShape="RoundRectangle 24"
                     VerticalOptions="Center"
-                    WidthRequest="80">
+                    WidthRequest="48">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding AddTaskCommand}" />
+                    </Border.GestureRecognizers>
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="24"
+                        HorizontalOptions="Center"
+                        Text="+"
+                        TextColor="{StaticResource PageBackgroundColor}"
+                        VerticalOptions="Center" />
+                </Border>
+
+                <!--  Active Tab (Col 3)  -->
+                <Border
+                    Grid.Column="3"
+                    Padding="8,10"
+                    HorizontalOptions="Fill"
+                    Stroke="Transparent"
+                    StrokeShape="RoundRectangle 12"
+                    VerticalOptions="Center">
                     <Border.Triggers>
                         <DataTrigger
                             Binding="{Binding SelectedFilterIndex}"
@@ -533,15 +531,14 @@
                     </VerticalStackLayout>
                 </Border>
 
-                <!--  Done Tab  -->
+                <!--  Done Tab (Col 4)  -->
                 <Border
-                    Grid.Column="3"
+                    Grid.Column="4"
                     Padding="8,10"
-                    HorizontalOptions="Center"
+                    HorizontalOptions="Fill"
                     Stroke="Transparent"
                     StrokeShape="RoundRectangle 12"
-                    VerticalOptions="Center"
-                    WidthRequest="80">
+                    VerticalOptions="Center">
                     <Border.Triggers>
                         <DataTrigger
                             Binding="{Binding SelectedFilterIndex}"
