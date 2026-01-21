@@ -1,31 +1,39 @@
-# 📋 TaskFlow
+# TaskFlow
 
-A modern task management application built with **.NET MAUI 9.0** for Windows. Manage your tasks locally with a clean, mobile-inspired interface.
+A minimalist, high-performance task management application built with **.NET MAUI 9.0** for Windows. Designed with a strict monochrome aesthetic for distraction-free productivity.
 
-## ✨ Features
+## Features
 
-- **Task Management** - Create, edit, and delete tasks
-- **Subtasks** - Break down tasks into smaller steps
-- **Status Tracking** - To Do → In Progress → Completed
-- **Due Dates** - Set optional deadlines with overdue alerts
-- **Filtering** - View tasks by status
-- **Local Storage** - SQLite database, no cloud required
-- **Dark Theme** - Modern, eye-friendly interface
+### Minimalist Design
+- **Monochrome Theme**: Black & white interface with glassmorphism elements.
+- **Distraction-Free**: Clean typography and layouts focused on content.
+- **Micro-interactions**: Subtle hover effects and responsive UI elements.
 
-## 🛠️ Tech Stack
+### Core Functionality
+- **Search & Filter**: Instantly search tasks by title/description with a sleek search bar.
+- **Task Management**: Create, edit, and delete tasks with ease.
+- **Subtasks**: Break complex tasks into manageable sub-steps.
+- **Smart Filtering**: "To Do", "Active", and "Done" tabs for quick navigation.
+- **Due Dates**: Set deadlines and track overdue items.
 
-- .NET MAUI 9.0
-- SQLite (sqlite-net-pcl)
-- MVVM with CommunityToolkit.Mvvm
-- C# 12
+### Technical Highlights
+- **Local Storage**: Secure, offline-first SQLite database (`Documents/Todo_asa` storage).
+- **AOT Compatible**: Fully optimized ViewModels avoiding reflection-heavy MVVM features.
+- **Performance**: Instant load times and smooth transitions.
 
-## 🚀 Getting Started
+## Tech Stack
+
+- **Framework**: .NET MAUI 9.0
+- **Database**: SQLite (sqlite-net-pcl)
+- **Architecture**: MVVM (CommunityToolkit.Mvvm)
+- **Language**: C# 12 / XAML
+
+## Getting Started
 
 ### Prerequisites
 
 - .NET 9.0 SDK
 - Visual Studio 2022 or VS Code
-- Windows 10/11
 
 ### Run the App
 
@@ -38,12 +46,11 @@ dotnet run -f net9.0-windows10.0.19041.0
 ## 📁 Project Structure
 
 ```
-Todo_asa/
+TodoListProgram/
 ├── Models/          # Data models (TaskItem, SubTaskItem)
-├── ViewModels/      # MVVM ViewModels
-├── Pages/           # UI pages
-├── Services/        # Database service
-├── Converters/      # XAML value converters
+├── ViewModels/      # MVVM ViewModels (AOT optimized)
+├── Pages/           # UI pages (MainPage, TaskDetailPage)
+├── Services/        # Database service logic
 └── Resources/       # Styles, colors, fonts
 ```
 
@@ -53,4 +60,4 @@ MIT License - Feel free to use and modify!
 
 ---
 
-Made with ❤️ using .NET MAUI
+Made with ❤️ and .NET MAUI
