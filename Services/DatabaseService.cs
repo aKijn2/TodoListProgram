@@ -13,7 +13,32 @@ namespace Todo_asa.Services
 
         public DatabaseService()
         {
-            _dbPath = Path.Combine(FileSystem.AppDataDirectory, "todo_asa.db3");
+            try 
+            {
+                string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                string folderPath = Path.Combine(documentsPath, "Todo_asa");
+
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+
+                string newDbPath = Path.Combine(folderPath, "todo_asa.db3");
+                
+                // Migrate existing data if it exists in the old location
+                string oldDbPath = Path.Combine(FileSystem.AppDataDirectory, "todo_asa.db3");
+                if (!File.Exists(newDbPath) && File.Exists(oldDbPath))
+                {
+                    File.Copy(oldDbPath, newDbPath);
+                }
+
+                _dbPath = newDbPath;
+            }
+            catch
+            {
+                // Fallback to AppData if Documents is not accessible (e.g. mobile permissions issues)
+                _dbPath = Path.Combine(FileSystem.AppDataDirectory, "todo_asa.db3");
+            }
         }
 
         /// <summary>
