@@ -21,28 +21,44 @@
             BackgroundColor="{StaticResource CardBackgroundColor}"
             Stroke="Transparent"
             StrokeShape="RoundRectangle 0,0,20,20">
-            <Grid ColumnDefinitions="Auto,*,Auto,Auto">
+            <Grid ColumnDefinitions="Auto,Auto,*,Auto">
 
-                <!--  Profile Avatar - Monochrome  -->
+                <!--  Notification - Monochrome (Moved to Left)  -->
                 <Border
                     Grid.Column="0"
+                    Margin="0,0,8,0"
                     BackgroundColor="{StaticResource GlassColor}"
-                    HeightRequest="44"
-                    Stroke="{StaticResource BorderColor}"
-                    StrokeShape="RoundRectangle 22"
-                    StrokeThickness="1"
-                    WidthRequest="44">
+                    HeightRequest="40"
+                    Stroke="Transparent"
+                    StrokeShape="RoundRectangle 12"
+                    WidthRequest="40">
                     <Label
-                        FontSize="24"
+                        FontSize="16"
                         HorizontalOptions="Center"
-                        Text="●"
-                        TextColor="{StaticResource PrimaryTextColor}"
+                        Text="◉"
+                        TextColor="{StaticResource SecondaryTextColor}"
                         VerticalOptions="Center" />
                 </Border>
 
-                <!--  Title & Greeting  -->
-                <VerticalStackLayout
+                <!--  Settings - Monochrome (Moved to Left)  -->
+                <Border
                     Grid.Column="1"
+                    BackgroundColor="{StaticResource GlassColor}"
+                    HeightRequest="40"
+                    Stroke="Transparent"
+                    StrokeShape="RoundRectangle 12"
+                    WidthRequest="40">
+                    <Label
+                        FontSize="20"
+                        HorizontalOptions="Center"
+                        Text="≡"
+                        TextColor="{StaticResource SecondaryTextColor}"
+                        VerticalOptions="Center" />
+                </Border>
+
+                <!--  Title & Greeting (Centered/Left next to buttons)  -->
+                <VerticalStackLayout
+                    Grid.Column="2"
                     Margin="14,0,0,0"
                     Spacing="2"
                     VerticalOptions="Center">
@@ -59,36 +75,20 @@
                         TextColor="{StaticResource SecondaryTextColor}" />
                 </VerticalStackLayout>
 
-                <!--  Notification - Monochrome  -->
-                <Border
-                    Grid.Column="2"
-                    Margin="0,0,8,0"
-                    BackgroundColor="{StaticResource GlassColor}"
-                    HeightRequest="40"
-                    Stroke="Transparent"
-                    StrokeShape="RoundRectangle 12"
-                    WidthRequest="40">
-                    <Label
-                        FontSize="16"
-                        HorizontalOptions="Center"
-                        Text="◉"
-                        TextColor="{StaticResource SecondaryTextColor}"
-                        VerticalOptions="Center" />
-                </Border>
-
-                <!--  Settings - Monochrome  -->
+                <!--  Profile Avatar - Monochrome (Moved to Right)  -->
                 <Border
                     Grid.Column="3"
                     BackgroundColor="{StaticResource GlassColor}"
-                    HeightRequest="40"
-                    Stroke="Transparent"
-                    StrokeShape="RoundRectangle 12"
-                    WidthRequest="40">
+                    HeightRequest="44"
+                    Stroke="{StaticResource BorderColor}"
+                    StrokeShape="RoundRectangle 22"
+                    StrokeThickness="1"
+                    WidthRequest="44">
                     <Label
-                        FontSize="20"
+                        FontSize="24"
                         HorizontalOptions="Center"
-                        Text="≡"
-                        TextColor="{StaticResource SecondaryTextColor}"
+                        Text="●"
+                        TextColor="{StaticResource PrimaryTextColor}"
                         VerticalOptions="Center" />
                 </Border>
             </Grid>
@@ -529,7 +529,7 @@
                             </Label.Triggers>
                         </Label>
                     </VerticalStackLayout>
-                </Border>
+                </Border> 
 
                 <Border
                     Grid.Column="4"
