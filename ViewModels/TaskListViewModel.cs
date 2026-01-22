@@ -24,6 +24,27 @@ namespace Todo_asa.ViewModels
             set => SetProperty(ref _tasks, value);
         }
 
+        private ObservableCollection<TaskItem> _todayTasks = new();
+        public ObservableCollection<TaskItem> TodayTasks
+        {
+            get => _todayTasks;
+            set => SetProperty(ref _todayTasks, value);
+        }
+
+        private ObservableCollection<TaskItem> _upcomingTasks = new();
+        public ObservableCollection<TaskItem> UpcomingTasks
+        {
+            get => _upcomingTasks;
+            set => SetProperty(ref _upcomingTasks, value);
+        }
+
+        private bool _hasTasks;
+        public bool HasTasks
+        {
+            get => _hasTasks;
+            set => SetProperty(ref _hasTasks, value);
+        }
+
         private Models.TaskStatus? _selectedFilter;
         public Models.TaskStatus? SelectedFilter
         {
@@ -137,13 +158,36 @@ namespace Todo_asa.ViewModels
             }
 
             // 3. Sort - Always newest first (default)
+            // 3. Sort - Oldest due date first for optimal attention, then created date
             filtered = filtered.OrderByDescending(t => t.CreatedAt);
 
-            Tasks.Clear();
-            foreach (var task in filtered)
+            var filteredList = filtered.ToList();
+            var todayDate = DateTime.Now.Date;
+
+            // Split into Today/Upcoming
+            var todayItems = filteredList.Where(t => t.DueDate.HasValue && t.DueDate.Value.Date <= todayDate)
+                                         .OrderBy(t => t.Status == Models.TaskStatus.Completed) // Completed last
+                                         .ThenBy(t => t.DueDate);
+            
+            var upcomingItems = filteredList.Where(t => !t.DueDate.HasValue || t.DueDate.Value.Date > todayDate)
+                                            .OrderBy(t => t.DueDate.HasValue ? t.DueDate.Value : DateTime.MaxValue); // No date at bottom
+
+            MainThread.BeginInvokeOnMainThread(() =>
             {
-                Tasks.Add(task);
-            }
+                Tasks.Clear();
+                TodayTasks.Clear();
+                UpcomingTasks.Clear();
+
+                foreach (var task in filteredList)
+                {
+                    Tasks.Add(task);
+                }
+
+                foreach(var t in todayItems) TodayTasks.Add(t);
+                foreach(var t in upcomingItems) UpcomingTasks.Add(t);
+
+                HasTasks = Tasks.Count > 0;
+            });
         }
 
         /// <summary>
@@ -207,7 +251,9 @@ namespace Todo_asa.ViewModels
             {
                 // Update cache immediately
                 _cachedTasks.Remove(task);
-                Tasks.Remove(task);
+                
+                // Refresh all lists (Tasks, TodayTasks, UpcomingTasks)
+                ApplyFilter();
                 
                 // Delete from database in background
                 await _databaseService.DeleteTaskAsync(task);
