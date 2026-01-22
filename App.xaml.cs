@@ -5,6 +5,13 @@
         public App()
         {
             InitializeComponent();
+
+            // Load saved theme
+            string savedTheme = Preferences.Get("AppTheme", "Unspecified");
+            if (Enum.TryParse(savedTheme, out AppTheme theme) && theme != AppTheme.Unspecified)
+            {
+                UserAppTheme = theme;
+            }
         }
 
         protected override Window CreateWindow(IActivationState? activationState)

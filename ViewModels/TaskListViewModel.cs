@@ -243,9 +243,12 @@ namespace Todo_asa.ViewModels
         {
             if (Application.Current == null) return;
 
-            Application.Current.UserAppTheme = Application.Current.UserAppTheme == AppTheme.Light
+            AppTheme newTheme = Application.Current.UserAppTheme == AppTheme.Light
                 ? AppTheme.Dark
                 : AppTheme.Light;
+            
+            Application.Current.UserAppTheme = newTheme;
+            Preferences.Set("AppTheme", newTheme.ToString());
         }
 
 
