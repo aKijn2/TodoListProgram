@@ -59,6 +59,27 @@ namespace TaskFlow.ViewModels
             set => SetProperty(ref _isUpcomingExpanded, value);
         }
 
+        private bool _isSettingsVisible;
+        public bool IsSettingsVisible
+        {
+            get => _isSettingsVisible;
+            set => SetProperty(ref _isSettingsVisible, value);
+        }
+
+        private bool _showCompletedTasksInAll;
+        public bool ShowCompletedTasksInAll
+        {
+            get => _showCompletedTasksInAll;
+            set
+            {
+                if (SetProperty(ref _showCompletedTasksInAll, value))
+                {
+                    Preferences.Set(nameof(ShowCompletedTasksInAll), value);
+                    ApplyFilter();
+                }
+            }
+        }
+
         private Models.TaskStatus? _selectedFilter;
         public Models.TaskStatus? SelectedFilter
         {
@@ -104,6 +125,7 @@ namespace TaskFlow.ViewModels
         {
             _databaseService = databaseService;
             Title = "My Tasks";
+            ShowCompletedTasksInAll = Preferences.Get(nameof(ShowCompletedTasksInAll), true); // Default to showing completed tasks
         }
 
         /// <summary>
@@ -160,6 +182,14 @@ namespace TaskFlow.ViewModels
             if (SelectedFilter.HasValue)
             {
                 filtered = filtered.Where(t => t.Status == SelectedFilter.Value);
+            }
+            else
+            {
+                // "All" Tab Logic
+                if (!ShowCompletedTasksInAll)
+                {
+                    filtered = filtered.Where(t => t.Status != Models.TaskStatus.Completed);
+                }
             }
 
             // 2. Filter by Search Text
@@ -320,7 +350,14 @@ namespace TaskFlow.ViewModels
                 : AppTheme.Light;
             
             Application.Current.UserAppTheme = newTheme;
+            Application.Current.UserAppTheme = newTheme;
             Preferences.Set("AppTheme", newTheme.ToString());
+        }
+
+        [RelayCommand]
+        private void ToggleSettings()
+        {
+            IsSettingsVisible = !IsSettingsVisible;
         }
 
 
