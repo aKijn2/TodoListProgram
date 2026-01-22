@@ -8,10 +8,58 @@
              Title="{Binding Title}"
              BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PageBackgroundColor}}">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="20">
+    <Grid RowDefinitions="Auto, *" RowSpacing="0">
+        <!-- HEADER / TOOLBAR -->
+        <Grid Grid.Row="0" 
+              ColumnDefinitions="Auto,*,Auto" 
+              Padding="20,16"
+              BackgroundColor="Transparent">
             
-            <!-- TASK TITLE -->
+            <!-- Cancel Button -->
+            <Border Grid.Column="0"
+                    StrokeShape="RoundRectangle 20"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"
+                    Stroke="Transparent"
+                    StrokeThickness="1"
+                    Padding="20,8"
+                    HorizontalOptions="Start">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding CancelCommand}"/>
+                </Border.GestureRecognizers>
+                <Label Text="Cancel"
+                       TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PageBackgroundColor}}"
+                       FontFamily="Inter"
+                       FontAttributes="Bold"
+                       FontSize="14"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center"/>
+            </Border>
+
+            <!-- Save Button -->
+            <Border Grid.Column="2" 
+                    StrokeShape="RoundRectangle 20"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"
+                    Stroke="Transparent"
+                    Padding="20,8"
+                    HorizontalOptions="End">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SaveCommand}"/>
+                </Border.GestureRecognizers>
+                <Label Text="Save"
+                       TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PageBackgroundColor}}"
+                       FontFamily="Inter"
+                       FontAttributes="Bold"
+                       FontSize="14"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center"/>
+            </Border>
+        </Grid>
+
+        <!-- SCROLLING FORM CONTENT -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="20" Spacing="20">
+                
+                <!-- TASK TITLE -->
             <VerticalStackLayout Spacing="8">
                 <Label Text="TITLE" 
                        FontSize="11" 
@@ -243,43 +291,7 @@
                 </VerticalStackLayout>
             </VerticalStackLayout>
             
-            <!-- ACTION BUTTONS -->
-            <Grid ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,20,0,0">
-                <!-- Cancel -->
-                <Border Grid.Column="0"
-                        StrokeShape="RoundRectangle 12"
-                        BackgroundColor="Transparent"
-                        Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource BorderColor}}"
-                        StrokeThickness="1"
-                        HeightRequest="48">
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding CancelCommand}"/>
-                    </Border.GestureRecognizers>
-                    <Label Text="Cancel"
-                           TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}"
-                           FontFamily="Inter"
-                           FontAttributes="Bold"
-                           VerticalOptions="Center"
-                           HorizontalOptions="Center"/>
-                </Border>
-                
-                <!-- Save -->
-                <Border Grid.Column="1"
-                        StrokeShape="RoundRectangle 12"
-                        BackgroundColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"
-                        Stroke="Transparent"
-                        HeightRequest="48">
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding SaveCommand}"/>
-                    </Border.GestureRecognizers>
-                    <Label Text="Save"
-                           TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PageBackgroundColor}}"
-                           FontFamily="Inter"
-                           FontAttributes="Bold"
-                           VerticalOptions="Center"
-                           HorizontalOptions="Center"/>
-                </Border>
-            </Grid>
+            <!-- ACTION BUTTONS REMOVED (Moved to Header) -->
             
             <!-- Delete Button -->
             <Border StrokeShape="RoundRectangle 12"
@@ -299,5 +311,6 @@
             </Border>
             
         </VerticalStackLayout>
-    </ScrollView>
+        </ScrollView>
+    </Grid>
 </ContentPage>
