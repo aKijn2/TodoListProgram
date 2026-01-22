@@ -45,6 +45,20 @@ namespace Todo_asa.ViewModels
             set => SetProperty(ref _hasTasks, value);
         }
 
+        private bool _isTodayExpanded = true;
+        public bool IsTodayExpanded
+        {
+            get => _isTodayExpanded;
+            set => SetProperty(ref _isTodayExpanded, value);
+        }
+
+        private bool _isUpcomingExpanded = true;
+        public bool IsUpcomingExpanded
+        {
+            get => _isUpcomingExpanded;
+            set => SetProperty(ref _isUpcomingExpanded, value);
+        }
+
         private Models.TaskStatus? _selectedFilter;
         public Models.TaskStatus? SelectedFilter
         {
@@ -282,6 +296,18 @@ namespace Todo_asa.ViewModels
             
             // Save to database in background
             await _databaseService.SaveTaskAsync(task);
+        }
+
+        [RelayCommand]
+        private void ToggleToday()
+        {
+            IsTodayExpanded = !IsTodayExpanded;
+        }
+
+        [RelayCommand]
+        private void ToggleUpcoming()
+        {
+            IsUpcomingExpanded = !IsUpcomingExpanded;
         }
 
         [RelayCommand]

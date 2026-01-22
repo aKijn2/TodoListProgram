@@ -352,26 +352,64 @@
 
                     <!-- Today Section -->
                     <VerticalStackLayout IsVisible="{Binding TodayTasks.Count, Converter={StaticResource IntToBoolConverter}}">
-                        <Label Text="Today" 
-                               FontSize="14" 
-                               FontFamily="Inter" 
-                               FontAttributes="Bold"
-                               TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"
-                               Padding="0,16,0,8"/>
-                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding TodayTasks}"
+                        <Grid Padding="0,16,0,8">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleTodayCommand}" />
+                            </Grid.GestureRecognizers>
+                            <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                                <Label Text="Today" 
+                                       FontSize="14" 
+                                       FontFamily="Inter" 
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"/>
+                                <Label FontSize="12" 
+                                       VerticalOptions="Center"
+                                       TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding IsTodayExpanded}" Value="True">
+                                            <Setter Property="Text" Value="▼" />
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding IsTodayExpanded}" Value="False">
+                                            <Setter Property="Text" Value="▶" />
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                            </HorizontalStackLayout>
+                        </Grid>
+                        <VerticalStackLayout IsVisible="{Binding IsTodayExpanded}"
+                                             BindableLayout.ItemsSource="{Binding TodayTasks}"
                                              BindableLayout.ItemTemplate="{StaticResource TaskItemTemplate}"
                                              Spacing="0" />
                     </VerticalStackLayout>
 
                     <!-- Coming Up Section -->
                     <VerticalStackLayout IsVisible="{Binding UpcomingTasks.Count, Converter={StaticResource IntToBoolConverter}}">
-                        <Label Text="Coming Up" 
-                               FontSize="14" 
-                               FontFamily="Inter" 
-                               FontAttributes="Bold"
-                               TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"
-                               Padding="0,24,0,8"/>
-                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding UpcomingTasks}"
+                        <Grid Padding="0,24,0,8">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleUpcomingCommand}" />
+                            </Grid.GestureRecognizers>
+                            <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                                <Label Text="Coming Up" 
+                                       FontSize="14" 
+                                       FontFamily="Inter" 
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"/>
+                                <Label FontSize="12" 
+                                       VerticalOptions="Center"
+                                       TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding IsUpcomingExpanded}" Value="True">
+                                            <Setter Property="Text" Value="▼" />
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding IsUpcomingExpanded}" Value="False">
+                                            <Setter Property="Text" Value="▶" />
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                            </HorizontalStackLayout>
+                        </Grid>
+                        <VerticalStackLayout IsVisible="{Binding IsUpcomingExpanded}"
+                                             BindableLayout.ItemsSource="{Binding UpcomingTasks}"
                                              BindableLayout.ItemTemplate="{StaticResource TaskItemTemplate}"
                                              Spacing="0" />
                     </VerticalStackLayout>
