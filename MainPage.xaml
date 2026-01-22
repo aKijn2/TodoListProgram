@@ -7,7 +7,7 @@
     xmlns:viewmodels="clr-namespace:Todo_asa.ViewModels"
     Title="{Binding Title}"
     x:DataType="viewmodels:TaskListViewModel"
-    BackgroundColor="{StaticResource PageBackgroundColor}"
+    BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PageBackgroundColor}}"
     Shell.NavBarIsVisible="False">
 
     <Grid RowDefinitions="Auto,Auto,*,Auto">
@@ -18,7 +18,7 @@
         <Border
             Grid.Row="0"
             Padding="20,16"
-            BackgroundColor="{StaticResource CardBackgroundColor}"
+            BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource CardBackgroundColor}}"
             Stroke="Transparent"
             StrokeShape="RoundRectangle 0,0,20,20">
             <Grid ColumnDefinitions="Auto,Auto,*,Auto">
@@ -27,23 +27,26 @@
                 <Border
                     Grid.Column="0"
                     Margin="0,0,8,0"
-                    BackgroundColor="{StaticResource GlassColor}"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource GlassColor}}"
                     HeightRequest="40"
                     Stroke="Transparent"
                     StrokeShape="RoundRectangle 12"
                     WidthRequest="40">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ToggleThemeCommand}" />
+                    </Border.GestureRecognizers>
                     <Label
                         FontSize="16"
                         HorizontalOptions="Center"
                         Text="◉"
-                        TextColor="{StaticResource SecondaryTextColor}"
+                        TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}"
                         VerticalOptions="Center" />
                 </Border>
 
                 <!--  Settings - Monochrome (Moved to Left)  -->
                 <Border
                     Grid.Column="1"
-                    BackgroundColor="{StaticResource GlassColor}"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource GlassColor}}"
                     HeightRequest="40"
                     Stroke="Transparent"
                     StrokeShape="RoundRectangle 12"
@@ -52,7 +55,7 @@
                         FontSize="20"
                         HorizontalOptions="Center"
                         Text="≡"
-                        TextColor="{StaticResource SecondaryTextColor}"
+                        TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}"
                         VerticalOptions="Center" />
                 </Border>
 
@@ -67,20 +70,20 @@
                         FontFamily="Inter"
                         FontSize="20"
                         Text="TaskFlow"
-                        TextColor="{StaticResource PrimaryTextColor}" />
+                        TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}" />
                     <Label
                         FontFamily="Inter"
                         FontSize="12"
                         Text="Let's be productive today"
-                        TextColor="{StaticResource SecondaryTextColor}" />
+                        TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}" />
                 </VerticalStackLayout>
 
                 <!--  Profile Avatar - Monochrome (Moved to Right)  -->
                 <Border
                     Grid.Column="3"
-                    BackgroundColor="{StaticResource GlassColor}"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource GlassColor}}"
                     HeightRequest="44"
-                    Stroke="{StaticResource BorderColor}"
+                    Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource BorderColor}}"
                     StrokeShape="RoundRectangle 22"
                     StrokeThickness="1"
                     WidthRequest="44">
@@ -88,7 +91,7 @@
                         FontSize="24"
                         HorizontalOptions="Center"
                         Text="●"
-                        TextColor="{StaticResource PrimaryTextColor}"
+                        TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"
                         VerticalOptions="Center" />
                 </Border>
             </Grid>
@@ -104,7 +107,7 @@
 
             <!-- Search Bar - Minimalist Text Only -->
             <Border
-                BackgroundColor="{StaticResource GlassColor}"
+                BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource GlassColor}}"
                 Stroke="Transparent"
                 StrokeShape="RoundRectangle 12"
                 HeightRequest="44">
@@ -112,7 +115,7 @@
                     <!-- "Something white" on the left: A minimalist dot -->
                     <BoxView
                         Grid.Column="0"
-                        Color="{StaticResource PrimaryTextColor}"
+                        Color="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"
                         CornerRadius="4"
                         HeightRequest="8"
                         VerticalOptions="Center"
@@ -124,9 +127,9 @@
                         BackgroundColor="Transparent"
                         ClearButtonVisibility="WhileEditing"
                         Placeholder="Search tasks..."
-                        PlaceholderColor="{StaticResource SecondaryTextColor}"
+                        PlaceholderColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}"
                         Text="{Binding SearchText}"
-                        TextColor="{StaticResource PrimaryTextColor}"
+                        TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"
                         VerticalOptions="Center" />
                 </Grid>
             </Border>
@@ -137,7 +140,7 @@
             Margin="16,12,16,0"
             Command="{Binding RefreshCommand}"
             IsRefreshing="{Binding IsBusy}"
-            RefreshColor="{StaticResource PrimaryTextColor}">
+            RefreshColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}">
             <CollectionView ItemsSource="{Binding Tasks}" SelectionMode="None">
 
                 <!--  Empty State - Monochrome  -->
@@ -152,10 +155,10 @@
                             VerticalOptions="CenterAndExpand">
 
                             <Border
-                                BackgroundColor="{StaticResource GlassColor}"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource GlassColor}}"
                                 HeightRequest="80"
                                 HorizontalOptions="Center"
-                                Stroke="{StaticResource BorderColor}"
+                                Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource BorderColor}}"
                                 StrokeShape="RoundRectangle 40"
                                 StrokeThickness="1"
                                 WidthRequest="80">
@@ -163,7 +166,7 @@
                                     FontSize="40"
                                     HorizontalOptions="Center"
                                     Text="○"
-                                    TextColor="{StaticResource SecondaryTextColor}"
+                                    TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}"
                                     VerticalOptions="Center" />
                             </Border>
                             <Label
@@ -172,13 +175,13 @@
                                 FontSize="18"
                                 HorizontalOptions="Center"
                                 Text="No tasks yet"
-                                TextColor="{StaticResource PrimaryTextColor}" />
+                                TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}" />
                             <Label
                                 FontFamily="Inter"
                                 FontSize="13"
                                 HorizontalOptions="Center"
                                 Text="Tap + to create your first task"
-                                TextColor="{StaticResource SecondaryTextColor}" />
+                                TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}" />
                         </VerticalStackLayout>
                     </Grid>
                 </CollectionView.EmptyView>
@@ -192,8 +195,8 @@
                         <!--  Task Card - Monochrome  -->
                         <Border
                             Padding="14"
-                            BackgroundColor="{StaticResource CardBackgroundColor}"
-                            Stroke="{StaticResource BorderColor}"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource CardBackgroundColor}}"
+                            Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource BorderColor}}"
                             StrokeShape="RoundRectangle 16"
                             StrokeThickness="1">
                             <Border.GestureRecognizers>
@@ -211,7 +214,7 @@
                                     Grid.RowSpan="2"
                                     Grid.Column="0"
                                     HeightRequest="44"
-                                    Stroke="{StaticResource BorderColor}"
+                                    Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource BorderColor}}"
                                     StrokeShape="RoundRectangle 22"
                                     StrokeThickness="1"
                                     VerticalOptions="Start"
@@ -227,13 +230,13 @@
                                             Binding="{Binding Status}"
                                             TargetType="Border"
                                             Value="InProgress">
-                                            <Setter Property="BackgroundColor" Value="{StaticResource GlassColor}" />
+                                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource GlassColor}}" />
                                         </DataTrigger>
                                         <DataTrigger
                                             Binding="{Binding Status}"
                                             TargetType="Border"
                                             Value="Completed">
-                                            <Setter Property="BackgroundColor" Value="{StaticResource PrimaryTextColor}" />
+                                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}" />
                                         </DataTrigger>
                                     </Border.Triggers>
                                     <Label
@@ -247,21 +250,21 @@
                                                 TargetType="Label"
                                                 Value="ToDo">
                                                 <Setter Property="Text" Value="○" />
-                                                <Setter Property="TextColor" Value="{StaticResource SecondaryTextColor}" />
+                                                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}" />
                                             </DataTrigger>
                                             <DataTrigger
                                                 Binding="{Binding Status}"
                                                 TargetType="Label"
                                                 Value="InProgress">
                                                 <Setter Property="Text" Value="◐" />
-                                                <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}" />
+                                                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}" />
                                             </DataTrigger>
                                             <DataTrigger
                                                 Binding="{Binding Status}"
                                                 TargetType="Label"
                                                 Value="Completed">
                                                 <Setter Property="Text" Value="✓" />
-                                                <Setter Property="TextColor" Value="{StaticResource PageBackgroundColor}" />
+                                                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PageBackgroundColor}}" />
                                             </DataTrigger>
                                         </Label.Triggers>
                                     </Label>
@@ -277,7 +280,7 @@
                                     LineBreakMode="TailTruncation"
                                     MaxLines="1"
                                     Text="{Binding Title}"
-                                    TextColor="{StaticResource PrimaryTextColor}" />
+                                    TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}" />
 
                                 <!--  Delete Button  -->
                                 <Border
@@ -295,7 +298,7 @@
                                         FontSize="18"
                                         HorizontalOptions="Center"
                                         Text="×"
-                                        TextColor="{StaticResource SecondaryTextColor}"
+                                        TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}"
                                         VerticalOptions="Center" />
                                 </Border>
 
@@ -308,18 +311,18 @@
                                         FontFamily="Inter"
                                         FontSize="11"
                                         Text="{Binding StatusDisplay}"
-                                        TextColor="{StaticResource SecondaryTextColor}" />
+                                        TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}" />
                                     <Label
                                         FontSize="11"
                                         IsVisible="{Binding SubTasks.Count, Converter={StaticResource IntToBoolConverter}}"
                                         Text="·"
-                                        TextColor="{StaticResource SecondaryTextColor}" />
+                                        TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}" />
                                     <Label
                                         FontFamily="Inter"
                                         FontSize="11"
                                         IsVisible="{Binding SubTasks.Count, Converter={StaticResource IntToBoolConverter}}"
                                         Text="{Binding SubTaskProgress}"
-                                        TextColor="{StaticResource SecondaryTextColor}" />
+                                        TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}" />
                                 </HorizontalStackLayout>
 
                                 <!--  Due Date  -->
@@ -342,7 +345,7 @@
                                             Binding="{Binding IsOverdue}"
                                             TargetType="Label"
                                             Value="False">
-                                            <Setter Property="TextColor" Value="{StaticResource SecondaryTextColor}" />
+                                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}" />
                                         </DataTrigger>
                                     </Label.Triggers>
                                 </Label>
@@ -371,8 +374,8 @@
         <Border
             Grid.Row="3"
             Padding="0,12,0,16"
-            BackgroundColor="{StaticResource CardBackgroundColor}"
-            Stroke="{StaticResource BorderColor}"
+            BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource CardBackgroundColor}}"
+            Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource BorderColor}}"
             StrokeShape="RoundRectangle 20,20,0,0"
             StrokeThickness="1">
             <Grid
@@ -393,7 +396,7 @@
                             Binding="{Binding SelectedFilterIndex}"
                             TargetType="Border"
                             Value="0">
-                            <Setter Property="BackgroundColor" Value="{StaticResource GlassColor}" />
+                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource GlassColor}}" />
                         </DataTrigger>
                     </Border.Triggers>
                     <Border.GestureRecognizers>
@@ -410,7 +413,7 @@
                                     Binding="{Binding SelectedFilterIndex}"
                                     TargetType="Label"
                                     Value="0">
-                                    <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}" />
+                                    <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}" />
                                 </DataTrigger>
                             </Label.Triggers>
                         </Label>
@@ -420,13 +423,13 @@
                             HorizontalOptions="Center"
                             HorizontalTextAlignment="Center"
                             Text="All"
-                            TextColor="{StaticResource SecondaryTextColor}">
+                            TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}">
                             <Label.Triggers>
                                 <DataTrigger
                                     Binding="{Binding SelectedFilterIndex}"
                                     TargetType="Label"
                                     Value="0">
-                                    <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}" />
+                                    <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}" />
                                     <Setter Property="FontAttributes" Value="Bold" />
                                 </DataTrigger>
                             </Label.Triggers>
@@ -447,7 +450,7 @@
                             Binding="{Binding SelectedFilterIndex}"
                             TargetType="Border"
                             Value="1">
-                            <Setter Property="BackgroundColor" Value="{StaticResource GlassColor}" />
+                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource GlassColor}}" />
                         </DataTrigger>
                     </Border.Triggers>
                     <Border.GestureRecognizers>
@@ -459,13 +462,13 @@
                             HorizontalOptions="Center"
                             HorizontalTextAlignment="Center"
                             Text="○"
-                            TextColor="{StaticResource SecondaryTextColor}">
+                            TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}">
                             <Label.Triggers>
                                 <DataTrigger
                                     Binding="{Binding SelectedFilterIndex}"
                                     TargetType="Label"
                                     Value="1">
-                                    <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}" />
+                                    <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}" />
                                 </DataTrigger>
                             </Label.Triggers>
                         </Label>
@@ -475,13 +478,13 @@
                             HorizontalOptions="Center"
                             HorizontalTextAlignment="Center"
                             Text="To Do"
-                            TextColor="{StaticResource SecondaryTextColor}">
+                            TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}">
                             <Label.Triggers>
                                 <DataTrigger
                                     Binding="{Binding SelectedFilterIndex}"
                                     TargetType="Label"
                                     Value="1">
-                                    <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}" />
+                                    <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}" />
                                     <Setter Property="FontAttributes" Value="Bold" />
                                 </DataTrigger>
                             </Label.Triggers>
@@ -492,7 +495,7 @@
                 <!--  ADD TASK BUTTON (Col 2)  -->
                 <Border
                     Grid.Column="2"
-                    BackgroundColor="{StaticResource PrimaryTextColor}"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"
                     HeightRequest="48"
                     HorizontalOptions="Center"
                     Stroke="Transparent"
@@ -507,7 +510,7 @@
                         FontSize="24"
                         HorizontalOptions="Center"
                         Text="+"
-                        TextColor="{StaticResource PageBackgroundColor}"
+                        TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PageBackgroundColor}}"
                         VerticalOptions="Center" />
                 </Border>
 
@@ -524,7 +527,7 @@
                             Binding="{Binding SelectedFilterIndex}"
                             TargetType="Border"
                             Value="2">
-                            <Setter Property="BackgroundColor" Value="{StaticResource GlassColor}" />
+                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource GlassColor}}" />
                         </DataTrigger>
                     </Border.Triggers>
                     <Border.GestureRecognizers>
@@ -536,13 +539,13 @@
                             HorizontalOptions="Center"
                             HorizontalTextAlignment="Center"
                             Text="◐"
-                            TextColor="{StaticResource SecondaryTextColor}">
+                            TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}">
                             <Label.Triggers>
                                 <DataTrigger
                                     Binding="{Binding SelectedFilterIndex}"
                                     TargetType="Label"
                                     Value="2">
-                                    <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}" />
+                                    <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}" />
                                 </DataTrigger>
                             </Label.Triggers>
                         </Label>
@@ -552,13 +555,13 @@
                             HorizontalOptions="Center"
                             HorizontalTextAlignment="Center"
                             Text="Active"
-                            TextColor="{StaticResource SecondaryTextColor}">
+                            TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}">
                             <Label.Triggers>
                                 <DataTrigger
                                     Binding="{Binding SelectedFilterIndex}"
                                     TargetType="Label"
                                     Value="2">
-                                    <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}" />
+                                    <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}" />
                                     <Setter Property="FontAttributes" Value="Bold" />
                                 </DataTrigger>
                             </Label.Triggers>
@@ -579,7 +582,7 @@
                             Binding="{Binding SelectedFilterIndex}"
                             TargetType="Border"
                             Value="3">
-                            <Setter Property="BackgroundColor" Value="{StaticResource GlassColor}" />
+                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource GlassColor}}" />
                         </DataTrigger>
                     </Border.Triggers>
                     <Border.GestureRecognizers>
@@ -591,13 +594,13 @@
                             HorizontalOptions="Center"
                             HorizontalTextAlignment="Center"
                             Text="●"
-                            TextColor="{StaticResource SecondaryTextColor}">
+                            TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}">
                             <Label.Triggers>
                                 <DataTrigger
                                     Binding="{Binding SelectedFilterIndex}"
                                     TargetType="Label"
                                     Value="3">
-                                    <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}" />
+                                    <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}" />
                                 </DataTrigger>
                             </Label.Triggers>
                         </Label>
@@ -607,13 +610,13 @@
                             HorizontalOptions="Center"
                             HorizontalTextAlignment="Center"
                             Text="Done"
-                            TextColor="{StaticResource SecondaryTextColor}">
+                            TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}">
                             <Label.Triggers>
                                 <DataTrigger
                                     Binding="{Binding SelectedFilterIndex}"
                                     TargetType="Label"
                                     Value="3">
-                                    <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}" />
+                                    <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}" />
                                     <Setter Property="FontAttributes" Value="Bold" />
                                 </DataTrigger>
                             </Label.Triggers>

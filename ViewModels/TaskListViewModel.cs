@@ -238,6 +238,16 @@ namespace Todo_asa.ViewModels
             await _databaseService.SaveTaskAsync(task);
         }
 
+        [RelayCommand]
+        private void ToggleTheme()
+        {
+            if (Application.Current == null) return;
+
+            Application.Current.UserAppTheme = Application.Current.UserAppTheme == AppTheme.Light
+                ? AppTheme.Dark
+                : AppTheme.Light;
+        }
+
 
 
         /// <summary>

@@ -7,7 +7,7 @@
     xmlns:pages="clr-namespace:Todo_asa.Pages"
     Title="Todo Asa"
     Shell.FlyoutBehavior="Disabled"
-    BackgroundColor="{StaticResource PageBackgroundColor}">
+    BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PageBackgroundColor}}">
 
     <ShellContent
         Title="My Tasks"
