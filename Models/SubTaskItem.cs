@@ -1,6 +1,6 @@
 using SQLite;
 
-namespace Todo_asa.Models
+namespace TaskFlow.Models
 {
     /// <summary>
     /// Represents a subtask under a main task

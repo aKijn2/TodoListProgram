@@ -1,6 +1,6 @@
-using Todo_asa.ViewModels;
+using TaskFlow.ViewModels;
 
-namespace Todo_asa.Pages
+namespace TaskFlow.Pages
 {
     public partial class TaskDetailPage : ContentPage
     {

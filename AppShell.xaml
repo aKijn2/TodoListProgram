@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Shell
-    x:Class="Todo_asa.AppShell"
+    x:Class="TaskFlow.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:Todo_asa"
-    xmlns:pages="clr-namespace:Todo_asa.Pages"
-    Title="Todo Asa"
+    xmlns:local="clr-namespace:TaskFlow"
+    xmlns:pages="clr-namespace:TaskFlow.Pages"
+    Title="TaskFlow"
     Shell.FlyoutBehavior="Disabled"
     BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PageBackgroundColor}}">
 

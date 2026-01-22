@@ -2,7 +2,7 @@ using System;
 using Microsoft.Maui;
 using Microsoft.Maui.Hosting;
 
-namespace Todo_asa
+namespace TaskFlow
 {
     internal class Program : MauiApplication
     {

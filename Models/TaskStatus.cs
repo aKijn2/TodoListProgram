@@ -1,4 +1,4 @@
-namespace Todo_asa.Models
+namespace TaskFlow.Models
 {
     /// <summary>
     /// Represents the status of a task

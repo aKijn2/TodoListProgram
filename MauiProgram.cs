@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
-using Todo_asa.Pages;
-using Todo_asa.Services;
-using Todo_asa.ViewModels;
+using TaskFlow.Pages;
+using TaskFlow.Services;
+using TaskFlow.ViewModels;
 
-namespace Todo_asa
+namespace TaskFlow
 {
     public static class MauiProgram
     {

@@ -1,10 +1,10 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
-using Todo_asa.Models;
-using Todo_asa.Services;
+using TaskFlow.Models;
+using TaskFlow.Services;
 
-namespace Todo_asa.ViewModels
+namespace TaskFlow.ViewModels
 {
     /// <summary>
     /// ViewModel for the main task list page - optimized for fast tab switching

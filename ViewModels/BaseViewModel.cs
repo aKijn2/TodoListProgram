@@ -1,6 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace Todo_asa.ViewModels
+namespace TaskFlow.ViewModels
 {
     /// <summary>
     /// Base ViewModel with common functionality

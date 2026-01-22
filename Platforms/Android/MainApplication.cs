@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace Todo_asa
+namespace TaskFlow
 {
     [Application]
     public class MainApplication : MauiApplication

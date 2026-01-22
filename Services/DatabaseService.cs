@@ -1,7 +1,7 @@
 using SQLite;
-using Todo_asa.Models;
+using TaskFlow.Models;
 
-namespace Todo_asa.Services
+namespace TaskFlow.Services
 {
     /// <summary>
     /// SQLite database service for local data persistence
@@ -23,10 +23,10 @@ namespace Todo_asa.Services
                     Directory.CreateDirectory(folderPath);
                 }
 
-                string newDbPath = Path.Combine(folderPath, "todo_asa.db3");
+                string newDbPath = Path.Combine(folderPath, "Todo_asa.db3");
                 
                 // Migrate existing data if it exists in the old location
-                string oldDbPath = Path.Combine(FileSystem.AppDataDirectory, "todo_asa.db3");
+                string oldDbPath = Path.Combine(FileSystem.AppDataDirectory, "Todo_asa.db3");
                 if (!File.Exists(newDbPath) && File.Exists(oldDbPath))
                 {
                     File.Copy(oldDbPath, newDbPath);
@@ -37,7 +37,7 @@ namespace Todo_asa.Services
             catch
             {
                 // Fallback to AppData if Documents is not accessible (e.g. mobile permissions issues)
-                _dbPath = Path.Combine(FileSystem.AppDataDirectory, "todo_asa.db3");
+                _dbPath = Path.Combine(FileSystem.AppDataDirectory, "Todo_asa.db3");
             }
         }
 

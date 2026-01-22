@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="Todo_asa.MainPage"
+    x:Class="TaskFlow.MainPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:models="clr-namespace:Todo_asa.Models"
-    xmlns:viewmodels="clr-namespace:Todo_asa.ViewModels"
+    xmlns:models="clr-namespace:TaskFlow.Models"
+    xmlns:viewmodels="clr-namespace:TaskFlow.ViewModels"
     Title="{Binding Title}"
     x:DataType="viewmodels:TaskListViewModel"
     BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PageBackgroundColor}}"
