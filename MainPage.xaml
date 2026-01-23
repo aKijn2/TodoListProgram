@@ -212,11 +212,11 @@
                         <TapGestureRecognizer Command="{Binding ToggleThemeCommand}" />
                     </Border.GestureRecognizers>
                     <Label
-                        FontSize="16"
+                        FontSize="24"
                         HorizontalOptions="Center"
-                        Text="◉"
-                        TextColor="{AppThemeBinding Light={StaticResource Gray600},
-                                                    Dark={StaticResource SecondaryTextColor}}"
+                        Text="{AppThemeBinding Light='☀', Dark='☾'}"
+                        TextColor="{AppThemeBinding Light={StaticResource Black},
+                                                    Dark={StaticResource White}}"
                         VerticalOptions="Center" />
                 </Border>
 
