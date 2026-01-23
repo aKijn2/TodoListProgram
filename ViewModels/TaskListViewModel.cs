@@ -201,7 +201,6 @@ namespace TaskFlow.ViewModels
                     (t.Description?.ToLowerInvariant().Contains(search) ?? false));
             }
 
-            // 3. Sort - Always newest first (default)
             // 3. Sort - Oldest due date first for optimal attention, then created date
             filtered = filtered.OrderByDescending(t => t.CreatedAt);
 
@@ -349,7 +348,6 @@ namespace TaskFlow.ViewModels
                 ? AppTheme.Dark
                 : AppTheme.Light;
             
-            Application.Current.UserAppTheme = newTheme;
             Application.Current.UserAppTheme = newTheme;
             Preferences.Set("AppTheme", newTheme.ToString());
         }
