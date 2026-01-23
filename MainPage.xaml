@@ -122,13 +122,15 @@
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:TaskListViewModel}}, Path=DeleteTaskCommand}" CommandParameter="{Binding .}" />
                             </Border.GestureRecognizers>
-                            <Label
-                                FontSize="18"
+                            <Path
+                                Aspect="Uniform"
+                                Data="{StaticResource IconClose}"
+                                Fill="{AppThemeBinding Light={StaticResource Gray600},
+                                                       Dark={StaticResource SecondaryTextColor}}"
+                                HeightRequest="14"
                                 HorizontalOptions="Center"
-                                Text="×"
-                                TextColor="{AppThemeBinding Light={StaticResource Gray600},
-                                                            Dark={StaticResource SecondaryTextColor}}"
-                                VerticalOptions="Center" />
+                                VerticalOptions="Center"
+                                WidthRequest="14" />
                         </Border>
 
                         <HorizontalStackLayout
@@ -213,14 +215,17 @@
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding ToggleThemeCommand}" Tapped="OnThemeToggleTapped" />
                     </Border.GestureRecognizers>
-                    <Label
-                        x:Name="ThemeIconLabel"
-                        FontSize="24"
+                    <Path
+                        x:Name="ThemeIconPath"
+                        Aspect="Uniform"
+                        Data="{AppThemeBinding Light={StaticResource IconSun},
+                                               Dark={StaticResource IconMoon}}"
+                        Fill="{AppThemeBinding Light={StaticResource Black},
+                                               Dark={StaticResource White}}"
+                        HeightRequest="20"
                         HorizontalOptions="Center"
-                        Text="{AppThemeBinding Light='☀', Dark='☾'}"
-                        TextColor="{AppThemeBinding Light={StaticResource Black},
-                                                    Dark={StaticResource White}}"
-                        VerticalOptions="Center" />
+                        VerticalOptions="Center"
+                        WidthRequest="20" />
                 </Border>
 
                 <!--  Settings - Monochrome (Moved to Left)  -->
@@ -232,13 +237,15 @@
                     Stroke="Transparent"
                     StrokeShape="RoundRectangle 12"
                     WidthRequest="40">
-                    <Label
-                        FontSize="20"
+                    <Path
+                        Aspect="Uniform"
+                        Data="{StaticResource IconSettings}"
+                        Fill="{AppThemeBinding Light={StaticResource Gray600},
+                                               Dark={StaticResource SecondaryTextColor}}"
+                        HeightRequest="20"
                         HorizontalOptions="Center"
-                        Text="≡"
-                        TextColor="{AppThemeBinding Light={StaticResource Gray600},
-                                                    Dark={StaticResource SecondaryTextColor}}"
-                        VerticalOptions="Center" />
+                        VerticalOptions="Center"
+                        WidthRequest="20" />
                 </Border>
 
                 <!--  Title & Greeting (Centered/Left next to buttons)  -->
@@ -298,14 +305,15 @@
                 StrokeShape="RoundRectangle 12">
                 <Grid Padding="15,0" ColumnDefinitions="Auto,*">
                     <!--  "Something white" on the left: A minimalist dot  -->
-                    <BoxView
+                    <Path
                         Grid.Column="0"
-                        CornerRadius="4"
-                        HeightRequest="8"
+                        Aspect="Uniform"
+                        Data="{StaticResource IconSearch}"
+                        Fill="{AppThemeBinding Light={StaticResource Black},
+                                               Dark={StaticResource PrimaryTextColor}}"
+                        HeightRequest="16"
                         VerticalOptions="Center"
-                        WidthRequest="8"
-                        Color="{AppThemeBinding Light={StaticResource Black},
-                                                Dark={StaticResource PrimaryTextColor}}" />
+                        WidthRequest="16" />
 
                     <Entry
                         Grid.Column="1"
@@ -608,14 +616,15 @@
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding AddTaskCommand}" />
                     </Border.GestureRecognizers>
-                    <Label
-                        FontAttributes="Bold"
-                        FontSize="24"
+                    <Path
+                        Aspect="Uniform"
+                        Data="{StaticResource IconPlus}"
+                        Fill="{AppThemeBinding Light={StaticResource White},
+                                               Dark={StaticResource PageBackgroundColor}}"
+                        HeightRequest="20"
                         HorizontalOptions="Center"
-                        Text="+"
-                        TextColor="{AppThemeBinding Light={StaticResource White},
-                                                    Dark={StaticResource PageBackgroundColor}}"
-                        VerticalOptions="Center" />
+                        VerticalOptions="Center"
+                        WidthRequest="20" />
                 </Border>
 
                 <Border
@@ -790,13 +799,15 @@
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding ToggleSettingsCommand}" />
                             </Border.GestureRecognizers>
-                            <Label
-                                FontSize="16"
+                            <Path
+                                Aspect="Uniform"
+                                Data="{StaticResource IconClose}"
+                                Fill="{AppThemeBinding Light={StaticResource Gray600},
+                                                       Dark={StaticResource SecondaryTextColor}}"
+                                HeightRequest="14"
                                 HorizontalOptions="Center"
-                                Text="✕"
-                                TextColor="{AppThemeBinding Light={StaticResource Gray600},
-                                                            Dark={StaticResource SecondaryTextColor}}"
-                                VerticalOptions="Center" />
+                                VerticalOptions="Center"
+                                WidthRequest="14" />
                         </Border>
                     </Grid>
 
