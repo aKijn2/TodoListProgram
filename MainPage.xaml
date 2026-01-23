@@ -23,7 +23,9 @@
                     Stroke="{AppThemeBinding Light={StaticResource Gray200},
                                              Dark={StaticResource BorderColor}}"
                     StrokeShape="RoundRectangle 16"
-                    StrokeThickness="1">
+                    StrokeThickness="1"
+                    Opacity="0"
+                    Loaded="OnTaskItemLoaded">
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:TaskListViewModel}}, Path=ViewTaskCommand}" CommandParameter="{Binding .}" />
                     </Border.GestureRecognizers>
@@ -209,9 +211,10 @@
                     StrokeShape="RoundRectangle 12"
                     WidthRequest="40">
                     <Border.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding ToggleThemeCommand}" />
+                        <TapGestureRecognizer Command="{Binding ToggleThemeCommand}" Tapped="OnThemeToggleTapped" />
                     </Border.GestureRecognizers>
                     <Label
+                        x:Name="ThemeIconLabel"
                         FontSize="24"
                         HorizontalOptions="Center"
                         Text="{AppThemeBinding Light='☀', Dark='☾'}"
