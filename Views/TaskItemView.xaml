@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:TaskFlow.Models"
+             xmlns:viewmodels="clr-namespace:TaskFlow.ViewModels"
+             x:Class="TaskFlow.Views.TaskItemView"
+             x:DataType="models:TaskItem">
+
+    <!--  Task Card - Monochrome  -->
+    <Border Margin="0,0,0,10"
+            Padding="14"
+            BackgroundColor="{AppThemeBinding Light={StaticResource White},
+                                              Dark={StaticResource CardBackgroundColor}}"
+            Stroke="{AppThemeBinding Light={StaticResource Gray200},
+                                     Dark={StaticResource BorderColor}}"
+            StrokeShape="RoundRectangle 16"
+            StrokeThickness="1"
+            Opacity="0"
+            Loaded="OnTaskItemLoaded">
+        <Border.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:TaskListViewModel}}, Path=ViewTaskCommand}" CommandParameter="{Binding .}" />
+        </Border.GestureRecognizers>
+
+        <Grid ColumnDefinitions="Auto,*,Auto"
+              ColumnSpacing="12"
+              RowDefinitions="Auto,Auto,Auto"
+              RowSpacing="6">
+
+            <!--  Status Icon - Monochrome Circles  -->
+            <Border Grid.RowSpan="2"
+                    Grid.Column="0"
+                    HeightRequest="44"
+                    Stroke="{AppThemeBinding Light={StaticResource Gray200},
+                                             Dark={StaticResource BorderColor}}"
+                    StrokeShape="RoundRectangle 22"
+                    StrokeThickness="1"
+                    VerticalOptions="Start"
+                    WidthRequest="44">
+                <Border.Triggers>
+                    <DataTrigger Binding="{Binding Status}"
+                                 TargetType="Border"
+                                 Value="ToDo">
+                        <Setter Property="BackgroundColor" Value="Transparent" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Status}"
+                                 TargetType="Border"
+                                 Value="InProgress">
+                        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource GlassColor}}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Status}"
+                                 TargetType="Border"
+                                 Value="Completed">
+                        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}" />
+                    </DataTrigger>
+                </Border.Triggers>
+                <Label FontAttributes="Bold"
+                       FontSize="18"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center">
+                    <Label.Triggers>
+                        <DataTrigger Binding="{Binding Status}"
+                                     TargetType="Label"
+                                     Value="ToDo">
+                            <Setter Property="Text" Value="○" />
+                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Status}"
+                                     TargetType="Label"
+                                     Value="InProgress">
+                            <Setter Property="Text" Value="◐" />
+                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Status}"
+                                     TargetType="Label"
+                                     Value="Completed">
+                            <Setter Property="Text" Value="✓" />
+                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PageBackgroundColor}}" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+            </Border>
+
+            <Label Grid.Row="0"
+                   Grid.Column="1"
+                   FontAttributes="Bold"
+                   FontFamily="Inter"
+                   FontSize="15"
+                   LineBreakMode="TailTruncation"
+                   MaxLines="1"
+                   Text="{Binding Title}"
+                   TextColor="{AppThemeBinding Light={StaticResource Black},
+                                               Dark={StaticResource PrimaryTextColor}}" />
+
+            <!--  Delete Button  -->
+            <Border Grid.Row="0"
+                    Grid.Column="2"
+                    BackgroundColor="Transparent"
+                    HeightRequest="28"
+                    Stroke="Transparent"
+                    StrokeShape="RoundRectangle 8"
+                    WidthRequest="28">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:TaskListViewModel}}, Path=DeleteTaskCommand}" CommandParameter="{Binding .}" />
+                </Border.GestureRecognizers>
+                <Path Aspect="Uniform"
+                      Data="{StaticResource IconClose}"
+                      Fill="{AppThemeBinding Light={StaticResource Gray600},
+                                             Dark={StaticResource SecondaryTextColor}}"
+                      HeightRequest="14"
+                      HorizontalOptions="Center"
+                      VerticalOptions="Center"
+                      WidthRequest="14" />
+            </Border>
+
+            <HorizontalStackLayout Grid.Row="1"
+                                   Grid.Column="1"
+                                   Spacing="8">
+
+                <!--  Status Text  -->
+                <Label FontFamily="Inter"
+                       FontSize="11"
+                       Text="{Binding StatusDisplay}"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray600},
+                                                   Dark={StaticResource SecondaryTextColor}}" />
+                <Label FontSize="11"
+                       IsVisible="{Binding SubTasks.Count, Converter={StaticResource IntToBoolConverter}}"
+                       Text="·"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray600},
+                                                   Dark={StaticResource SecondaryTextColor}}" />
+                <Label FontFamily="Inter"
+                       FontSize="11"
+                       IsVisible="{Binding SubTasks.Count, Converter={StaticResource IntToBoolConverter}}"
+                       Text="{Binding SubTaskProgress}"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray600},
+                                                   Dark={StaticResource SecondaryTextColor}}" />
+            </HorizontalStackLayout>
+
+            <!--  Due Date  -->
+            <Label Grid.Row="2"
+                   Grid.Column="1"
+                   Grid.ColumnSpan="2"
+                   FontFamily="Inter"
+                   FontSize="11"
+                   IsVisible="{Binding DueDate, Converter={StaticResource NullableToBoolConverter}}"
+                   Text="{Binding DueDateDisplay}">
+                <Label.Triggers>
+                    <DataTrigger Binding="{Binding IsOverdue}"
+                                 TargetType="Label"
+                                 Value="True">
+                        <Setter Property="TextColor" Value="{StaticResource OverdueColor}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding IsOverdue}"
+                                 TargetType="Label"
+                                 Value="False">
+                        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}" />
+                    </DataTrigger>
+                </Label.Triggers>
+            </Label>
+        </Grid>
+    </Border>
+</ContentView>

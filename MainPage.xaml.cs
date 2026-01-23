@@ -30,20 +30,6 @@ namespace TaskFlow
             }
         }
 
-        private async void OnThemeToggleTapped(object sender, EventArgs e)
-        {
-            // 360-degree rotation animation for "premium" feel
-            await ThemeIconPath.RotateTo(360, 500, Easing.CubicOut);
-            ThemeIconPath.Rotation = 0;
-        }
 
-        private async void OnTaskItemLoaded(object sender, EventArgs e)
-        {
-            if (sender is View view)
-            {
-                // Fade in animation
-                await view.FadeTo(1, 400, Easing.CubicOut);
-            }
-        }
     }
 }

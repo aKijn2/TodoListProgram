@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:TaskFlow.ViewModels"
+             x:Class="TaskFlow.Views.MainHeaderView">
+    
+    <Border Padding="20,16"
+            BackgroundColor="{AppThemeBinding Light={StaticResource White},
+                                              Dark={StaticResource CardBackgroundColor}}"
+            Stroke="Transparent"
+            StrokeShape="RoundRectangle 0,0,20,20">
+        <Grid ColumnDefinitions="Auto,Auto,*,Auto">
+
+            <!--  Notification - Monochrome (Moved to Left)  -->
+            <Border Grid.Column="0"
+                    Margin="0,0,8,0"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource Gray100},
+                                                      Dark={StaticResource GlassColor}}"
+                    HeightRequest="40"
+                    Stroke="Transparent"
+                    StrokeShape="RoundRectangle 12"
+                    WidthRequest="40">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ToggleThemeCommand}" Tapped="OnThemeToggleTapped" />
+                </Border.GestureRecognizers>
+                <Path x:Name="ThemeIconPath"
+                      Aspect="Uniform"
+                      Data="{AppThemeBinding Light={StaticResource IconSun},
+                                             Dark={StaticResource IconMoon}}"
+                      Fill="{AppThemeBinding Light={StaticResource Black},
+                                             Dark={StaticResource White}}"
+                      HeightRequest="20"
+                      HorizontalOptions="Center"
+                      VerticalOptions="Center"
+                      WidthRequest="20" />
+            </Border>
+
+            <!--  Settings - Monochrome (Moved to Left)  -->
+            <Border Grid.Column="1"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource Gray100},
+                                                      Dark={StaticResource GlassColor}}"
+                    HeightRequest="40"
+                    Stroke="Transparent"
+                    StrokeShape="RoundRectangle 12"
+                    WidthRequest="40">
+                <Path Aspect="Uniform"
+                      Data="{StaticResource IconSettings}"
+                      Fill="{AppThemeBinding Light={StaticResource Gray600},
+                                             Dark={StaticResource SecondaryTextColor}}"
+                      HeightRequest="20"
+                      HorizontalOptions="Center"
+                      VerticalOptions="Center"
+                      WidthRequest="20" />
+            </Border>
+
+            <!--  Title & Greeting (Centered/Left next to buttons)  -->
+            <VerticalStackLayout Grid.Column="2"
+                                 Margin="14,0,0,0"
+                                 Spacing="2"
+                                 VerticalOptions="Center">
+                <Label FontAttributes="Bold"
+                       FontFamily="Inter"
+                       FontSize="20"
+                       Text="TaskFlow"
+                       TextColor="{AppThemeBinding Light={StaticResource Black},
+                                                   Dark={StaticResource PrimaryTextColor}}" />
+                <Label FontFamily="Inter"
+                       FontSize="12"
+                       Text="Let's be productive today"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray600},
+                                                   Dark={StaticResource SecondaryTextColor}}" />
+            </VerticalStackLayout>
+
+            <!--  Profile Avatar - Monochrome (Moved to Right)  -->
+            <Border Grid.Column="3"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource Gray100},
+                                                      Dark={StaticResource GlassColor}}"
+                    HeightRequest="44"
+                    Stroke="{AppThemeBinding Light={StaticResource Gray200},
+                                             Dark={StaticResource BorderColor}}"
+                    StrokeShape="RoundRectangle 22"
+                    StrokeThickness="1"
+                    WidthRequest="44">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ToggleSettingsCommand}" />
+                </Border.GestureRecognizers>
+                <Label FontSize="24"
+                       HorizontalOptions="Center"
+                       Text="●"
+                       TextColor="{AppThemeBinding Light={StaticResource Black},
+                                                   Dark={StaticResource PrimaryTextColor}}"
+                       VerticalOptions="Center" />
+            </Border>
+        </Grid>
+    </Border>
+</ContentView>

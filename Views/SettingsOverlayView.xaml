@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:TaskFlow.ViewModels"
+             x:Class="TaskFlow.Views.SettingsOverlayView">
+    
+    <!--  SETTINGS OVERLAY  -->
+    <Grid BackgroundColor="#66000000"
+          IsVisible="{Binding IsSettingsVisible}"
+          ZIndex="100">
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding ToggleSettingsCommand}" />
+        </Grid.GestureRecognizers>
+
+        <Border Margin="20"
+                Padding="16,20"
+                BackgroundColor="{AppThemeBinding Light={StaticResource White},
+                                                  Dark={StaticResource CardBackgroundColor}}"
+                HorizontalOptions="Center"
+                Stroke="{AppThemeBinding Light={StaticResource Gray200},
+                                         Dark={StaticResource BorderColor}}"
+                StrokeShape="RoundRectangle 20"
+                VerticalOptions="Center"
+                WidthRequest="310">
+            <Border.Shadow>
+                <Shadow Brush="Black"
+                        Opacity="0.1"
+                        Radius="20"
+                        Offset="0,10" />
+            </Border.Shadow>
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer />
+                <!--  Prevent tap from closing overlay  -->
+            </Border.GestureRecognizers>
+
+            <VerticalStackLayout Spacing="16">
+                <!--  Header  -->
+                <Grid ColumnDefinitions="*,Auto">
+                    <Label FontAttributes="Bold"
+                           FontFamily="Inter"
+                           FontSize="17"
+                           Text="Settings"
+                           TextColor="{AppThemeBinding Light={StaticResource Black},
+                                                       Dark={StaticResource PrimaryTextColor}}"
+                           VerticalOptions="Center" />
+
+                    <!--  Close Button (Mac-style hover circle effect implied by design)  -->
+                    <Border Grid.Column="1"
+                            BackgroundColor="Transparent"
+                            HeightRequest="28"
+                            Stroke="Transparent"
+                            StrokeShape="RoundRectangle 14"
+                            WidthRequest="28">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ToggleSettingsCommand}" />
+                        </Border.GestureRecognizers>
+                        <Path Aspect="Uniform"
+                              Data="{StaticResource IconClose}"
+                              Fill="{AppThemeBinding Light={StaticResource Gray600},
+                                                     Dark={StaticResource SecondaryTextColor}}"
+                              HeightRequest="14"
+                              HorizontalOptions="Center"
+                              VerticalOptions="Center"
+                              WidthRequest="14" />
+                    </Border>
+                </Grid>
+
+                <!--  Use a Grid to fill the width  -->
+                <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+                    <Label Grid.Row="0"
+                           Grid.Column="0"
+                           FontFamily="Inter"
+                           FontSize="15"
+                           Text="Show Completed Tasks"
+                           TextColor="{AppThemeBinding Light={StaticResource Black},
+                                                       Dark={StaticResource PrimaryTextColor}}"
+                           VerticalOptions="Center" />
+                    <Label Grid.Row="1"
+                           Grid.Column="0"
+                           FontFamily="Inter"
+                           FontSize="12"
+                           Text="In 'All' tab"
+                           TextColor="{AppThemeBinding Light={StaticResource Gray600},
+                                                       Dark={StaticResource SecondaryTextColor}}"
+                           VerticalOptions="Start" />
+
+                    <Switch Grid.Row="0"
+                            Grid.RowSpan="2"
+                            Grid.Column="1"
+                            IsToggled="{Binding ShowCompletedTasksInAll}"
+                            OnColor="{AppThemeBinding Light={StaticResource Black},
+                                                      Dark={StaticResource PrimaryTextColor}}"
+                            ThumbColor="{AppThemeBinding Light={StaticResource White},
+                                                         Dark={StaticResource PageBackgroundColor}}" />
+                </Grid>
+                
+                <!-- Helper text regarding theme -->
+                <Label FontFamily="Inter"
+                       FontSize="12"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center"
+                       Text="Theme follows system settings or toggle button"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray400}, 
+                                                   Dark={StaticResource Gray600}}"
+                       Margin="0,10,0,0"/>
+
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+</ContentView>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:TaskFlow.Converters"
+             x:Class="TaskFlow.Views.EmptyStateView">
+             
+    <!--  Empty State - Monochrome  -->
+    <VerticalStackLayout Margin="15"
+                         Padding="15"
+                         HorizontalOptions="Fill"
+                         IsVisible="{Binding HasTasks, Converter={StaticResource InverseBoolConverter}}"
+                         Spacing="20"
+                         VerticalOptions="CenterAndExpand">
+
+        <Border BackgroundColor="{AppThemeBinding Light={StaticResource Gray100},
+                                                  Dark={StaticResource GlassColor}}"
+                HeightRequest="80"
+                HorizontalOptions="Center"
+                Stroke="{AppThemeBinding Light={StaticResource Gray200},
+                                         Dark={StaticResource BorderColor}}"
+                StrokeShape="RoundRectangle 40"
+                StrokeThickness="1"
+                WidthRequest="80">
+            <Label FontSize="40"
+                   HorizontalOptions="Center"
+                   Text="○"
+                   TextColor="{AppThemeBinding Light={StaticResource Gray600},
+                                               Dark={StaticResource SecondaryTextColor}}"
+                   VerticalOptions="Center" />
+        </Border>
+        <Label FontAttributes="Bold"
+               FontFamily="Inter"
+               FontSize="18"
+               HorizontalOptions="Center"
+               Text="No tasks yet"
+               TextColor="{AppThemeBinding Light={StaticResource Black},
+                                           Dark={StaticResource PrimaryTextColor}}" />
+        <Label FontFamily="Inter"
+               FontSize="13"
+               HorizontalOptions="Center"
+               Text="Tap + to create your first task"
+               TextColor="{AppThemeBinding Light={StaticResource Gray600},
+                                           Dark={StaticResource SecondaryTextColor}}" />
+    </VerticalStackLayout>
+</ContentView>
