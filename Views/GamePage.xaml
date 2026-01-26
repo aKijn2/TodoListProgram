@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TaskFlow.Views.GamePage"
+             BackgroundColor="{AppThemeBinding Light={StaticResource White},
+                                               Dark={StaticResource PageBackgroundColor}}"
+             Title="Tic Tac Toe">
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="20">
+        
+        <!-- Header -->
+        <Grid Grid.Row="0" HeightRequest="60" ColumnDefinitions="Auto,*,Auto">
+            <Border StrokeThickness="0" 
+                    BackgroundColor="Transparent"
+                    HeightRequest="40" 
+                    WidthRequest="40"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Start">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBackClicked"/>
+                </Border.GestureRecognizers>
+                <Label Text="✕" 
+                       FontSize="24" 
+                       HorizontalOptions="Center" 
+                       VerticalOptions="Center"
+                       TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"/>
+            </Border>
+            
+            <Label Grid.Column="1" 
+                   Text="Tic Tac Toe" 
+                   FontSize="20" 
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center" 
+                   VerticalOptions="Center"
+                   TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"/>
+        </Grid>
+
+        <!-- Game Area -->
+        <VerticalStackLayout Grid.Row="1" 
+                             VerticalOptions="Center" 
+                             Spacing="30">
+            
+            <!-- Turn Indicator -->
+            <Border BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource CardBackgroundColor}}"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 20"
+                    HorizontalOptions="Center"
+                    Padding="20,10">
+                <Label x:Name="StatusLabel"
+                       Text="Player X's Turn"
+                       FontSize="16"
+                       FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"/>
+            </Border>
+
+            <!-- Game Board -->
+            <Border BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource CardBackgroundColor}}"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 20"
+                    HorizontalOptions="Center"
+                    WidthRequest="300"
+                    HeightRequest="300">
+                <Grid x:Name="GameGrid"
+                      RowDefinitions="*,*,*" 
+                      ColumnDefinitions="*,*,*"
+                      Padding="10"
+                      RowSpacing="10"
+                      ColumnSpacing="10">
+                    
+                    <!-- Row 0 -->
+                    <Button Grid.Row="0" Grid.Column="0" Clicked="OnGameButtonClicked" Style="{StaticResource GameButtonStyle}"/>
+                    <Button Grid.Row="0" Grid.Column="1" Clicked="OnGameButtonClicked" Style="{StaticResource GameButtonStyle}"/>
+                    <Button Grid.Row="0" Grid.Column="2" Clicked="OnGameButtonClicked" Style="{StaticResource GameButtonStyle}"/>
+
+                    <!-- Row 1 -->
+                    <Button Grid.Row="1" Grid.Column="0" Clicked="OnGameButtonClicked" Style="{StaticResource GameButtonStyle}"/>
+                    <Button Grid.Row="1" Grid.Column="1" Clicked="OnGameButtonClicked" Style="{StaticResource GameButtonStyle}"/>
+                    <Button Grid.Row="1" Grid.Column="2" Clicked="OnGameButtonClicked" Style="{StaticResource GameButtonStyle}"/>
+
+                    <!-- Row 2 -->
+                    <Button Grid.Row="2" Grid.Column="0" Clicked="OnGameButtonClicked" Style="{StaticResource GameButtonStyle}"/>
+                    <Button Grid.Row="2" Grid.Column="1" Clicked="OnGameButtonClicked" Style="{StaticResource GameButtonStyle}"/>
+                    <Button Grid.Row="2" Grid.Column="2" Clicked="OnGameButtonClicked" Style="{StaticResource GameButtonStyle}"/>
+                </Grid>
+            </Border>
+        </VerticalStackLayout>
+
+        <!-- Reset Button -->
+        <Button Grid.Row="2"
+                Text="Reset Game"
+                Clicked="OnResetClicked"
+                BackgroundColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"
+                TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PageBackgroundColor}}"
+                CornerRadius="25"
+                HeightRequest="50"
+                FontAttributes="Bold"
+                Margin="0,0,0,20"/>
+
+    </Grid>
+
+    <ContentPage.Resources>
+        <Style x:Key="GameButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PageBackgroundColor}}"/>
+            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"/>
+            <Setter Property="FontSize" Value="40"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Padding" Value="0"/>
+        </Style>
+    </ContentPage.Resources>
+</ContentPage>

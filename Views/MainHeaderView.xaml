@@ -43,6 +43,9 @@
                     Stroke="Transparent"
                     StrokeShape="RoundRectangle 12"
                     WidthRequest="40">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnGameTapped" />
+                </Border.GestureRecognizers>
                 <Path Aspect="Uniform"
                       Data="{StaticResource IconSettings}"
                       Fill="{AppThemeBinding Light={StaticResource Gray600},

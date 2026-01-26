@@ -16,5 +16,10 @@ namespace TaskFlow.Views
             await ThemeIconPath.RotateTo(360, 500, Easing.CubicOut);
             ThemeIconPath.Rotation = 0;
         }
+
+        private async void OnGameTapped(object sender, EventArgs e)
+        {
+            await Shell.Current.Navigation.PushModalAsync(new Views.GamePage());
+        }
     }
 }
