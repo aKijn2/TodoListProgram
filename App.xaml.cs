@@ -19,13 +19,15 @@
             var window = new Window(new AppShell());
 
 #if WINDOWS
-            // Set fixed window size like a small mobile phone (360x640 is common)
-            window.Width = 400;
-            window.Height = 700;
-            window.MinimumWidth = 400;
-            window.MinimumHeight = 700;
-            window.MaximumWidth = 400;
-            window.MaximumHeight = 700;
+            // Set desktop window size
+            window.Width = 1200;
+            window.Height = 800;
+            window.MinimumWidth = 800;
+            window.MinimumHeight = 600;
+            
+            // Allow resizing (remove max constraints)
+            // window.MaximumWidth = double.PositiveInfinity;
+            // window.MaximumHeight = double.PositiveInfinity;
 
             // Center window
             var displayInfo = DeviceDisplay.Current.MainDisplayInfo;
