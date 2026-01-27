@@ -156,5 +156,9 @@
         <!--  SETTINGS OVERLAY  -->
         <views:SettingsOverlayView />
 
+        <!-- Custom Delete Confirmation Overlay -->
+        <views:DeleteConfirmationView Grid.RowSpan="2"
+                                      Grid.ColumnSpan="2"
+                                      ZIndex="999" />
     </Grid>
 </ContentPage>

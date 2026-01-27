@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:TaskFlow.ViewModels"
+             x:Class="TaskFlow.Views.DeleteConfirmationView"
+             x:DataType="viewmodels:TaskListViewModel">
+    
+    <Grid BackgroundColor="#66000000"
+          IsVisible="{Binding IsDeleteConfirmationVisible}"
+          InputTransparent="False">
+        
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding CancelDeleteCommand}" />
+        </Grid.GestureRecognizers>
+
+        <Border BackgroundColor="{AppThemeBinding Light={StaticResource White},
+                                                  Dark={StaticResource CardBackgroundColor}}"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                StrokeShape="RoundRectangle 20"
+                StrokeThickness="0"
+                WidthRequest="300"
+                Padding="24">
+            
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer />
+            </Border.GestureRecognizers>
+
+            <VerticalStackLayout Spacing="20">
+                <!-- Icon -->
+                <Border HeightRequest="50"
+                        WidthRequest="50"
+                        StrokeShape="RoundRectangle 25"
+                        BackgroundColor="{AppThemeBinding Light=#FFEBEE, Dark=#3E2723}"
+                        HorizontalOptions="Center"
+                        StrokeThickness="0">
+                    <Label Text="!"
+                           TextColor="{AppThemeBinding Light=#D32F2F, Dark=#FF5252}"
+                           FontSize="24"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"/>
+                </Border>
+
+                <!-- Title -->
+                <Label Text="Delete Task?"
+                       FontSize="20"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       TextColor="{AppThemeBinding Light={StaticResource Black},
+                                                   Dark={StaticResource PrimaryTextColor}}"/>
+
+                <!-- Message -->
+                <Label Text="Are you sure you want to delete this task? This action cannot be undone."
+                       FontSize="14"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray600},
+                                                   Dark={StaticResource SecondaryTextColor}}"/>
+
+                <!-- Buttons -->
+                <Grid ColumnDefinitions="*,*" 
+                      ColumnSpacing="12"
+                      Margin="0,10,0,0">
+                    
+                    <Button Grid.Column="0"
+                            Text="Cancel"
+                            Command="{Binding CancelDeleteCommand}"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource Gray100},
+                                                              Dark={StaticResource GlassColor}}"
+                            TextColor="{AppThemeBinding Light={StaticResource Black},
+                                                        Dark={StaticResource PrimaryTextColor}}"
+                            CornerRadius="12"
+                            HeightRequest="44"
+                            FontSize="14"
+                            FontAttributes="Bold"
+                            Padding="0"/>
+
+                    <Button Grid.Column="1"
+                            Text="Delete"
+                            Command="{Binding ConfirmDeleteCommand}"
+                            BackgroundColor="{AppThemeBinding Light=#D32F2F, Dark=#FF5252}"
+                            TextColor="White"
+                            CornerRadius="12"
+                            HeightRequest="44"
+                            FontSize="14"
+                            FontAttributes="Bold"
+                            Padding="0"/>
+                </Grid>
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+</ContentView>

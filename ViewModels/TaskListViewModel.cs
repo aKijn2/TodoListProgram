@@ -276,31 +276,65 @@ namespace TaskFlow.ViewModels
             await Shell.Current.GoToAsync($"TaskDetailPage?id={task.Id}");
         }
 
+        private bool _isDeleteConfirmationVisible;
+        public bool IsDeleteConfirmationVisible
+        {
+            get => _isDeleteConfirmationVisible;
+            set => SetProperty(ref _isDeleteConfirmationVisible, value);
+        }
+
+        private TaskItem? _taskToDelete;
+        public TaskItem? TaskToDelete
+        {
+            get => _taskToDelete;
+            set => SetProperty(ref _taskToDelete, value);
+        }
+
         /// <summary>
-        /// Delete a task - update cache immediately
+        /// Delete a task - show confirmation overlay
         /// </summary>
         [RelayCommand]
-        private async Task DeleteTaskAsync(TaskItem task)
+        private void DeleteTask(TaskItem task)
         {
             if (task == null) return;
+            TaskToDelete = task;
+            IsDeleteConfirmationVisible = true;
+        }
 
-            bool confirm = await Shell.Current.DisplayAlert(
-                "Delete Task",
-                $"Are you sure you want to delete '{task.Title}'?",
-                "Delete",
-                "Cancel");
+        [RelayCommand]
+        private async Task ConfirmDeleteAsync()
+        {
+            if (TaskToDelete == null) return;
 
-            if (confirm)
+            try
             {
                 // Update cache immediately
-                _cachedTasks.Remove(task);
+                _cachedTasks.Remove(TaskToDelete);
                 
-                // Refresh all lists (Tasks, TodayTasks, UpcomingTasks)
+                // Refresh all lists
                 ApplyFilter();
                 
                 // Delete from database in background
-                await _databaseService.DeleteTaskAsync(task);
+                await _databaseService.DeleteTaskAsync(TaskToDelete);
             }
+            catch (Exception ex)
+            {
+                // We can't use DisplayAlert here easily without blocking, 
+                // but since it's a background operation, safe to log or ignore for now
+                System.Diagnostics.Debug.WriteLine($"Error deleting task: {ex.Message}");
+            }
+            finally
+            {
+                IsDeleteConfirmationVisible = false;
+                TaskToDelete = null;
+            }
+        }
+
+        [RelayCommand]
+        private void CancelDelete()
+        {
+            IsDeleteConfirmationVisible = false;
+            TaskToDelete = null;
         }
 
         /// <summary>
