@@ -13,7 +13,10 @@
         <Grid Grid.Row="0" 
               ColumnDefinitions="Auto,*,Auto" 
               Padding="20,16"
-              BackgroundColor="Transparent">
+              BackgroundColor="Transparent"
+              MaximumWidthRequest="800"
+              HorizontalOptions="Center"
+              WidthRequest="{Binding Width, Source={RelativeSource AncestorType={x:Type ContentPage}}}">
             
             <!-- Cancel Button -->
             <Border Grid.Column="0"
@@ -57,7 +60,11 @@
 
         <!-- SCROLLING FORM CONTENT -->
         <ScrollView Grid.Row="1">
-            <VerticalStackLayout Padding="20" Spacing="20">
+            <VerticalStackLayout Padding="20" 
+                                 Spacing="20"
+                                 MaximumWidthRequest="800"
+                                 HorizontalOptions="Center"
+                                 WidthRequest="{Binding Width, Source={RelativeSource AncestorType={x:Type ContentPage}}}">
                 
                 <!-- TASK TITLE -->
             <VerticalStackLayout Spacing="8">
