@@ -26,6 +26,18 @@
             window.MinimumHeight = 700;
             window.MaximumWidth = 400;
             window.MaximumHeight = 700;
+
+            // Center window
+            var displayInfo = DeviceDisplay.Current.MainDisplayInfo;
+            if (displayInfo.Width > 0 && displayInfo.Height > 0)
+            {
+                var density = displayInfo.Density;
+                var screenWidth = displayInfo.Width / density;
+                var screenHeight = displayInfo.Height / density;
+
+                window.X = (screenWidth - window.Width) / 2;
+                window.Y = (screenHeight - window.Height) / 2;
+            }
 #endif
 
             return window;
