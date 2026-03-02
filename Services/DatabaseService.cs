@@ -52,6 +52,17 @@ namespace TaskFlow.Services
             _database = new SQLiteAsyncConnection(_dbPath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create | SQLiteOpenFlags.SharedCache);
             await _database.CreateTableAsync<TaskItem>();
             await _database.CreateTableAsync<SubTaskItem>();
+
+            // Schema migration: add ParentSubTaskId column if this is an existing DB
+            try
+            {
+                await _database.ExecuteAsync(
+                    "ALTER TABLE SubTasks ADD COLUMN ParentSubTaskId INTEGER NOT NULL DEFAULT 0");
+            }
+            catch
+            {
+                // Column already exists — safe to ignore
+            }
         }
 
         #region Task Operations
@@ -66,7 +77,7 @@ namespace TaskFlow.Services
             
             foreach (var task in tasks)
             {
-                task.SubTasks = await GetSubTasksAsync(task.Id);
+                task.SubTasks = await GetAllSubTasksForTaskAsync(task.Id);
             }
             
             return tasks;
@@ -82,10 +93,18 @@ namespace TaskFlow.Services
             
             if (task != null)
             {
-                task.SubTasks = await GetSubTasksAsync(task.Id);
+                task.SubTasks = await GetAllSubTasksForTaskAsync(task.Id);
             }
             
             return task;
+        }
+
+        /// <summary>
+        /// Get ALL subtasks for a task (top-level only; children loaded separately)
+        /// </summary>
+        private async Task<List<SubTaskItem>> GetAllSubTasksForTaskAsync(int taskId)
+        {
+            return await GetSubTasksAsync(taskId);
         }
 
         /// <summary>
@@ -101,7 +120,7 @@ namespace TaskFlow.Services
             
             foreach (var task in tasks)
             {
-                task.SubTasks = await GetSubTasksAsync(task.Id);
+                task.SubTasks = await GetAllSubTasksForTaskAsync(task.Id);
             }
             
             return tasks;
@@ -129,12 +148,12 @@ namespace TaskFlow.Services
         }
 
         /// <summary>
-        /// Delete a task and all its subtasks
+        /// Delete a task and all its subtasks (including child sub-subtasks)
         /// </summary>
         public async Task<int> DeleteTaskAsync(TaskItem task)
         {
             await InitAsync();
-            // Delete all subtasks first
+            // Delete all subtasks and sub-subtasks for this task
             await _database!.ExecuteAsync("DELETE FROM SubTasks WHERE ParentTaskId = ?", task.Id);
             return await _database.DeleteAsync(task);
         }
@@ -144,13 +163,25 @@ namespace TaskFlow.Services
         #region SubTask Operations
 
         /// <summary>
-        /// Get subtasks for a task
+        /// Get top-level subtasks for a task (direct children only)
         /// </summary>
         public async Task<List<SubTaskItem>> GetSubTasksAsync(int taskId)
         {
             await InitAsync();
             return await _database!.Table<SubTaskItem>()
-                .Where(s => s.ParentTaskId == taskId)
+                .Where(s => s.ParentTaskId == taskId && s.ParentSubTaskId == 0)
+                .OrderBy(s => s.CreatedAt)
+                .ToListAsync();
+        }
+
+        /// <summary>
+        /// Get child sub-subtasks for a given subtask
+        /// </summary>
+        public async Task<List<SubTaskItem>> GetChildSubTasksAsync(int subTaskId)
+        {
+            await InitAsync();
+            return await _database!.Table<SubTaskItem>()
+                .Where(s => s.ParentSubTaskId == subTaskId)
                 .OrderBy(s => s.CreatedAt)
                 .ToListAsync();
         }
@@ -176,12 +207,14 @@ namespace TaskFlow.Services
         }
 
         /// <summary>
-        /// Delete a subtask
+        /// Delete a subtask and all its children
         /// </summary>
         public async Task<int> DeleteSubTaskAsync(SubTaskItem subTask)
         {
             await InitAsync();
-            return await _database!.DeleteAsync(subTask);
+            // Cascade-delete any children of this subtask first
+            await _database!.ExecuteAsync("DELETE FROM SubTasks WHERE ParentSubTaskId = ?", subTask.Id);
+            return await _database.DeleteAsync(subTask);
         }
 
         /// <summary>

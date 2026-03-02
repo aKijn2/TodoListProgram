@@ -101,8 +101,8 @@ namespace TaskFlow.ViewModels
             set => SetProperty(ref _minimumDate, value);
         }
 
-        private ObservableCollection<SubTaskItem> _subTasks = new();
-        public ObservableCollection<SubTaskItem> SubTasks
+        private ObservableCollection<SubTaskViewModel> _subTasks = new();
+        public ObservableCollection<SubTaskViewModel> SubTasks
         {
             get => _subTasks;
             set => SetProperty(ref _subTasks, value);
@@ -163,7 +163,12 @@ namespace TaskFlow.ViewModels
                     SubTasks.Clear();
                     foreach (var subTask in task.SubTasks)
                     {
-                        SubTasks.Add(subTask);
+                        var vm = SubTaskViewModel.FromModel(subTask);
+                        // Load one level of children
+                        var children = await _databaseService.GetChildSubTasksAsync(subTask.Id);
+                        foreach (var child in children)
+                            vm.Children.Add(SubTaskViewModel.FromModel(child));
+                        SubTasks.Add(vm);
                     }
                 }
             }
@@ -248,7 +253,7 @@ namespace TaskFlow.ViewModels
         }
 
         /// <summary>
-        /// Add a new subtask
+        /// Add a new top-level subtask
         /// </summary>
         [RelayCommand]
         private async Task AddSubTaskAsync()
@@ -277,60 +282,99 @@ namespace TaskFlow.ViewModels
                 Title = "Edit Task";
             }
 
-            var subTask = new SubTaskItem
+            var subTaskModel = new SubTaskItem
             {
                 ParentTaskId = TaskId,
+                ParentSubTaskId = 0,
                 Title = NewSubTaskTitle.Trim(),
                 IsCompleted = false
             };
 
-            await _databaseService.SaveSubTaskAsync(subTask);
-            SubTasks.Add(subTask);
+            await _databaseService.SaveSubTaskAsync(subTaskModel);
+            var vm = SubTaskViewModel.FromModel(subTaskModel);
+            SubTasks.Add(vm);
             NewSubTaskTitle = string.Empty;
         }
 
         /// <summary>
-        /// Toggle subtask completion
+        /// Add a child sub-subtask to an existing subtask
         /// </summary>
         [RelayCommand]
-        private async Task ToggleSubTaskAsync(SubTaskItem subTask)
+        private async Task AddChildSubTaskAsync(SubTaskViewModel parent)
         {
-            if (subTask == null) return;
+            if (parent == null || string.IsNullOrWhiteSpace(parent.NewChildTitle)) return;
 
-            // Find index first
-            var index = SubTasks.IndexOf(subTask);
-            if (index < 0) return;
-
-            // Toggle state
-            subTask.IsCompleted = !subTask.IsCompleted;
-            
-            // Save to database
-            await _databaseService.SaveSubTaskAsync(subTask);
-            
-            // Create a new instance to force UI update (since model doesn't implement INotifyPropertyChanged)
-            var updatedSubTask = new SubTaskItem
+            var childModel = new SubTaskItem
             {
-                Id = subTask.Id,
-                ParentTaskId = subTask.ParentTaskId,
-                Title = subTask.Title,
-                IsCompleted = subTask.IsCompleted,
-                CreatedAt = subTask.CreatedAt
+                ParentTaskId = parent.ParentTaskId,
+                ParentSubTaskId = parent.Id,
+                Title = parent.NewChildTitle.Trim(),
+                IsCompleted = false
             };
 
-            // Replace the item in the collection
-            SubTasks[index] = updatedSubTask;
+            await _databaseService.SaveSubTaskAsync(childModel);
+            parent.Children.Add(SubTaskViewModel.FromModel(childModel));
+            parent.NewChildTitle = string.Empty;
         }
 
         /// <summary>
-        /// Delete a subtask
+        /// Toggle subtask or sub-subtask completion
         /// </summary>
         [RelayCommand]
-        private async Task DeleteSubTaskAsync(SubTaskItem subTask)
+        private async Task ToggleSubTaskAsync(SubTaskViewModel subTask)
+        {
+            if (subTask == null) return;
+            subTask.IsCompleted = !subTask.IsCompleted;
+            await _databaseService.SaveSubTaskAsync(subTask.ToModel());
+        }
+
+        /// <summary>
+        /// Edit a subtask or sub-subtask title via a prompt
+        /// </summary>
+        [RelayCommand]
+        private async Task EditSubTaskAsync(SubTaskViewModel subTask)
         {
             if (subTask == null) return;
 
-            await _databaseService.DeleteSubTaskAsync(subTask);
+            string? result = await Shell.Current.DisplayPromptAsync(
+                "Edit Subtask",
+                "Update the subtask title:",
+                initialValue: subTask.Title,
+                maxLength: 200,
+                keyboard: Keyboard.Text);
+
+            if (result == null || string.IsNullOrWhiteSpace(result)) return;
+
+            subTask.Title = result.Trim();
+            await _databaseService.SaveSubTaskAsync(subTask.ToModel());
+        }
+
+        /// <summary>
+        /// Delete a top-level subtask (and its children) from the list
+        /// </summary>
+        [RelayCommand]
+        private async Task DeleteSubTaskAsync(SubTaskViewModel subTask)
+        {
+            if (subTask == null) return;
+            await _databaseService.DeleteSubTaskAsync(subTask.ToModel());
             SubTasks.Remove(subTask);
+        }
+
+        /// <summary>
+        /// Delete a child sub-subtask from its parent's Children collection
+        /// </summary>
+        [RelayCommand]
+        private async Task DeleteChildSubTaskAsync(SubTaskViewModel child)
+        {
+            if (child == null) return;
+
+            // Find the parent that owns this child
+            var parent = SubTasks.FirstOrDefault(s => s.Children.Contains(child));
+            if (parent != null)
+            {
+                await _databaseService.DeleteSubTaskAsync(child.ToModel());
+                parent.Children.Remove(child);
+            }
         }
 
 
