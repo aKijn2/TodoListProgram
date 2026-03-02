@@ -373,6 +373,30 @@ namespace TaskFlow.ViewModels
             IsUpcomingExpanded = !IsUpcomingExpanded;
         }
 
+        /// <summary>
+        /// Toggle subtask expand/collapse panel on a task card
+        /// </summary>
+        [RelayCommand]
+        private void ToggleExpand(TaskItem task)
+        {
+            if (task == null) return;
+            task.IsExpanded = !task.IsExpanded;
+        }
+
+        /// <summary>
+        /// Toggle a subtask's completion directly from the task list
+        /// </summary>
+        [RelayCommand]
+        private async Task ToggleSubTaskInListAsync(SubTaskItem subTask)
+        {
+            if (subTask == null) return;
+            subTask.IsCompleted = !subTask.IsCompleted;
+            // Notify the parent task so SubTaskProgress updates
+            var parentTask = _cachedTasks.FirstOrDefault(t => t.SubTasks.Contains(subTask));
+            parentTask?.NotifySubTasksChanged();
+            await _databaseService.SaveSubTaskAsync(subTask);
+        }
+
         [RelayCommand]
         private void ToggleTheme()
         {

@@ -105,8 +105,17 @@ namespace TaskFlow.ViewModels
         public ObservableCollection<SubTaskViewModel> SubTasks
         {
             get => _subTasks;
-            set => SetProperty(ref _subTasks, value);
+            set
+            {
+                if (SetProperty(ref _subTasks, value))
+                {
+                    _subTasks.CollectionChanged += (_, _) => OnPropertyChanged(nameof(HasSubTasks));
+                    OnPropertyChanged(nameof(HasSubTasks));
+                }
+            }
         }
+
+        public bool HasSubTasks => SubTasks.Count > 0;
 
         private string _newSubTaskTitle = string.Empty;
         public string NewSubTaskTitle
@@ -133,6 +142,7 @@ namespace TaskFlow.ViewModels
         {
             _databaseService = databaseService;
             Title = "New Task";
+            _subTasks.CollectionChanged += (_, _) => OnPropertyChanged(nameof(HasSubTasks));
         }
 
         /// <summary>
@@ -396,6 +406,16 @@ namespace TaskFlow.ViewModels
                 SelectedDueDate = DateTime.Today;
                 DueDate = SelectedDueDate;
             }
+        }
+
+        /// <summary>
+        /// Set status index from segmented pill buttons
+        /// </summary>
+        [RelayCommand]
+        private void SetStatusIndex(string indexParam)
+        {
+            if (int.TryParse(indexParam, out int idx))
+                SelectedStatusIndex = idx;
         }
 
         /// <summary>

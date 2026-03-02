@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:TaskFlow.ViewModels"
@@ -7,439 +7,667 @@
              x:DataType="viewmodels:TaskDetailViewModel"
              x:Name="DetailPage"
              Title="{Binding Title}"
-             BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PageBackgroundColor}}">
+             BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource PageBackgroundColor}}">
 
-    <Grid RowDefinitions="Auto, *" RowSpacing="0">
-        <!-- HEADER / TOOLBAR -->
-        <Grid Grid.Row="0" 
-              ColumnDefinitions="Auto,*,Auto" 
-              Padding="20,16"
-              BackgroundColor="Transparent"
-              MaximumWidthRequest="800"
-              HorizontalOptions="Center"
-              WidthRequest="{Binding Width, Source={RelativeSource AncestorType={x:Type ContentPage}}}">
-            
-            <!-- Cancel Button -->
-            <Border Grid.Column="0"
-                    StrokeShape="RoundRectangle 20"
-                    BackgroundColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"
-                    Stroke="Transparent"
-                    StrokeThickness="1"
-                    Padding="20,8"
-                    HorizontalOptions="Start">
-                <Border.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding CancelCommand}"/>
-                </Border.GestureRecognizers>
-                <Label Text="Cancel"
-                       TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PageBackgroundColor}}"
+    <Grid RowDefinitions="Auto,*" RowSpacing="0">
+
+        <!-- HEADER -->
+        <Border Grid.Row="0"
+                BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource CardBackgroundColor}}"
+                Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource BorderColor}}"
+                StrokeThickness="0,0,0,1"
+                StrokeShape="Rectangle"
+                Padding="20,14">
+            <Grid ColumnDefinitions="Auto,*,Auto"
+                  MaximumWidthRequest="820"
+                  HorizontalOptions="Center"
+                  WidthRequest="{Binding Width, Source={RelativeSource AncestorType={x:Type ContentPage}}}">
+
+                <!-- Cancel -->
+                <Border Grid.Column="0"
+                        StrokeShape="RoundRectangle 22"
+                        Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource BorderColor}}"
+                        StrokeThickness="1"
+                        BackgroundColor="Transparent"
+                        Padding="18,8">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding CancelCommand}" />
+                    </Border.GestureRecognizers>
+                    <Label Text="Cancel"
+                           FontFamily="Inter"
+                           FontSize="14"
+                           TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center" />
+                </Border>
+
+                <!-- Title -->
+                <Label Grid.Column="1"
+                       Text="{Binding Title}"
                        FontFamily="Inter"
                        FontAttributes="Bold"
-                       FontSize="14"
+                       FontSize="17"
+                       HorizontalOptions="Center"
                        VerticalOptions="Center"
-                       HorizontalOptions="Center"/>
-            </Border>
+                       TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}" />
 
-            <!-- Save Button -->
-            <Border Grid.Column="2" 
-                    StrokeShape="RoundRectangle 20"
-                    BackgroundColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"
-                    Stroke="Transparent"
-                    Padding="20,8"
-                    HorizontalOptions="End">
-                <Border.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding SaveCommand}"/>
-                </Border.GestureRecognizers>
-                <Label Text="Save"
-                       TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PageBackgroundColor}}"
-                       FontFamily="Inter"
-                       FontAttributes="Bold"
-                       FontSize="14"
-                       VerticalOptions="Center"
-                       HorizontalOptions="Center"/>
-            </Border>
-        </Grid>
+                <!-- Save -->
+                <Border Grid.Column="2"
+                        StrokeShape="RoundRectangle 22"
+                        Stroke="Transparent"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"
+                        Padding="18,8">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SaveCommand}" />
+                    </Border.GestureRecognizers>
+                    <Label Text="Save"
+                           FontFamily="Inter"
+                           FontAttributes="Bold"
+                           FontSize="14"
+                           TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PageBackgroundColor}}"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center" />
+                </Border>
+            </Grid>
+        </Border>
 
-        <!-- SCROLLING FORM CONTENT -->
+        <!-- FORM -->
         <ScrollView Grid.Row="1">
-            <VerticalStackLayout Padding="20" 
-                                 Spacing="20"
-                                 MaximumWidthRequest="800"
+            <VerticalStackLayout Padding="20"
+                                 Spacing="16"
+                                 MaximumWidthRequest="820"
                                  HorizontalOptions="Center"
                                  WidthRequest="{Binding Width, Source={RelativeSource AncestorType={x:Type ContentPage}}}">
-                
-                <!-- TASK TITLE -->
-            <VerticalStackLayout Spacing="8">
-                <Label Text="TITLE" 
-                       FontSize="11" 
-                       FontAttributes="Bold"
-                       FontFamily="Inter"
-                       TextColor="{StaticResource SecondaryTextColor}"
-                       CharacterSpacing="1"/>
-                <Border BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource CardBackgroundColor}}"
-                        StrokeShape="RoundRectangle 12"
-                        Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource BorderColor}}"
-                        StrokeThickness="1"
-                        Padding="14,12">
-                    <Entry Text="{Binding TaskTitle}"
-                           Placeholder="Enter task title..."
-                           PlaceholderColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource PlaceholderColor}}"
-                           TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"
-                           FontSize="16"
+
+                <!-- TITLE -->
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="TITLE"
+                           FontSize="11"
+                           FontAttributes="Bold"
                            FontFamily="Inter"
-                           BackgroundColor="Transparent"/>
-                </Border>
-            </VerticalStackLayout>
-            
-            <!-- DESCRIPTION -->
-            <VerticalStackLayout Spacing="8">
-                <Label Text="DESCRIPTION" 
-                       FontSize="11" 
-                       FontAttributes="Bold"
-                       FontFamily="Inter"
-                       TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}"
-                       CharacterSpacing="1"/>
-                <Border BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource CardBackgroundColor}}"
-                        StrokeShape="RoundRectangle 12"
-                        Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource BorderColor}}"
-                        StrokeThickness="1"
-                        Padding="14,12"
-                        MinimumHeightRequest="100">
-                    <Editor Text="{Binding Description}"
-                            Placeholder="Enter description..."
-                            PlaceholderColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource PlaceholderColor}}"
-                            TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"
-                            FontSize="14"
-                            FontFamily="Inter"
-                            AutoSize="TextChanges"
-                            BackgroundColor="Transparent"/>
-                </Border>
-            </VerticalStackLayout>
-            
-            <!-- STATUS -->
-            <VerticalStackLayout Spacing="8">
-                <Label Text="STATUS" 
-                       FontSize="11" 
-                       FontAttributes="Bold"
-                       FontFamily="Inter"
-                       TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}"
-                       CharacterSpacing="1"/>
-                <Border BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource CardBackgroundColor}}"
-                        StrokeShape="RoundRectangle 12"
-                        Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource BorderColor}}"
-                        StrokeThickness="1"
-                        Padding="14,8">
-                    <Grid ColumnDefinitions="Auto,*">
-                        <!-- Status Icon -->
-                        <Label Grid.Column="0" 
+                           CharacterSpacing="1.2"
+                           TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource SecondaryTextColor}}" />
+                    <Border BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource CardBackgroundColor}}"
+                            StrokeShape="RoundRectangle 14"
+                            Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource BorderColor}}"
+                            StrokeThickness="1"
+                            Padding="16,13">
+                        <Entry Text="{Binding TaskTitle}"
+                               Placeholder="What needs to be done?"
+                               PlaceholderColor="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource PlaceholderColor}}"
+                               TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"
                                FontSize="16"
-                               Margin="0,0,12,0"
-                               VerticalOptions="Center">
-                            <Label.Triggers>
-                                <DataTrigger TargetType="Label" Binding="{Binding SelectedStatusIndex}" Value="0">
-                                    <Setter Property="Text" Value="○"/>
-                                    <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}"/>
-                                </DataTrigger>
-                                <DataTrigger TargetType="Label" Binding="{Binding SelectedStatusIndex}" Value="1">
-                                    <Setter Property="Text" Value="◐"/>
-                                    <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"/>
-                                </DataTrigger>
-                                <DataTrigger TargetType="Label" Binding="{Binding SelectedStatusIndex}" Value="2">
-                                    <Setter Property="Text" Value="●"/>
-                                    <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"/>
-                                </DataTrigger>
-                            </Label.Triggers>
-                        </Label>
-                        <Picker Grid.Column="1"
-                                SelectedIndex="{Binding SelectedStatusIndex}"
-                                TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"
-                                BackgroundColor="Transparent">
-                            <Picker.ItemsSource>
-                                <x:Array Type="{x:Type x:String}">
-                                    <x:String>To Do</x:String>
-                                    <x:String>In Progress</x:String>
-                                    <x:String>Completed</x:String>
-                                </x:Array>
-                            </Picker.ItemsSource>
-                        </Picker>
-                    </Grid>
-                </Border>
-            </VerticalStackLayout>
-            
-            <!-- DUE DATE -->
-            <VerticalStackLayout Spacing="8">
-                <Label Text="DUE DATE" 
-                       FontSize="11" 
-                       FontAttributes="Bold"
-                       FontFamily="Inter"
-                       TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}"
-                       CharacterSpacing="1"/>
-                
-                <Border BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource CardBackgroundColor}}"
-                        StrokeShape="RoundRectangle 12"
-                        Stroke="Transparent"
-                        Padding="12,8">
-                    <HorizontalStackLayout Spacing="12">
-                        <CheckBox IsChecked="{Binding HasDueDate}"
-                                  Color="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"/>
-                        <Label Text="Set a due date"
-                               FontSize="14"
                                FontFamily="Inter"
-                               TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"
-                               VerticalOptions="Center"/>
-                    </HorizontalStackLayout>
-                </Border>
-                
-                <Border BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource CardBackgroundColor}}"
-                        StrokeShape="RoundRectangle 12"
-                        Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource BorderColor}}"
-                        StrokeThickness="1"
-                        Padding="14,12"
-                        IsVisible="{Binding HasDueDate}">
-                    <DatePicker Date="{Binding SelectedDueDate}"
-                                MinimumDate="{Binding MinimumDate}"
+                               FontAttributes="Bold"
+                               BackgroundColor="Transparent" />
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- DESCRIPTION -->
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="DESCRIPTION"
+                           FontSize="11"
+                           FontAttributes="Bold"
+                           FontFamily="Inter"
+                           CharacterSpacing="1.2"
+                           TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource SecondaryTextColor}}" />
+                    <Border BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource CardBackgroundColor}}"
+                            StrokeShape="RoundRectangle 14"
+                            Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource BorderColor}}"
+                            StrokeThickness="1"
+                            Padding="16,13"
+                            MinimumHeightRequest="90">
+                        <Editor Text="{Binding Description}"
+                                Placeholder="Add notes or details..."
+                                PlaceholderColor="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource PlaceholderColor}}"
                                 TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"
-                                BackgroundColor="Transparent"/>
-                </Border>
-            </VerticalStackLayout>
-            
-            <!-- SUBTASKS -->
-            <VerticalStackLayout Spacing="10">
-                <Label Text="SUBTASKS" 
-                       FontSize="11" 
-                       FontAttributes="Bold"
-                       FontFamily="Inter"
-                       TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}"
-                       CharacterSpacing="1"/>
-                
-                <!-- Add Subtask -->
-                <Border BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource CardBackgroundColor}}"
-                        StrokeShape="RoundRectangle 12"
-                        Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource BorderColor}}"
-                        StrokeThickness="1"
-                        Padding="12">
-                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
-                        <Entry Grid.Column="0"
-                               Text="{Binding NewSubTaskTitle}"
-                               Placeholder="Add a subtask..."
-                               PlaceholderColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource PlaceholderColor}}"
-                               TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"
-                               FontFamily="Inter"
-                               BackgroundColor="Transparent"
-                               ReturnCommand="{Binding AddSubTaskCommand}"/>
-                        <Border Grid.Column="1"
-                                StrokeShape="RoundRectangle 8"
-                                Stroke="Transparent"
-                                BackgroundColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"
-                                Padding="14,8">
-                            <Border.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding AddSubTaskCommand}"/>
-                            </Border.GestureRecognizers>
-                            <Label Text="Add" 
-                                   TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PageBackgroundColor}}" 
-                                   FontAttributes="Bold"
-                                   FontFamily="Inter"
-                                   FontSize="12"
-                                   VerticalOptions="Center"/>
-                        </Border>
-                    </Grid>
-                </Border>
-                
-                <!-- Subtask List -->
-                <VerticalStackLayout BindableLayout.ItemsSource="{Binding SubTasks}" Spacing="8">
-                    <BindableLayout.ItemTemplate>
-                        <DataTemplate x:DataType="viewmodels:SubTaskViewModel">
-                            <Border BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource CardBackgroundColor}}"
+                                FontSize="14"
+                                FontFamily="Inter"
+                                AutoSize="TextChanges"
+                                BackgroundColor="Transparent" />
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- STATUS -->
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="STATUS"
+                           FontSize="11"
+                           FontAttributes="Bold"
+                           FontFamily="Inter"
+                           CharacterSpacing="1.2"
+                           TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource SecondaryTextColor}}" />
+
+                    <Border BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource CardBackgroundColor}}"
+                            StrokeShape="RoundRectangle 14"
+                            Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource BorderColor}}"
+                            StrokeThickness="1"
+                            Padding="10">
+                        <Grid ColumnDefinitions="*,*,*" ColumnSpacing="6">
+
+                            <!-- To Do -->
+                            <Border Grid.Column="0"
                                     StrokeShape="RoundRectangle 10"
-                                    Stroke="Transparent"
-                                    Padding="12">
-                                <VerticalStackLayout Spacing="8">
-
-                                    <!-- ── Main subtask row ── -->
-                                    <Grid ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="10">
-
-                                        <!-- Checkbox (tap to toggle completion) -->
-                                        <Border Grid.Column="0"
-                                                BackgroundColor="Transparent" Stroke="Transparent"
-                                                StrokeShape="RoundRectangle 5" Padding="0">
-                                            <Border.GestureRecognizers>
-                                                <TapGestureRecognizer
-                                                    Command="{Binding BindingContext.ToggleSubTaskCommand, Source={x:Reference DetailPage}}"
-                                                    CommandParameter="{Binding .}"/>
-                                            </Border.GestureRecognizers>
-                                            <CheckBox IsChecked="{Binding IsCompleted}"
-                                                      Color="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"
-                                                      InputTransparent="True"/>
-                                        </Border>
-
-                                        <!-- Title -->
-                                        <Label Grid.Column="1"
-                                               Text="{Binding Title}"
-                                               TextDecorations="{Binding TitleDecoration}"
-                                               FontSize="14" FontFamily="Inter"
-                                               TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"
-                                               VerticalOptions="Center">
-                                            <Label.Triggers>
-                                                <DataTrigger TargetType="Label" Binding="{Binding IsCompleted}" Value="True">
-                                                    <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}"/>
-                                                </DataTrigger>
-                                            </Label.Triggers>
-                                        </Label>
-
-                                        <!-- Edit button -->
-                                        <Border Grid.Column="2"
-                                                WidthRequest="30" HeightRequest="30"
-                                                StrokeShape="RoundRectangle 6"
-                                                BackgroundColor="Transparent" Stroke="Transparent">
-                                            <Border.GestureRecognizers>
-                                                <TapGestureRecognizer
-                                                    Command="{Binding BindingContext.EditSubTaskCommand, Source={x:Reference DetailPage}}"
-                                                    CommandParameter="{Binding .}"/>
-                                            </Border.GestureRecognizers>
-                                            <Label Text="✎" FontSize="14"
-                                                   TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}"
-                                                   HorizontalOptions="Center" VerticalOptions="Center"/>
-                                        </Border>
-
-                                        <!-- Delete button -->
-                                        <Border Grid.Column="3"
-                                                WidthRequest="30" HeightRequest="30"
-                                                StrokeShape="RoundRectangle 6"
-                                                BackgroundColor="Transparent" Stroke="Transparent">
-                                            <Border.GestureRecognizers>
-                                                <TapGestureRecognizer
-                                                    Command="{Binding BindingContext.DeleteSubTaskCommand, Source={x:Reference DetailPage}}"
-                                                    CommandParameter="{Binding .}"/>
-                                            </Border.GestureRecognizers>
-                                            <Label Text="×" FontSize="16"
-                                                   TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}"
-                                                   HorizontalOptions="Center" VerticalOptions="Center"/>
-                                        </Border>
-
-                                    </Grid>
-
-                                    <!-- ── Child sub-subtasks list ── -->
-                                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Children}"
-                                                         Margin="30,0,0,0" Spacing="4">
-                                        <BindableLayout.ItemTemplate>
-                                            <DataTemplate x:DataType="viewmodels:SubTaskViewModel">
-                                                <Grid ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="8" Padding="0,2">
-
-                                                    <!-- Toggle child -->
-                                                    <Border Grid.Column="0"
-                                                            BackgroundColor="Transparent" Stroke="Transparent"
-                                                            StrokeShape="RoundRectangle 5" Padding="0">
-                                                        <Border.GestureRecognizers>
-                                                            <TapGestureRecognizer
-                                                                Command="{Binding BindingContext.ToggleSubTaskCommand, Source={x:Reference DetailPage}}"
-                                                                CommandParameter="{Binding .}"/>
-                                                        </Border.GestureRecognizers>
-                                                        <CheckBox IsChecked="{Binding IsCompleted}"
-                                                                  Color="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"
-                                                                  InputTransparent="True"
-                                                                  HeightRequest="28" WidthRequest="28"/>
-                                                    </Border>
-
-                                                    <!-- Child title -->
-                                                    <Label Grid.Column="1"
-                                                           Text="{Binding Title}"
-                                                           TextDecorations="{Binding TitleDecoration}"
-                                                           FontSize="13" FontFamily="Inter"
-                                                           TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"
-                                                           VerticalOptions="Center">
-                                                        <Label.Triggers>
-                                                            <DataTrigger TargetType="Label" Binding="{Binding IsCompleted}" Value="True">
-                                                                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}"/>
-                                                            </DataTrigger>
-                                                        </Label.Triggers>
-                                                    </Label>
-
-                                                    <!-- Edit child -->
-                                                    <Border Grid.Column="2"
-                                                            WidthRequest="26" HeightRequest="26"
-                                                            StrokeShape="RoundRectangle 5"
-                                                            BackgroundColor="Transparent" Stroke="Transparent">
-                                                        <Border.GestureRecognizers>
-                                                            <TapGestureRecognizer
-                                                                Command="{Binding BindingContext.EditSubTaskCommand, Source={x:Reference DetailPage}}"
-                                                                CommandParameter="{Binding .}"/>
-                                                        </Border.GestureRecognizers>
-                                                        <Label Text="✎" FontSize="12"
-                                                               TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}"
-                                                               HorizontalOptions="Center" VerticalOptions="Center"/>
-                                                    </Border>
-
-                                                    <!-- Delete child -->
-                                                    <Border Grid.Column="3"
-                                                            WidthRequest="26" HeightRequest="26"
-                                                            StrokeShape="RoundRectangle 5"
-                                                            BackgroundColor="Transparent" Stroke="Transparent">
-                                                        <Border.GestureRecognizers>
-                                                            <TapGestureRecognizer
-                                                                Command="{Binding BindingContext.DeleteChildSubTaskCommand, Source={x:Reference DetailPage}}"
-                                                                CommandParameter="{Binding .}"/>
-                                                        </Border.GestureRecognizers>
-                                                        <Label Text="×" FontSize="15"
-                                                               TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}"
-                                                               HorizontalOptions="Center" VerticalOptions="Center"/>
-                                                    </Border>
-
-                                                </Grid>
-                                            </DataTemplate>
-                                        </BindableLayout.ItemTemplate>
-                                    </VerticalStackLayout>
-
-                                    <!-- ── Add sub-subtask row ── -->
-                                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8" Margin="30,0,0,0">
-                                        <Entry Grid.Column="0"
-                                               Text="{Binding NewChildTitle}"
-                                               Placeholder="Add sub-subtask..."
-                                               PlaceholderColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource PlaceholderColor}}"
-                                               TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"
-                                               FontFamily="Inter" FontSize="12"
-                                               BackgroundColor="Transparent"/>
-                                        <Border Grid.Column="1"
-                                                StrokeShape="RoundRectangle 7" Stroke="Transparent"
-                                                BackgroundColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource BorderColor}}"
-                                                Padding="12,5">
-                                            <Border.GestureRecognizers>
-                                                <TapGestureRecognizer
-                                                    Command="{Binding BindingContext.AddChildSubTaskCommand, Source={x:Reference DetailPage}}"
-                                                    CommandParameter="{Binding .}"/>
-                                            </Border.GestureRecognizers>
-                                            <Label Text="+"
-                                                   TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"
-                                                   FontAttributes="Bold" FontSize="16"
-                                                   HorizontalOptions="Center" VerticalOptions="Center"/>
-                                        </Border>
-                                    </Grid>
-
+                                    StrokeThickness="0"
+                                    Padding="0,12">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SetStatusIndexCommand}" CommandParameter="0" />
+                                </Border.GestureRecognizers>
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border" Binding="{Binding SelectedStatusIndex}" Value="0">
+                                        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding SelectedStatusIndex}" Value="1">
+                                        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource GlassColor}}" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding SelectedStatusIndex}" Value="2">
+                                        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource GlassColor}}" />
+                                    </DataTrigger>
+                                </Border.Triggers>
+                                <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                    <Label Text="&#x25CB;"
+                                           FontSize="18"
+                                           HorizontalOptions="Center">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding SelectedStatusIndex}" Value="0">
+                                                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PageBackgroundColor}}" />
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" Binding="{Binding SelectedStatusIndex}" Value="1">
+                                                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource SecondaryTextColor}}" />
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" Binding="{Binding SelectedStatusIndex}" Value="2">
+                                                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource SecondaryTextColor}}" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                    <Label Text="To Do"
+                                           FontFamily="Inter"
+                                           FontSize="12"
+                                           FontAttributes="Bold"
+                                           HorizontalOptions="Center">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding SelectedStatusIndex}" Value="0">
+                                                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PageBackgroundColor}}" />
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" Binding="{Binding SelectedStatusIndex}" Value="1">
+                                                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}" />
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" Binding="{Binding SelectedStatusIndex}" Value="2">
+                                                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
                                 </VerticalStackLayout>
                             </Border>
-                        </DataTemplate>
-                    </BindableLayout.ItemTemplate>
+
+                            <!-- In Progress -->
+                            <Border Grid.Column="1"
+                                    StrokeShape="RoundRectangle 10"
+                                    StrokeThickness="0"
+                                    Padding="0,12">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SetStatusIndexCommand}" CommandParameter="1" />
+                                </Border.GestureRecognizers>
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border" Binding="{Binding SelectedStatusIndex}" Value="0">
+                                        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource GlassColor}}" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding SelectedStatusIndex}" Value="1">
+                                        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding SelectedStatusIndex}" Value="2">
+                                        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource GlassColor}}" />
+                                    </DataTrigger>
+                                </Border.Triggers>
+                                <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                    <Label Text="&#x25D0;"
+                                           FontSize="18"
+                                           HorizontalOptions="Center">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding SelectedStatusIndex}" Value="0">
+                                                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource SecondaryTextColor}}" />
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" Binding="{Binding SelectedStatusIndex}" Value="1">
+                                                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PageBackgroundColor}}" />
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" Binding="{Binding SelectedStatusIndex}" Value="2">
+                                                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource SecondaryTextColor}}" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                    <Label Text="In Progress"
+                                           FontFamily="Inter"
+                                           FontSize="12"
+                                           FontAttributes="Bold"
+                                           HorizontalOptions="Center">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding SelectedStatusIndex}" Value="0">
+                                                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}" />
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" Binding="{Binding SelectedStatusIndex}" Value="1">
+                                                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PageBackgroundColor}}" />
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" Binding="{Binding SelectedStatusIndex}" Value="2">
+                                                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                </VerticalStackLayout>
+                            </Border>
+
+                            <!-- Done -->
+                            <Border Grid.Column="2"
+                                    StrokeShape="RoundRectangle 10"
+                                    StrokeThickness="0"
+                                    Padding="0,12">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SetStatusIndexCommand}" CommandParameter="2" />
+                                </Border.GestureRecognizers>
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border" Binding="{Binding SelectedStatusIndex}" Value="0">
+                                        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource GlassColor}}" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding SelectedStatusIndex}" Value="1">
+                                        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource GlassColor}}" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding SelectedStatusIndex}" Value="2">
+                                        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}" />
+                                    </DataTrigger>
+                                </Border.Triggers>
+                                <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                    <Label Text="&#x25CF;"
+                                           FontSize="18"
+                                           HorizontalOptions="Center">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding SelectedStatusIndex}" Value="0">
+                                                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource SecondaryTextColor}}" />
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" Binding="{Binding SelectedStatusIndex}" Value="1">
+                                                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource SecondaryTextColor}}" />
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" Binding="{Binding SelectedStatusIndex}" Value="2">
+                                                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PageBackgroundColor}}" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                    <Label Text="Done"
+                                           FontFamily="Inter"
+                                           FontSize="12"
+                                           FontAttributes="Bold"
+                                           HorizontalOptions="Center">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding SelectedStatusIndex}" Value="0">
+                                                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}" />
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" Binding="{Binding SelectedStatusIndex}" Value="1">
+                                                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}" />
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" Binding="{Binding SelectedStatusIndex}" Value="2">
+                                                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PageBackgroundColor}}" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                </VerticalStackLayout>
+                            </Border>
+
+                        </Grid>
+                    </Border>
                 </VerticalStackLayout>
+
+                <!-- DUE DATE -->
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="DUE DATE"
+                           FontSize="11"
+                           FontAttributes="Bold"
+                           FontFamily="Inter"
+                           CharacterSpacing="1.2"
+                           TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource SecondaryTextColor}}" />
+
+                    <!-- Toggle row -->
+                    <Border BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource CardBackgroundColor}}"
+                            StrokeShape="RoundRectangle 14"
+                            Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource BorderColor}}"
+                            StrokeThickness="1"
+                            Padding="16,0">
+                        <Grid ColumnDefinitions="*,Auto" HeightRequest="52">
+                            <Label Grid.Column="0"
+                                   Text="Set a due date"
+                                   FontFamily="Inter"
+                                   FontSize="14"
+                                   TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"
+                                   VerticalOptions="Center" />
+                            <Switch Grid.Column="1"
+                                    IsToggled="{Binding HasDueDate}"
+                                    OnColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"
+                                    VerticalOptions="Center" />
+                        </Grid>
+                    </Border>
+
+                    <!-- Date picker -->
+                    <Border BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource CardBackgroundColor}}"
+                            StrokeShape="RoundRectangle 14"
+                            Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource BorderColor}}"
+                            StrokeThickness="1"
+                            Padding="16,13"
+                            IsVisible="{Binding HasDueDate}">
+                        <DatePicker Date="{Binding SelectedDueDate}"
+                                    MinimumDate="{Binding MinimumDate}"
+                                    TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"
+                                    BackgroundColor="Transparent" />
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- SUBTASKS -->
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="SUBTASKS"
+                           FontSize="11"
+                           FontAttributes="Bold"
+                           FontFamily="Inter"
+                           CharacterSpacing="1.2"
+                           TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource SecondaryTextColor}}" />
+
+                    <!-- Add subtask input -->
+                    <Border BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource CardBackgroundColor}}"
+                            StrokeShape="RoundRectangle 14"
+                            Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource BorderColor}}"
+                            StrokeThickness="1"
+                            Padding="16,0">
+                        <Grid ColumnDefinitions="*,Auto" HeightRequest="52" ColumnSpacing="12">
+                            <Entry Grid.Column="0"
+                                   Text="{Binding NewSubTaskTitle}"
+                                   Placeholder="Add a subtask..."
+                                   PlaceholderColor="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource PlaceholderColor}}"
+                                   TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"
+                                   FontFamily="Inter"
+                                   FontSize="14"
+                                   BackgroundColor="Transparent"
+                                   ReturnCommand="{Binding AddSubTaskCommand}"
+                                   VerticalOptions="Center" />
+                            <Border Grid.Column="1"
+                                    StrokeShape="RoundRectangle 10"
+                                    Stroke="Transparent"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"
+                                    Padding="16,8"
+                                    VerticalOptions="Center">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding AddSubTaskCommand}" />
+                                </Border.GestureRecognizers>
+                                <Label Text="Add"
+                                       FontFamily="Inter"
+                                       FontAttributes="Bold"
+                                       FontSize="13"
+                                       TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PageBackgroundColor}}"
+                                       VerticalOptions="Center" />
+                            </Border>
+                        </Grid>
+                    </Border>
+
+                    <!-- Subtask list card -->
+                    <Border BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource CardBackgroundColor}}"
+                            StrokeShape="RoundRectangle 14"
+                            Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource BorderColor}}"
+                            StrokeThickness="1"
+                            Padding="0"
+                            IsVisible="{Binding HasSubTasks}">
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding SubTasks}" Spacing="0">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="viewmodels:SubTaskViewModel">
+                                    <VerticalStackLayout Spacing="0">
+
+                                        <!-- Subtask row -->
+                                        <Grid ColumnDefinitions="Auto,*,Auto,Auto"
+                                              ColumnSpacing="10"
+                                              Padding="16,12">
+
+                                            <!-- Toggle checkbox -->
+                                            <Border Grid.Column="0"
+                                                    WidthRequest="28"
+                                                    HeightRequest="28"
+                                                    StrokeShape="RoundRectangle 14"
+                                                    StrokeThickness="1.5"
+                                                    VerticalOptions="Center">
+                                                <Border.GestureRecognizers>
+                                                    <TapGestureRecognizer
+                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ToggleSubTaskCommand}"
+                                                        CommandParameter="{Binding .}" />
+                                                </Border.GestureRecognizers>
+                                                <Border.Triggers>
+                                                    <DataTrigger TargetType="Border" Binding="{Binding IsCompleted}" Value="False">
+                                                        <Setter Property="BackgroundColor" Value="Transparent" />
+                                                        <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource BorderColor}}" />
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Border" Binding="{Binding IsCompleted}" Value="True">
+                                                        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}" />
+                                                        <Setter Property="Stroke" Value="Transparent" />
+                                                    </DataTrigger>
+                                                </Border.Triggers>
+                                                <Label Text="&#x2713;"
+                                                       FontSize="12"
+                                                       FontAttributes="Bold"
+                                                       HorizontalOptions="Center"
+                                                       VerticalOptions="Center">
+                                                    <Label.Triggers>
+                                                        <DataTrigger TargetType="Label" Binding="{Binding IsCompleted}" Value="False">
+                                                            <Setter Property="IsVisible" Value="False" />
+                                                        </DataTrigger>
+                                                        <DataTrigger TargetType="Label" Binding="{Binding IsCompleted}" Value="True">
+                                                            <Setter Property="IsVisible" Value="True" />
+                                                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PageBackgroundColor}}" />
+                                                        </DataTrigger>
+                                                    </Label.Triggers>
+                                                </Label>
+                                            </Border>
+
+                                            <!-- Title -->
+                                            <Label Grid.Column="1"
+                                                   Text="{Binding Title}"
+                                                   TextDecorations="{Binding TitleDecoration}"
+                                                   FontFamily="Inter"
+                                                   FontSize="14"
+                                                   VerticalOptions="Center">
+                                                <Label.Triggers>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding IsCompleted}" Value="False">
+                                                        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}" />
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding IsCompleted}" Value="True">
+                                                        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource SecondaryTextColor}}" />
+                                                    </DataTrigger>
+                                                </Label.Triggers>
+                                            </Label>
+
+                                            <!-- Edit -->
+                                            <Border Grid.Column="2"
+                                                    WidthRequest="32"
+                                                    HeightRequest="32"
+                                                    StrokeShape="RoundRectangle 8"
+                                                    BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource GlassColor}}"
+                                                    Stroke="Transparent">
+                                                <Border.GestureRecognizers>
+                                                    <TapGestureRecognizer
+                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EditSubTaskCommand}"
+                                                        CommandParameter="{Binding .}" />
+                                                </Border.GestureRecognizers>
+                                                <Label Text="&#x270E;"
+                                                       FontSize="14"
+                                                       TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource SecondaryTextColor}}"
+                                                       HorizontalOptions="Center"
+                                                       VerticalOptions="Center" />
+                                            </Border>
+
+                                            <!-- Delete -->
+                                            <Border Grid.Column="3"
+                                                    WidthRequest="32"
+                                                    HeightRequest="32"
+                                                    StrokeShape="RoundRectangle 8"
+                                                    BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource GlassColor}}"
+                                                    Stroke="Transparent">
+                                                <Border.GestureRecognizers>
+                                                    <TapGestureRecognizer
+                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteSubTaskCommand}"
+                                                        CommandParameter="{Binding .}" />
+                                                </Border.GestureRecognizers>
+                                                <Label Text="&#xD7;"
+                                                       FontSize="18"
+                                                       TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource SecondaryTextColor}}"
+                                                       HorizontalOptions="Center"
+                                                       VerticalOptions="Center" />
+                                            </Border>
+                                        </Grid>
+
+                                        <!-- Child sub-subtasks -->
+                                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Children}"
+                                                             Margin="54,0,16,4"
+                                                             Spacing="0">
+                                            <BindableLayout.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid ColumnDefinitions="Auto,*,Auto"
+                                                          ColumnSpacing="10"
+                                                          Padding="0,7">
+
+                                                        <!-- Child checkbox -->
+                                                        <Border Grid.Column="0"
+                                                                WidthRequest="22"
+                                                                HeightRequest="22"
+                                                                StrokeShape="RoundRectangle 11"
+                                                                StrokeThickness="1.5"
+                                                                VerticalOptions="Center">
+                                                            <Border.GestureRecognizers>
+                                                                <TapGestureRecognizer
+                                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ToggleSubTaskCommand}"
+                                                                    CommandParameter="{Binding .}" />
+                                                            </Border.GestureRecognizers>
+                                                            <Border.Triggers>
+                                                                <DataTrigger TargetType="Border" Binding="{Binding IsCompleted}" Value="False">
+                                                                    <Setter Property="BackgroundColor" Value="Transparent" />
+                                                                    <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource BorderColor}}" />
+                                                                </DataTrigger>
+                                                                <DataTrigger TargetType="Border" Binding="{Binding IsCompleted}" Value="True">
+                                                                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource SecondaryTextColor}}" />
+                                                                    <Setter Property="Stroke" Value="Transparent" />
+                                                                </DataTrigger>
+                                                            </Border.Triggers>
+                                                            <Label Text="&#x2713;"
+                                                                   FontSize="10"
+                                                                   FontAttributes="Bold"
+                                                                   HorizontalOptions="Center"
+                                                                   VerticalOptions="Center">
+                                                                <Label.Triggers>
+                                                                    <DataTrigger TargetType="Label" Binding="{Binding IsCompleted}" Value="False">
+                                                                        <Setter Property="IsVisible" Value="False" />
+                                                                    </DataTrigger>
+                                                                    <DataTrigger TargetType="Label" Binding="{Binding IsCompleted}" Value="True">
+                                                                        <Setter Property="IsVisible" Value="True" />
+                                                                        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PageBackgroundColor}}" />
+                                                                    </DataTrigger>
+                                                                </Label.Triggers>
+                                                            </Label>
+                                                        </Border>
+
+                                                        <!-- Child title -->
+                                                        <Label Grid.Column="1"
+                                                               Text="{Binding Title}"
+                                                               TextDecorations="{Binding TitleDecoration}"
+                                                               FontFamily="Inter"
+                                                               FontSize="13"
+                                                               VerticalOptions="Center">
+                                                            <Label.Triggers>
+                                                                <DataTrigger TargetType="Label" Binding="{Binding IsCompleted}" Value="False">
+                                                                    <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}" />
+                                                                </DataTrigger>
+                                                                <DataTrigger TargetType="Label" Binding="{Binding IsCompleted}" Value="True">
+                                                                    <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource SecondaryTextColor}}" />
+                                                                </DataTrigger>
+                                                            </Label.Triggers>
+                                                        </Label>
+
+                                                        <!-- Delete child -->
+                                                        <Border Grid.Column="2"
+                                                                WidthRequest="28"
+                                                                HeightRequest="28"
+                                                                StrokeShape="RoundRectangle 7"
+                                                                BackgroundColor="Transparent"
+                                                                Stroke="Transparent">
+                                                            <Border.GestureRecognizers>
+                                                                <TapGestureRecognizer
+                                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteChildSubTaskCommand}"
+                                                                    CommandParameter="{Binding .}" />
+                                                            </Border.GestureRecognizers>
+                                                            <Label Text="&#xD7;"
+                                                                   FontSize="16"
+                                                                   TextColor="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource SecondaryTextColor}}"
+                                                                   HorizontalOptions="Center"
+                                                                   VerticalOptions="Center" />
+                                                        </Border>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </BindableLayout.ItemTemplate>
+                                        </VerticalStackLayout>
+
+                                        <!-- Add child sub-subtask row -->
+                                        <Grid ColumnDefinitions="*,Auto"
+                                              ColumnSpacing="8"
+                                              Margin="54,0,16,10"
+                                              HeightRequest="36">
+                                            <Entry Grid.Column="0"
+                                                   Text="{Binding NewChildTitle}"
+                                                   Placeholder="Add sub-subtask..."
+                                                   PlaceholderColor="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource PlaceholderColor}}"
+                                                   TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"
+                                                   FontFamily="Inter"
+                                                   FontSize="12"
+                                                   BackgroundColor="Transparent"
+                                                   VerticalOptions="Center" />
+                                            <Border Grid.Column="1"
+                                                    StrokeShape="RoundRectangle 8"
+                                                    Stroke="Transparent"
+                                                    BackgroundColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource GlassColor}}"
+                                                    Padding="12,5"
+                                                    VerticalOptions="Center">
+                                                <Border.GestureRecognizers>
+                                                    <TapGestureRecognizer
+                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AddChildSubTaskCommand}"
+                                                        CommandParameter="{Binding .}" />
+                                                </Border.GestureRecognizers>
+                                                <Label Text="+"
+                                                       FontAttributes="Bold"
+                                                       FontSize="16"
+                                                       TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"
+                                                       HorizontalOptions="Center"
+                                                       VerticalOptions="Center" />
+                                            </Border>
+                                        </Grid>
+
+                                        <!-- Divider -->
+                                        <BoxView HeightRequest="1"
+                                                 Margin="16,0"
+                                                 BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource BorderColor}}" />
+
+                                    </VerticalStackLayout>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- DELETE TASK -->
+                <Border StrokeShape="RoundRectangle 14"
+                        BackgroundColor="Transparent"
+                        Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource BorderColor}}"
+                        StrokeThickness="1"
+                        HeightRequest="50"
+                        Margin="0,8,0,8"
+                        IsVisible="{Binding IsNewTask, Converter={StaticResource InverseBoolConverter}}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding DeleteCommand}" />
+                    </Border.GestureRecognizers>
+                    <Label Text="Delete Task"
+                           FontFamily="Inter"
+                           FontSize="14"
+                           TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource SecondaryTextColor}}"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center" />
+                </Border>
+
             </VerticalStackLayout>
-            
-            <!-- ACTION BUTTONS REMOVED (Moved to Header) -->
-            
-            <!-- Delete Button -->
-            <Border StrokeShape="RoundRectangle 12"
-                    BackgroundColor="Transparent"
-                    Stroke="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}"
-                    StrokeThickness="1"
-                    HeightRequest="48"
-                    IsVisible="{Binding IsNewTask, Converter={StaticResource InverseBoolConverter}}">
-                <Border.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding DeleteCommand}"/>
-                </Border.GestureRecognizers>
-                <Label Text="Delete Task"
-                       TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}"
-                       FontFamily="Inter"
-                       VerticalOptions="Center"
-                       HorizontalOptions="Center"/>
-            </Border>
-            
-        </VerticalStackLayout>
         </ScrollView>
     </Grid>
 </ContentPage>
