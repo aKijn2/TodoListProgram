@@ -100,11 +100,16 @@ namespace TaskFlow.Services
         }
 
         /// <summary>
-        /// Get ALL subtasks for a task (top-level only; children loaded separately)
+        /// Get ALL subtasks for a task with their children populated
         /// </summary>
         private async Task<List<SubTaskItem>> GetAllSubTasksForTaskAsync(int taskId)
         {
-            return await GetSubTasksAsync(taskId);
+            var topLevel = await GetSubTasksAsync(taskId);
+            foreach (var sub in topLevel)
+            {
+                sub.Children = await GetChildSubTasksAsync(sub.Id);
+            }
+            return topLevel;
         }
 
         /// <summary>

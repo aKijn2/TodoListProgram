@@ -1,3 +1,4 @@
+using CommunityToolkit.Mvvm.ComponentModel;
 using SQLite;
 
 namespace TaskFlow.Models
@@ -6,7 +7,7 @@ namespace TaskFlow.Models
     /// Represents a subtask under a main task
     /// </summary>
     [Table("SubTasks")]
-    public class SubTaskItem
+    public partial class SubTaskItem : ObservableObject
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
@@ -26,8 +27,15 @@ namespace TaskFlow.Models
         [MaxLength(200)]
         public string Title { get; set; } = string.Empty;
 
-        public bool IsCompleted { get; set; } = false;
+        [ObservableProperty]
+        private bool _isCompleted = false;
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
+
+        /// <summary>
+        /// Child sub-subtasks — not stored in DB, populated by service
+        /// </summary>
+        [Ignore]
+        public List<SubTaskItem> Children { get; set; } = new();
     }
 }

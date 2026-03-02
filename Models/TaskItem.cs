@@ -1,3 +1,4 @@
+using CommunityToolkit.Mvvm.ComponentModel;
 using SQLite;
 
 namespace TaskFlow.Models
@@ -6,7 +7,7 @@ namespace TaskFlow.Models
     /// Represents a main task item
     /// </summary>
     [Table("Tasks")]
-    public class TaskItem
+    public partial class TaskItem : ObservableObject
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
@@ -102,5 +103,21 @@ namespace TaskFlow.Models
                 return $"{completed}/{SubTasks.Count}";
             }
         }
+
+        /// <summary>
+        /// Whether the subtask expand panel is visible in the task list
+        /// </summary>
+        private bool _isExpanded;
+        [Ignore]
+        public bool IsExpanded
+        {
+            get => _isExpanded;
+            set => SetProperty(ref _isExpanded, value);
+        }
+
+        /// <summary>
+        /// Notify UI that subtask progress has changed (e.g. after toggling a subtask from the list)
+        /// </summary>
+        public void NotifySubTasksChanged() => OnPropertyChanged(nameof(SubTaskProgress));
     }
 }
