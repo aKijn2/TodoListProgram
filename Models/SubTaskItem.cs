@@ -17,6 +17,12 @@ namespace TaskFlow.Models
         [Indexed]
         public int ParentTaskId { get; set; }
 
+        /// <summary>
+        /// Foreign key to parent subtask (0 means direct child of the task)
+        /// </summary>
+        [Indexed]
+        public int ParentSubTaskId { get; set; } = 0;
+
         [MaxLength(200)]
         public string Title { get; set; } = string.Empty;
 
