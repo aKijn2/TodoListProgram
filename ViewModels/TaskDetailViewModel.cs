@@ -339,24 +339,39 @@ namespace TaskFlow.ViewModels
         }
 
         /// <summary>
-        /// Edit a subtask or sub-subtask title via a prompt
+        /// Begin inline editing for a subtask or sub-subtask
         /// </summary>
         [RelayCommand]
-        private async Task EditSubTaskAsync(SubTaskViewModel subTask)
+        private void EditSubTask(SubTaskViewModel subTask)
         {
             if (subTask == null) return;
+            subTask.EditingTitle = subTask.Title;
+            subTask.IsEditing = true;
+        }
 
-            string? result = await Shell.Current.DisplayPromptAsync(
-                "Edit Subtask",
-                "Update the subtask title:",
-                initialValue: subTask.Title,
-                maxLength: 200,
-                keyboard: Keyboard.Text);
+        /// <summary>
+        /// Commit the inline edit and persist to the database
+        /// </summary>
+        [RelayCommand]
+        private async Task CommitEditSubTaskAsync(SubTaskViewModel subTask)
+        {
+            if (subTask == null) return;
+            if (!string.IsNullOrWhiteSpace(subTask.EditingTitle))
+            {
+                subTask.Title = subTask.EditingTitle.Trim();
+                await _databaseService.SaveSubTaskAsync(subTask.ToModel());
+            }
+            subTask.IsEditing = false;
+        }
 
-            if (result == null || string.IsNullOrWhiteSpace(result)) return;
-
-            subTask.Title = result.Trim();
-            await _databaseService.SaveSubTaskAsync(subTask.ToModel());
+        /// <summary>
+        /// Cancel inline editing without saving
+        /// </summary>
+        [RelayCommand]
+        private void CancelEditSubTask(SubTaskViewModel subTask)
+        {
+            if (subTask == null) return;
+            subTask.IsEditing = false;
         }
 
         /// <summary>

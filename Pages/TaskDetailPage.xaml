@@ -416,7 +416,8 @@
                                         <!-- Subtask row -->
                                         <Grid ColumnDefinitions="Auto,*,Auto,Auto"
                                               ColumnSpacing="10"
-                                              Padding="16,12">
+                                              Padding="16,12"
+                                              IsVisible="{Binding IsNotEditing}">
 
                                             <!-- Toggle checkbox -->
                                             <Border Grid.Column="0"
@@ -513,15 +514,84 @@
                                             </Border>
                                         </Grid>
 
+                                        <!-- Inline edit panel for parent subtask -->
+                                        <Border IsVisible="{Binding IsEditing}"
+                                                BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource CardBackgroundColor}}"
+                                                Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource BorderColor}}"
+                                                StrokeThickness="1"
+                                                StrokeShape="RoundRectangle 10"
+                                                Margin="12,6,12,6"
+                                                Padding="14,12">
+                                            <VerticalStackLayout Spacing="10">
+                                                <Label Text="EDIT SUBTASK"
+                                                       FontFamily="Inter"
+                                                       FontSize="10"
+                                                       FontAttributes="Bold"
+                                                       CharacterSpacing="1.2"
+                                                       TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource SecondaryTextColor}}" />
+                                                <Border BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource GlassColor}}"
+                                                        StrokeShape="RoundRectangle 8"
+                                                        Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource BorderColor}}"
+                                                        StrokeThickness="1"
+                                                        Padding="12,8">
+                                                    <Entry Text="{Binding EditingTitle}"
+                                                           FontFamily="Inter"
+                                                           FontSize="14"
+                                                           TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"
+                                                           BackgroundColor="Transparent" />
+                                                </Border>
+                                                <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                                                    <Border Grid.Column="0"
+                                                            StrokeShape="RoundRectangle 8"
+                                                            Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource BorderColor}}"
+                                                            StrokeThickness="1"
+                                                            BackgroundColor="Transparent"
+                                                            Padding="0,10">
+                                                        <Border.GestureRecognizers>
+                                                            <TapGestureRecognizer
+                                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.CancelEditSubTaskCommand}"
+                                                                CommandParameter="{Binding .}" />
+                                                        </Border.GestureRecognizers>
+                                                        <Label Text="Cancel"
+                                                               FontFamily="Inter"
+                                                               FontSize="13"
+                                                               TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}"
+                                                               HorizontalOptions="Center" />
+                                                    </Border>
+                                                    <Border Grid.Column="1"
+                                                            StrokeShape="RoundRectangle 8"
+                                                            Stroke="Transparent"
+                                                            BackgroundColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"
+                                                            Padding="0,10">
+                                                        <Border.GestureRecognizers>
+                                                            <TapGestureRecognizer
+                                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.CommitEditSubTaskCommand}"
+                                                                CommandParameter="{Binding .}" />
+                                                        </Border.GestureRecognizers>
+                                                        <Label Text="Save"
+                                                               FontFamily="Inter"
+                                                               FontAttributes="Bold"
+                                                               FontSize="13"
+                                                               TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PageBackgroundColor}}"
+                                                               HorizontalOptions="Center" />
+                                                    </Border>
+                                                </Grid>
+                                            </VerticalStackLayout>
+                                        </Border>
+
                                         <!-- Child sub-subtasks -->
                                         <VerticalStackLayout BindableLayout.ItemsSource="{Binding Children}"
                                                              Margin="54,0,16,4"
                                                              Spacing="0">
                                             <BindableLayout.ItemTemplate>
                                                 <DataTemplate>
-                                                    <Grid ColumnDefinitions="Auto,*,Auto"
+                                                    <VerticalStackLayout Spacing="0">
+
+                                                    <!-- Child row: view mode -->
+                                                    <Grid ColumnDefinitions="Auto,*,Auto,Auto"
                                                           ColumnSpacing="10"
-                                                          Padding="0,7">
+                                                          Padding="0,7"
+                                                          IsVisible="{Binding IsNotEditing}">
 
                                                         <!-- Child checkbox -->
                                                         <Border Grid.Column="0"
@@ -579,13 +649,34 @@
                                                             </Label.Triggers>
                                                         </Label>
 
-                                                        <!-- Delete child -->
+                                                        <!-- Edit child -->
                                                         <Border Grid.Column="2"
+                                                                WidthRequest="26"
+                                                                HeightRequest="26"
+                                                                StrokeShape="RoundRectangle 7"
+                                                                BackgroundColor="Transparent"
+                                                                Stroke="Transparent"
+                                                                VerticalOptions="Center">
+                                                            <Border.GestureRecognizers>
+                                                                <TapGestureRecognizer
+                                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EditSubTaskCommand}"
+                                                                    CommandParameter="{Binding .}" />
+                                                            </Border.GestureRecognizers>
+                                                            <Label Text="&#x270E;"
+                                                                   FontSize="13"
+                                                                   TextColor="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource SecondaryTextColor}}"
+                                                                   HorizontalOptions="Center"
+                                                                   VerticalOptions="Center" />
+                                                        </Border>
+
+                                                        <!-- Delete child -->
+                                                        <Border Grid.Column="3"
                                                                 WidthRequest="28"
                                                                 HeightRequest="28"
                                                                 StrokeShape="RoundRectangle 7"
                                                                 BackgroundColor="Transparent"
-                                                                Stroke="Transparent">
+                                                                Stroke="Transparent"
+                                                                VerticalOptions="Center">
                                                             <Border.GestureRecognizers>
                                                                 <TapGestureRecognizer
                                                                     Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteChildSubTaskCommand}"
@@ -598,6 +689,73 @@
                                                                    VerticalOptions="Center" />
                                                         </Border>
                                                     </Grid>
+
+                                                    <!-- Child inline edit panel -->
+                                                    <Border IsVisible="{Binding IsEditing}"
+                                                            BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource CardBackgroundColor}}"
+                                                            Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource BorderColor}}"
+                                                            StrokeThickness="1"
+                                                            StrokeShape="RoundRectangle 8"
+                                                            Margin="0,4,0,4"
+                                                            Padding="10,10">
+                                                        <VerticalStackLayout Spacing="8">
+                                                            <Label Text="EDIT SUB-SUBTASK"
+                                                                   FontFamily="Inter"
+                                                                   FontSize="10"
+                                                                   FontAttributes="Bold"
+                                                                   CharacterSpacing="1.2"
+                                                                   TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource SecondaryTextColor}}" />
+                                                            <Border BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource GlassColor}}"
+                                                                    StrokeShape="RoundRectangle 6"
+                                                                    Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource BorderColor}}"
+                                                                    StrokeThickness="1"
+                                                                    Padding="10,6">
+                                                                <Entry Text="{Binding EditingTitle}"
+                                                                       FontFamily="Inter"
+                                                                       FontSize="13"
+                                                                       TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"
+                                                                       BackgroundColor="Transparent" />
+                                                            </Border>
+                                                            <Grid ColumnDefinitions="*,*" ColumnSpacing="6">
+                                                                <Border Grid.Column="0"
+                                                                        StrokeShape="RoundRectangle 6"
+                                                                        Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource BorderColor}}"
+                                                                        StrokeThickness="1"
+                                                                        BackgroundColor="Transparent"
+                                                                        Padding="0,8">
+                                                                    <Border.GestureRecognizers>
+                                                                        <TapGestureRecognizer
+                                                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.CancelEditSubTaskCommand}"
+                                                                            CommandParameter="{Binding .}" />
+                                                                    </Border.GestureRecognizers>
+                                                                    <Label Text="Cancel"
+                                                                           FontFamily="Inter"
+                                                                           FontSize="12"
+                                                                           TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}"
+                                                                           HorizontalOptions="Center" />
+                                                                </Border>
+                                                                <Border Grid.Column="1"
+                                                                        StrokeShape="RoundRectangle 6"
+                                                                        Stroke="Transparent"
+                                                                        BackgroundColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}"
+                                                                        Padding="0,8">
+                                                                    <Border.GestureRecognizers>
+                                                                        <TapGestureRecognizer
+                                                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.CommitEditSubTaskCommand}"
+                                                                            CommandParameter="{Binding .}" />
+                                                                    </Border.GestureRecognizers>
+                                                                    <Label Text="Save"
+                                                                           FontFamily="Inter"
+                                                                           FontAttributes="Bold"
+                                                                           FontSize="12"
+                                                                           TextColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource PageBackgroundColor}}"
+                                                                           HorizontalOptions="Center" />
+                                                                </Border>
+                                                            </Grid>
+                                                        </VerticalStackLayout>
+                                                    </Border>
+
+                                                    </VerticalStackLayout>
                                                 </DataTemplate>
                                             </BindableLayout.ItemTemplate>
                                         </VerticalStackLayout>
