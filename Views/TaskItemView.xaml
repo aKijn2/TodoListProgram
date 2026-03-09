@@ -81,17 +81,29 @@
                    MaxLines="2"
                    Text="{Binding Title}"
                    VerticalOptions="Center"
-                   TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:TaskListViewModel}}, Path=ViewTaskCommand}" CommandParameter="{Binding .}" />
-                </Label.GestureRecognizers>
-            </Label>
+                   TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource PrimaryTextColor}}" />
 
             <!-- Action buttons: expand + delete -->
             <HorizontalStackLayout Grid.Row="0"
                                    Grid.Column="2"
                                    Spacing="2"
                                    VerticalOptions="Center">
+
+                <!-- Edit -->
+                <Border WidthRequest="32"
+                        HeightRequest="32"
+                        StrokeShape="RoundRectangle 8"
+                        BackgroundColor="Transparent"
+                        Stroke="Transparent">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:TaskListViewModel}}, Path=ViewTaskCommand}" CommandParameter="{Binding .}" />
+                    </Border.GestureRecognizers>
+                    <Label Text="&#x270E;"
+                           FontSize="14"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource SecondaryTextColor}}" />
+                </Border>
 
                 <!-- Expand/collapse (only visible when has subtasks) -->
                 <Border WidthRequest="32"
