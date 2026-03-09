@@ -30,6 +30,21 @@ namespace TaskFlow.ViewModels
         [ObservableProperty]
         private string _newChildTitle = string.Empty;
 
+        /// <summary>
+        /// True while the inline edit panel is open for this item
+        /// </summary>
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(IsNotEditing))]
+        private bool _isEditing = false;
+
+        /// <summary>
+        /// Draft title shown in the inline edit Entry
+        /// </summary>
+        [ObservableProperty]
+        private string _editingTitle = string.Empty;
+
+        public bool IsNotEditing => !IsEditing;
+
         public TextDecorations TitleDecoration =>
             IsCompleted ? TextDecorations.Strikethrough : TextDecorations.None;
 
