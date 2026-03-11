@@ -14,9 +14,7 @@
             Stroke="{AppThemeBinding Light={StaticResource Gray200},
                                      Dark={StaticResource BorderColor}}"
             StrokeShape="RoundRectangle 16"
-            StrokeThickness="1"
-            Opacity="0"
-            Loaded="OnTaskItemLoaded">
+            StrokeThickness="1">
 
         <Grid ColumnDefinitions="Auto,*,Auto"
               ColumnSpacing="14"

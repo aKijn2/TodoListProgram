@@ -9,14 +9,5 @@ namespace TaskFlow.Views
         {
             InitializeComponent();
         }
-
-        private async void OnTaskItemLoaded(object sender, EventArgs e)
-        {
-            if (sender is View view)
-            {
-                // Fade in animation
-                await view.FadeTo(1, 400, Easing.CubicOut);
-            }
-        }
     }
 }
