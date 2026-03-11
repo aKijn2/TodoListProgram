@@ -11,6 +11,10 @@ namespace TaskFlow
         {
             InitializeComponent();
             BindingContext = _viewModel = viewModel;
+
+            bool isAndroid = DeviceInfo.Current.Platform == DevicePlatform.Android;
+            WindowsLayout.IsVisible = !isAndroid;
+            AndroidLayout.IsVisible = isAndroid;
         }
 
         protected override async void OnAppearing()

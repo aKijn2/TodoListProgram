@@ -217,19 +217,11 @@ namespace TaskFlow.ViewModels
 
             MainThread.BeginInvokeOnMainThread(() =>
             {
-                Tasks.Clear();
-                TodayTasks.Clear();
-                UpcomingTasks.Clear();
-
-                foreach (var task in filteredList)
-                {
-                    Tasks.Add(task);
-                }
-
-                foreach(var t in todayItems) TodayTasks.Add(t);
-                foreach(var t in upcomingItems) UpcomingTasks.Add(t);
-
-                HasTasks = Tasks.Count > 0;
+                // Assign new collections in one shot — avoids N CollectionChanged events per list
+                Tasks         = new ObservableCollection<TaskItem>(filteredList);
+                TodayTasks    = new ObservableCollection<TaskItem>(todayItems);
+                UpcomingTasks = new ObservableCollection<TaskItem>(upcomingItems);
+                HasTasks      = filteredList.Count > 0;
             });
         }
 

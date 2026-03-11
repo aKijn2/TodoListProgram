@@ -20,7 +20,7 @@ namespace TaskFlow
                 });
 
             // Register Services
-            builder.Services.AddSingleton<DatabaseService>();
+            builder.Services.AddHttpClient<DatabaseService>();
 
             // Register ViewModels
             builder.Services.AddTransient<TaskListViewModel>();
